@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,39 +9,11 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// Criação do tema com customização para o botão
 const defaultTheme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#702054',
-          '&:hover': {
-            backgroundColor: '#702054', // Mantém a cor ao passar o mouse
-          },
-        },
-      },
-    },
-  },
-});
+  components: { MuiButton: { styleOverrides: { root: { backgroundColor: '#702054','&:hover': { backgroundColor: '#702054' }}}}}});
 
 export default function LoginForm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -123,14 +94,13 @@ export default function LoginForm() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/register" variant="body2">
                     {"Não possui uma conta? Cadastre-se"}
                   </Link>
                 </Grid>
               </Grid>
             </Box>
           </Box>
-          <Copyright sx={{ mt: 4, mb: 2 }} />
         </Container>
       </Box>
     </ThemeProvider>

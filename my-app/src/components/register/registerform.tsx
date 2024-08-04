@@ -11,38 +11,12 @@ import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// Criação do tema com customização para o botão
-const defaultTheme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#702054',
-          '&:hover': {
-            backgroundColor: '#702054', // Mantém a cor ao passar o mouse
-          },
-        },
-      },
-    },
-  },
-});
+const defaultTheme = createTheme({ components: { MuiButton: { styleOverrides: { root: { backgroundColor: '#702054', '&:hover': { backgroundColor: '#702054' }}}}}});
 
 export default function RegistrationForm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -68,44 +42,14 @@ export default function RegistrationForm() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '100vh',
-          backgroundImage: 'url("/img/background-girls.png")', // Substitua com o caminho para sua imagem
-          backgroundSize: 'cover',
-        }}
-      >
-        <Container
-          component="main"
-          maxWidth="md"
-          sx={{ 
-            backgroundColor: 'white', 
-            padding: 4, 
-            borderRadius: 2,
-            paddingLeft: 20, // Adiciona padding nas laterais
-            paddingRight: 20,
-            paddingTop: 6, // Adiciona padding no topo
-            paddingBottom: 6 // Adiciona padding na parte inferior
-          }}
-        >
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundImage: 'url("/img/background-girls.png")', backgroundSize: 'cover' }} >
+        <Container component="main" maxWidth="md" sx={{ backgroundColor: 'white', padding: 4, borderRadius: 2, paddingLeft: 20, paddingRight: 20, paddingTop: 6, paddingBottom: 6 }} >
           <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 4,
-              marginBottom: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
+          <Box sx={{ marginTop: 4, marginBottom: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
             <img src="/img/writted-logo.png" alt="Logo" style={{ height: '60px', marginRight: '16px', marginLeft: '0px' }} />
-
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+              
               <Grid container spacing={2}>
-                {/* Primeira linha */}
                 <Grid item xs={12} sm={6}>
                   <TextField
                     margin="normal"
@@ -147,7 +91,6 @@ export default function RegistrationForm() {
                 <Grid item xs={12} sm={4}>
                   <TextField
                     margin="normal"
-                    required
                     fullWidth
                     id="telefone"
                     label="Telefone"
@@ -286,6 +229,16 @@ export default function RegistrationForm() {
                   />
                 </Grid>
               </Grid>
+              <FormControlLabel
+                control={<Checkbox value="image_term" color="primary" required />}
+                label="Autorizo o uso de imagem"
+                labelPlacement="start"
+              />
+              <FormControlLabel
+                control={<Checkbox value="data_term" color="primary" required />}
+                label="Autorizo o uso de dados"
+                labelPlacement="start"
+              />
               <Button
                 type="submit"
                 fullWidth
@@ -296,14 +249,13 @@ export default function RegistrationForm() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="/login" variant="body2" >
                     Já possui uma conta? Faça login
                   </Link>
                 </Grid>
               </Grid>
             </Box>
           </Box>
-          <Copyright sx={{ mt: 4, mb: 2 }} />
         </Container>
       </Box>
     </ThemeProvider>
