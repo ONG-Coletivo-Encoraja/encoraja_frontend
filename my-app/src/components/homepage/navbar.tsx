@@ -12,7 +12,7 @@ export default function Navbar() {
           <img
             src="/img/mini-logo.png"
             alt="Logo"
-            style={{ height: '50px', marginRight: '16px', marginLeft: '0px' }} // Aumentar o tamanho e ajustar a margem
+            style={{ height: '50px', marginRight: '16px', marginLeft: '0px' }}
           />
           <Box sx={{ flexGrow: 1 }} />
           <Button color="inherit">Login</Button>
