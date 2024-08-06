@@ -1,4 +1,5 @@
-import { API_URL } from './api';
+import API from '@/services/api';
+import axios from 'axios';
 
 export async function register(data: {
   name: string;
@@ -20,20 +21,17 @@ export async function register(data: {
 }) {
   console.log('Enviando dados para o registro:', data);
 
-  const res = await fetch(`${API_URL}/users`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-
-  const responseData = await res.json();
-  console.log('Resposta do servidor:', responseData);
-
-  if (!res.ok) {
-    throw new Error(`Failed to register: ${responseData.message || 'Unknown error'}`);
+  try {
+    const response = await API.post('/users', data, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    return response.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error:', error.response?.data || error.message);
+    } else {
+      console.error('Unexpected Error:', error);
+    }
+    throw error;
   }
-
-  return responseData;
 }

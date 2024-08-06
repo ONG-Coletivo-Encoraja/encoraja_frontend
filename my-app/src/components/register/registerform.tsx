@@ -83,13 +83,16 @@ export default function RegistrationForm() {
 
     try {
       const response = await register(data);
+      
+      console.log(response)
       if (response) {
         router.push('/login');
       }
     } catch (error) {
-      alert('Registration failed');
+      alert('Registration failed: ' + error);
     }
   };
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -189,21 +192,21 @@ export default function RegistrationForm() {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth margin="normal" required>
-                    <InputLabel id="gender-label">Gênero</InputLabel>
-                    <Select
-                      labelId="gender-label"
-                      id="gender"
-                      name="gender"
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
-                    >
-                      <MenuItem value="male">Masculino</MenuItem>
-                      <MenuItem value="female">Feminino</MenuItem>
-                      <MenuItem value="prefer not say">Prefiro não dizer</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
+                <FormControl fullWidth margin="normal" required>
+                  <InputLabel id="gender-label">Gênero</InputLabel>
+                  <Select
+                    labelId="gender-label"
+                    id="gender"
+                    name="gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <MenuItem value="male">Masculino</MenuItem>
+                    <MenuItem value="female">Feminino</MenuItem>
+                    <MenuItem value="prefer not say">Prefiro não dizer</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
 
                 {/* Quarta linha */}
                 <Grid item xs={12} sm={4}>
