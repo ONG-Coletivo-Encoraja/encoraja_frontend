@@ -1,33 +1,19 @@
-// auth.ts
+import API from '@/services/api';
+import axios from 'axios';
+import { UserData } from '../../interfaces/IUserData';
 
-export async function register(data: {
-  name: string;
-  email: string;
-  password: string;
-  cpf: string;
-  date_birthday: string;
-  race: string;
-  gender: string;
-  image_term: boolean;
-  data_term: boolean;
-  street: string;
-  number: string;
-  neighbourhood: string;
-  city: string;
-  zip_code: string;
-  phone: string;
-}) {
-  const res = await fetch('http://127.0.0.1:8000/api/users', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to register');
+export async function register(data: UserData) {
+  try {
+    const response = await API.post('/users', data, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    return response.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error:', error.response?.data || error.message);
+    } else {
+      console.error('Unexpected Error:', error);
+    }
+    throw error;
   }
-
-  return await res.json();
 }

@@ -19,6 +19,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register } from '../../app/api/auth';
+import { UserData } from '../../interfaces/IUserData'; 
 
 const defaultTheme = createTheme({
   components: {
@@ -56,8 +57,8 @@ export default function RegistrationForm() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    const data = {
+  
+    const data: UserData = {
       name,
       email,
       password,
@@ -74,16 +75,19 @@ export default function RegistrationForm() {
       zip_code,
       phone,
     };
-
+  
     try {
       const response = await register(data);
+      
+      console.log(response)
       if (response) {
         router.push('/login');
       }
     } catch (error) {
-      alert('Registration failed');
+      alert('Registration failed: ' + error);
     }
   };
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -122,7 +126,6 @@ export default function RegistrationForm() {
                   />
                 </Grid>
 
-                {/* Segunda linha */}
                 <Grid item xs={12} sm={4}>
                   <TextField
                     margin="normal"
@@ -164,7 +167,6 @@ export default function RegistrationForm() {
                   />
                 </Grid>
 
-                {/* Terceira linha */}
                 <Grid item xs={12} sm={6}>
                   <FormControl fullWidth margin="normal" required>
                     <InputLabel id="race-label">Raça</InputLabel>
@@ -179,6 +181,7 @@ export default function RegistrationForm() {
                       <MenuItem value="Preta">Preta</MenuItem>
                       <MenuItem value="Parda">Parda</MenuItem>
                       <MenuItem value="Amarela">Amarela</MenuItem>
+                      <MenuItem value="Indígena">Indígena</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -192,14 +195,13 @@ export default function RegistrationForm() {
                       value={gender}
                       onChange={(e) => setGender(e.target.value)}
                     >
-                      <MenuItem value="Feminino">Feminino</MenuItem>
-                      <MenuItem value="Masculino">Masculino</MenuItem>
-                      <MenuItem value="Prefiro não dizer">Prefiro não dizer</MenuItem>
+                      <MenuItem value="female">Feminino</MenuItem>
+                      <MenuItem value="male">Masculino</MenuItem>
+                      <MenuItem value="Prefer not say">Prefiro não dizer</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
 
-                {/* Quarta linha */}
                 <Grid item xs={12} sm={4}>
                   <TextField
                     margin="normal"
@@ -240,7 +242,6 @@ export default function RegistrationForm() {
                   />
                 </Grid>
 
-                {/* Quinta linha */}
                 <Grid item xs={12} sm={6}>
                   <TextField
                     margin="normal"
@@ -268,7 +269,6 @@ export default function RegistrationForm() {
                   />
                 </Grid>
 
-                {/* Sexta linha */}
                 <Grid item xs={12} sm={6}>
                   <TextField
                     margin="normal"
@@ -296,16 +296,14 @@ export default function RegistrationForm() {
                 </Grid>
               </Grid>
               <FormControlLabel
-                control={<Checkbox checked={image_term} color="primary" required />}
+                control={<Checkbox checked={image_term} color="primary" onChange={(e) => setImageTerm(e.target.checked)} />}
                 label="Autorizo o uso de imagem"
-                labelPlacement="start"
-                onChange={(e) => setImageTerm(e.target.value)}
+                labelPlacement="end"
               />
               <FormControlLabel
-                control={<Checkbox checked={data_term} color="primary" required />}
+                control={<Checkbox checked={data_term} color="primary" onChange={(e) => setDataTerm(e.target.checked)} />}
                 label="Autorizo o uso de dados"
-                labelPlacement="start"
-                onChange={(e) => setDataTerm(e.target.checked)}
+                labelPlacement="end"
               />
               <Button
                 type="submit"
