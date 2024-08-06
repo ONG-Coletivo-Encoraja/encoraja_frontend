@@ -11,18 +11,34 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { login } from '../../app/api/auth';
 
 const defaultTheme = createTheme({
-  components: { MuiButton: { styleOverrides: { root: { backgroundColor: '#702054','&:hover': { backgroundColor: '#702054' }}}}}});
+  components: { MuiButton: { styleOverrides: { root: { backgroundColor: '#702054', '&:hover': { backgroundColor: '#702054' } } } } }
+});
 
 export default function LoginForm() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    
+    try {
+      const response = await login(email, password);
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+        router.push('/home');
+      } else {
+        alert('Login failed');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Login failed');
+    }
   };
 
   return (
@@ -62,8 +78,10 @@ export default function LoginForm() {
                 id="email"
                 label="Email"
                 name="email"
+                type="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -74,6 +92,7 @@ export default function LoginForm() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
