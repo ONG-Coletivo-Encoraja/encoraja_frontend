@@ -19,6 +19,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register } from '../../app/api/auth';
+import { UserData } from '../../interfaces/IUserData'; 
 
 const defaultTheme = createTheme({
   components: {
@@ -63,7 +64,7 @@ export default function RegistrationForm() {
       return;
     }
 
-    const data = {
+    const data: UserData = {
       name,
       email,
       password,

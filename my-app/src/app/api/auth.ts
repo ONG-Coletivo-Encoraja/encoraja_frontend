@@ -1,26 +1,8 @@
 import API from '@/services/api';
 import axios from 'axios';
+import { UserData } from '../../interfaces/IUserData';
 
-export async function register(data: {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  cpf: string;
-  date_birthday: string;
-  race: string;
-  gender: string;
-  image_term: boolean;
-  data_term: boolean;
-  street: string;
-  number: string;
-  neighbourhood: string;
-  city: string;
-  zip_code: string;
-  phone: string;
-}) {
-  console.log('Enviando dados para o registro:', data);
-
+export async function register(data: UserData) {
   try {
     const response = await API.post('/users', data, {
       headers: { 'Content-Type': 'application/json' },
