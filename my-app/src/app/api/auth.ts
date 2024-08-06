@@ -1,9 +1,10 @@
-// auth.ts
+import { API_URL } from './api';
 
 export async function register(data: {
   name: string;
   email: string;
   password: string;
+  confirmPassword: string;
   cpf: string;
   date_birthday: string;
   race: string;
@@ -17,7 +18,9 @@ export async function register(data: {
   zip_code: string;
   phone: string;
 }) {
-  const res = await fetch('http://127.0.0.1:8000/api/users', {
+  console.log('Enviando dados para o registro:', data);
+
+  const res = await fetch(`${API_URL}/users`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -25,9 +28,12 @@ export async function register(data: {
     body: JSON.stringify(data),
   });
 
+  const responseData = await res.json();
+  console.log('Resposta do servidor:', responseData);
+
   if (!res.ok) {
-    throw new Error('Failed to register');
+    throw new Error(`Failed to register: ${responseData.message || 'Unknown error'}`);
   }
 
-  return await res.json();
+  return responseData;
 }

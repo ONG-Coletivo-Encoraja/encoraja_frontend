@@ -39,6 +39,7 @@ export default function RegistrationForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [cpf, setCpf] = useState('');
   const [date_birthday, setDateBirthday] = useState('');
   const [race, setRace] = useState('');
@@ -56,6 +57,11 @@ export default function RegistrationForm() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
 
     const data = {
       name,
@@ -192,9 +198,9 @@ export default function RegistrationForm() {
                       value={gender}
                       onChange={(e) => setGender(e.target.value)}
                     >
-                      <MenuItem value="Feminino">Feminino</MenuItem>
-                      <MenuItem value="Masculino">Masculino</MenuItem>
-                      <MenuItem value="Prefiro não dizer">Prefiro não dizer</MenuItem>
+                      <MenuItem value="male">Masculino</MenuItem>
+                      <MenuItem value="female">Feminino</MenuItem>
+                      <MenuItem value="prefer not say">Prefiro não dizer</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -292,20 +298,20 @@ export default function RegistrationForm() {
                     label="Confirmar Senha"
                     type="password"
                     id="confirm-password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </Grid>
               </Grid>
               <FormControlLabel
-                control={<Checkbox checked={image_term} color="primary" required />}
+                control={<Checkbox checked={image_term} color="primary" onChange={(e) => setImageTerm(e.target.checked)} />}
                 label="Autorizo o uso de imagem"
                 labelPlacement="start"
-                onChange={(e) => setImageTerm(e.target.value)}
               />
               <FormControlLabel
-                control={<Checkbox checked={data_term} color="primary" required />}
+                control={<Checkbox checked={data_term} color="primary" onChange={(e) => setDataTerm(e.target.checked)} />}
                 label="Autorizo o uso de dados"
                 labelPlacement="start"
-                onChange={(e) => setDataTerm(e.target.checked)}
               />
               <Button
                 type="submit"
