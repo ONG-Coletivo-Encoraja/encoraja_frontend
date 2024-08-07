@@ -14,6 +14,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login } from '../../app/api/auth';
+import { UserLogin } from '../../interfaces/IUserLogin'; 
+
 
 const defaultTheme = createTheme({
   components: { MuiButton: { styleOverrides: { root: { backgroundColor: '#702054', '&:hover': { backgroundColor: '#702054' } } } } }
@@ -26,9 +28,14 @@ export default function LoginForm() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    const data: UserLogin = {
+      email,
+      password,
+    };
     
     try {
-      const response = await login(email, password);
+      const response = await login(data);
       if (response.token) {
         localStorage.setItem('token', response.token);
         router.push('/home');

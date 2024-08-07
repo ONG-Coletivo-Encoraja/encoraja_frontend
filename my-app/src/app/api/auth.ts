@@ -1,11 +1,12 @@
 import API from '@/services/api';
 import axios from 'axios';
 import { UserData } from '../../interfaces/IUserData';
+import { UserLogin } from '../../interfaces/IUserLogin';
 
 
-export async function login(email: string, password: string) {
+export async function login(data: UserLogin) {
   try {
-    const response = await API.post('/auth/login', { email, password }, {
+    const response = await API.post('/auth/login', data, {
       headers: { 'Content-Type': 'application/json' },
     });
     return response.data;
