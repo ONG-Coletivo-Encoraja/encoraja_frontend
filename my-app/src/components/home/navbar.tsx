@@ -8,11 +8,38 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
-export default function Home() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
 
-  const handleClick = (event) => {
+const MyAppBar = styled(AppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const drawerWidth = 240;
+
+export default function Navbar({ open, handleDrawerOpen }) {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -21,9 +48,21 @@ export default function Home() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, m: 0, p: 0 }}>
-      <AppBar position="static" sx={{ bgcolor: '#702054' }}>
+    <Box sx={{ flexGrow: 1 }}>
+      <MyAppBar position="fixed" open={open} sx={{ bgcolor: '#702054' }}>
         <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              marginRight: 5,
+              ...(open && { display: 'none' }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
           <img
             src="/img/mini-logo.png"
             alt="Logo"
@@ -67,7 +106,7 @@ export default function Home() {
             <MenuItem onClick={handleClose}>Logout</MenuItem>
           </Menu>
         </Toolbar>
-      </AppBar>
+      </MyAppBar>
     </Box>
   );
 }
