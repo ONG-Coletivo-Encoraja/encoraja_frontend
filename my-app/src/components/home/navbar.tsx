@@ -61,13 +61,12 @@ export default function Navbar({ open, handleDrawerOpen }) {
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon />
-          </IconButton>
           <img
             src="/img/mini-logo.png"
             alt="Logo"
-            style={{ height: '50px', marginRight: '16px', marginLeft: '0px' }}
+            style={{ height: '50px' }}
           />
+          </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Button
             variant="outlined"
