@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Navbar from '../../components/home/navbar';
 import Sidebar from '../../components/home/sidebar';
 

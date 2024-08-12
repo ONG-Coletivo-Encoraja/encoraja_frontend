@@ -1,3 +1,5 @@
+// navbar.tsx
+
 'use client';
 
 import * as React from 'react';
@@ -10,11 +12,15 @@ import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import LogoutConfirmation from '@/components/pop-ups/LogoutConfirmation';
+import { logout, getUserData } from '../../app/api/auth'; // Importando a função getUserData
+import { useRouter } from 'next/navigation';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
+
+const drawerWidth = 240;
 
 const MyAppBar = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -34,10 +40,26 @@ const MyAppBar = styled(AppBar, {
   }),
 }));
 
-const drawerWidth = 240;
-
 export default function Navbar({ open, handleDrawerOpen }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [logoutDialogOpen, setLogoutDialogOpen] = React.useState(false);
+  const [userName, setUserName] = React.useState<string | null>(null);
+  
+  const router = useRouter();
+
+  React.useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await getUserData();
+        console.log('User Data:', userData); // Verifique a resposta da API
+        setUserName(userData.name); // Ajuste conforme a estrutura de dados
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    };
+    
+    fetchUserData();
+  }, []);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -46,6 +68,16 @@ export default function Navbar({ open, handleDrawerOpen }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = async () => {
+    try {
+      await logout(); // Chama a função de logout
+      router.push('/login'); // Redireciona para a página de login
+    } catch (error) {
+      console.error('Logout failed', error);
+    } 
+  }; 
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -61,11 +93,11 @@ export default function Navbar({ open, handleDrawerOpen }) {
               ...(open && { display: 'none' }),
             }}
           >
-          <img
-            src="/img/mini-logo.png"
-            alt="Logo"
-            style={{ height: '50px' }}
-          />
+            <img
+              src="/img/mini-logo.png"
+              alt="Logo"
+              style={{ height: '50px' }}
+            />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Button
@@ -84,7 +116,7 @@ export default function Navbar({ open, handleDrawerOpen }) {
               },
             }}
           >
-            Nome do usuário
+            {userName || 'Carregando...'}
             <ArrowDropDownIcon sx={{ ml: 1 }} />
           </Button>
           <Menu
@@ -102,10 +134,15 @@ export default function Navbar({ open, handleDrawerOpen }) {
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={() => setLogoutDialogOpen(true)}>Logout</MenuItem>
           </Menu>
         </Toolbar>
       </MyAppBar>
+      <LogoutConfirmation
+        open={logoutDialogOpen}
+        onClose={() => setLogoutDialogOpen(false)}
+        onConfirm={handleLogout}
+      />
     </Box>
   );
 }
