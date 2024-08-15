@@ -15,7 +15,9 @@ export async function getUserData(): Promise<UserData> {
         'Authorization': `Bearer ${token}`,
       },
     });
+    console.log("response: ", response);
     return response.data;
+  
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       console.error('Error:', error.response?.data || error.message);
@@ -57,6 +59,8 @@ export async function logout() {
     });
     // Remove o token do localStorage
     localStorage.removeItem('authToken');
+    //localStorage.removeItem('token');
+    localStorage.clear();
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       console.error('Error:', error.response?.data || error.message);

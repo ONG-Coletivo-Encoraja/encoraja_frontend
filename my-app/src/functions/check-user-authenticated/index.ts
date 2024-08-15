@@ -6,6 +6,9 @@ const getStorageItem = (key: string) => {
 };
 
 export const checkUserAuthenticated = () => {
-    const userToken = getStorageItem(process.env.NEXT_PUBLIC_USER_TOKEN ?? '');
+ //   const userToken = getStorageItem(process.env.NEXT_PUBLIC_USER_TOKEN ?? '');
+
+    const userToken = localStorage.getItem('authToken');
+    console.log('token:', userToken)
     return !!userToken;
 };

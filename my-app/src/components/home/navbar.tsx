@@ -4,6 +4,7 @@
 
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
+import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
@@ -40,7 +41,12 @@ const MyAppBar = styled(AppBar, {
   }),
 }));
 
-export default function Navbar({ open, handleDrawerOpen }) {
+type NavbarProps = {
+  open: boolean;
+  handleDrawerOpen: () => void;
+};
+
+export default function Navbar({ open, handleDrawerOpen }: NavbarProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [logoutDialogOpen, setLogoutDialogOpen] = React.useState(false);
   const [userName, setUserName] = React.useState<string | null>(null);
