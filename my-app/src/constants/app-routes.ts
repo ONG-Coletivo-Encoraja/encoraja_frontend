@@ -1,11 +1,12 @@
 export const APP_ROUTES = {
     private: {
-        home_auth: "/home"        
+        // home_auth: "/home"        
     },
     public: {
         login: "/login",
         home: "/",
-        registrer: "/register"
+        registrer: "/register",
+        home_auth: "/home"
 
     }
 }

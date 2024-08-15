@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login } from '../../app/api/auth';
 import { UserLogin } from '../../interfaces/IUserLogin'; 
+import { signIn } from 'next-auth/react';
 
 
 const defaultTheme = createTheme({
@@ -22,31 +23,50 @@ const defaultTheme = createTheme({
 });
 
 export default function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
   const router = useRouter();
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  async function handleSubmit(event: React.SyntheticEvent) {
+    event.preventDefault()
 
-    const data: UserLogin = {
+    const result = await signIn('credentials', {
       email,
       password,
-    };
-    
-    try {
-      const response = await login(data);
-      if (response.token) {
-        localStorage.setItem('token', response.token);
-        router.push('/home');
-      } else {
-        alert('Login failed');
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      alert('Login failed');
+      redirect: false
+    })
+
+    if (result?.error) {
+      console.log(result)
+      return 
     }
-  };
+
+    router.replace('/home')
+  }
+
+
+  // const handleSubmit = async (event: React.FormEvent) => {
+  //   event.preventDefault();
+
+  //   const data: UserLogin = {
+  //     email,
+  //     password,
+  //   };
+    
+  //   try {
+  //     const response = await login(data);
+  //     if (response.token) {
+  //       localStorage.setItem('token', response.token);
+  //       router.push('/home');
+  //     } else {
+  //       alert('Login failed');
+  //     }
+  //   } catch (error) {
+  //     console.error('Login error:', error);
+  //     alert('Login failed');
+  //   }
+  // };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -85,7 +105,7 @@ export default function LoginForm() {
                 id="email"
                 label="Email"
                 name="email"
-                type="email"
+                type="text"
                 autoComplete="email"
                 autoFocus
                 onChange={(e) => setEmail(e.target.value)}
