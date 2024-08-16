@@ -14,7 +14,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import LogoutConfirmation from '@/components/pop-ups/LogoutConfirmation';
-import { logout, getUserData } from '../../app/api/auth'; // Importando a função getUserData
+import { logout, getUserData } from '../../app/api/auth'; 
 import { useRouter } from 'next/navigation';
 
 interface AppBarProps extends MuiAppBarProps {
@@ -151,4 +151,5 @@ export default function Navbar({ open, handleDrawerOpen }: NavbarProps) {
       />
     </Box>
   );
+  
 }

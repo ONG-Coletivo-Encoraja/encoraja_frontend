@@ -13,6 +13,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import Link from '@mui/material/Link';
 
 const drawerWidth = 240;
 
@@ -81,24 +82,34 @@ export default function Sidebar({ open, handleDrawerClose }) {
 
   const menuItems = [
     { text: 'Página inicial', subItems: [] },
-    { text: 'Voluntários', subItems: [
-      { name: 'Aceitar voluntários', onClick: () => alert('Aceitar voluntários clicado') },
-      { name: 'Todos os voluntários', onClick: () => alert('Todos os voluntários clicado') }
-    ]},
-    { text: 'Eventos', subItems: [
-      { name: 'Cadastrar evento', onClick: () => alert('Cadastrar evento clicado') },
-      { name: 'Todos os eventos', onClick: () => alert('Todos os eventos clicado') }
-    ]},
-    { text: 'Inscrições', subItems: [
-      { name: 'Todas as inscrições', onClick: () => alert('Todas as inscrições clicadas') }
-    ]},
-    { text: 'Usuários', subItems: [
-      { name: 'Gerenciar usuários', onClick: () => alert('Gerenciar usuários clicado') }
-    ]},
-    { text: 'Relatórios', subItems: [
-      { name: 'Relatórios de voluntários', onClick: () => alert('Relatórios de voluntários clicado') },
-      { name: 'Relatórios gerais', onClick: () => alert('Relatórios gerais clicado') }
-    ]}
+    {
+      text: 'Voluntários', subItems: [
+        { name: 'Aceitar voluntários', path: '/voluntarios/aceitar-voluntarios' },
+        { name: 'Todos os voluntários', path: '/voluntarios/todos-os-voluntarios' }
+      ]
+    },
+    {
+      text: 'Eventos', subItems: [
+        { name: 'Cadastrar evento', path: '/home-admin/eventos' },
+        { name: 'Todos os eventos', path: '/eventos/todos-os-eventos' }
+      ]
+    },
+    {
+      text: 'Inscrições', subItems: [
+        { name: 'Todas as inscrições', path: '/inscricoes/todas-as-inscricoes' }
+      ]
+    },
+    {
+      text: 'Usuários', subItems: [
+        { name: 'Gerenciar usuários', path: '/usuarios/gerenciar-usuarios' }
+      ]
+    },
+    {
+      text: 'Relatórios', subItems: [
+        { name: 'Relatórios de voluntários', path: '/relatorios/relatorios-de-voluntarios' },
+        { name: 'Relatórios gerais', path: '/relatorios/relatorios-gerais' }
+      ]
+    }
   ];
 
   return (
@@ -141,9 +152,11 @@ export default function Sidebar({ open, handleDrawerClose }) {
                 <List component="div" disablePadding>
                   {item.subItems.map((subItem, subIndex) => (
                     <ListItem key={subIndex} sx={{ pl: 4 }}>
-                      <ListItemButton onClick={subItem.onClick}>
-                        <ListItemText primary={subItem.name} />
-                      </ListItemButton>
+                      <Link href={subItem.path} passHref>
+                        <ListItemButton component="a">
+                          <ListItemText primary={subItem.name} />
+                        </ListItemButton>
+                      </Link>
                     </ListItem>
                   ))}
                 </List>

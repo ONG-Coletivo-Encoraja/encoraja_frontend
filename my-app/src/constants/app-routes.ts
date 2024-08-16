@@ -1,6 +1,6 @@
 export const APP_ROUTES = {
     private: {
-        home_auth: "/home"     
+        home_admin: "/home-admin"     
     },
     public: {
         login: "/login",

@@ -39,7 +39,7 @@ export default function LoginForm() {
       console.log(response);
       if (response.token) {
       /*localStorage.setItem('token', response.token);*/
-        router.push('/home');
+        router.push('/home-admin');
       } else {
         alert('Login failed');
       }
