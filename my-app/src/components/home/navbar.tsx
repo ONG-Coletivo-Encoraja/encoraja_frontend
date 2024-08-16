@@ -101,7 +101,7 @@ export default function Navbar({ open, handleDrawerOpen }) {
               },
             }}
           >
-            {status === 'loading' ? 'Carregando...' : session?.user?.name || 'Usuário'}
+            {status === 'loading' ? 'Carregando...' : session?.user?.user || 'Usuário'}
             <ArrowDropDownIcon sx={{ ml: 1 }} />
           </Button>
           <Menu
