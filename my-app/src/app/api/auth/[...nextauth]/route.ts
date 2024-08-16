@@ -1,5 +1,6 @@
-import NextAuth, { NextAuthOptions } from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
+import NextAuth, { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import axios from 'axios';
 
 const nextAuthOptions: NextAuthOptions = {
     providers: [
@@ -11,29 +12,32 @@ const nextAuthOptions: NextAuthOptions = {
             },
 
             async authorize(credentials, req) {
-                const response = await fetch('http://localhost:8000/api/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json' 
-                    },
-                    body: JSON.stringify({
+                try {
+                    const response = await axios.post('http://localhost:8000/api/auth/login', {
                         email: credentials?.email,
                         password: credentials?.password
-                    })
-                })
-
-                const user = await response.json()
-
-                if (user && response.ok) {
-                    return user
+                    }, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+            
+                    const user = response.data;
+            
+                    if (user && response.status === 200) {
+                        return user;
+                    }
+                    return null;
+                } catch (error) {
+                    console.error('Authorization error:', error);
+                    return null;
                 }
-                return null
             },
 
         })
     ],
     pages: {
-        signIn: '/'
+        signIn: '/login'
     },
     callbacks: {
 		async jwt({ token, user }) {

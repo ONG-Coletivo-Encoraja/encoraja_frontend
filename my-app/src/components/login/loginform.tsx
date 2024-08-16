@@ -13,8 +13,6 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { login } from '../../app/api/auth';
-import { UserLogin } from '../../interfaces/IUserLogin'; 
 import { signIn } from 'next-auth/react';
 
 
@@ -44,29 +42,6 @@ export default function LoginForm() {
 
     router.replace('/home')
   }
-
-
-  // const handleSubmit = async (event: React.FormEvent) => {
-  //   event.preventDefault();
-
-  //   const data: UserLogin = {
-  //     email,
-  //     password,
-  //   };
-    
-  //   try {
-  //     const response = await login(data);
-  //     if (response.token) {
-  //       localStorage.setItem('token', response.token);
-  //       router.push('/home');
-  //     } else {
-  //       alert('Login failed');
-  //     }
-  //   } catch (error) {
-  //     console.error('Login error:', error);
-  //     alert('Login failed');
-  //   }
-  // };
 
   return (
     <ThemeProvider theme={defaultTheme}>

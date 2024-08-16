@@ -1,5 +1,3 @@
-// navbar.tsx
-
 'use client';
 
 import * as React from 'react';
@@ -13,7 +11,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import LogoutConfirmation from '@/components/pop-ups/LogoutConfirmation';
-import { signOut, useSession } from 'next-auth/react'; // Importa o useSession e signOut do next-auth
+import { signOut, useSession } from 'next-auth/react'; 
 import { useRouter } from 'next/navigation';
 
 interface AppBarProps extends MuiAppBarProps {
@@ -101,7 +99,7 @@ export default function Navbar({ open, handleDrawerOpen }) {
               },
             }}
           >
-            {status === 'loading' ? 'Carregando...' : session?.user?.user || 'Usuário'}
+            {status === 'loading' ? 'Carregando...' : session?.user?.name || 'Usuário'}
             <ArrowDropDownIcon sx={{ ml: 1 }} />
           </Button>
           <Menu
