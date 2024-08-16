@@ -8,6 +8,8 @@ declare module 'next-auth' {
             name: string,
             permission: string
         },
-        token: string
+        token: string,
+        expires_in: string,
+        token_type: string
     }
 }
