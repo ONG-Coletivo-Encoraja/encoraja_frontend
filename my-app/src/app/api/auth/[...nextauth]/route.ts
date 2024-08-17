@@ -13,6 +13,7 @@ const nextAuthOptions: NextAuthOptions = {
 
             async authorize(credentials, req) {
                 try {
+                    console.log("response")
                     const response = await axios.post('http://localhost:8000/api/auth/login', {
                         email: credentials?.email,
                         password: credentials?.password
@@ -21,6 +22,8 @@ const nextAuthOptions: NextAuthOptions = {
                             'Content-Type': 'application/json'
                         }
                     });
+
+                    console.log(response)
             
                     const user = response.data;
             
