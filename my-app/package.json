@@ -18,6 +18,7 @@
     "axios": "^1.7.3",
     "cookie": "^0.6.0",
     "next": "14.2.5",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
     "styled-components": "^6.1.12"
@@ -26,6 +27,9 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10",
     "typescript": "^5"
   }
 }

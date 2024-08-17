@@ -1,5 +1,3 @@
-// navbar.tsx
-
 'use client';
 
 import * as React from 'react';
@@ -14,7 +12,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import LogoutConfirmation from '@/components/pop-ups/LogoutConfirmation';
-import { logout, getUserData } from '../../app/api/auth'; 
+import { signOut, useSession } from 'next-auth/react'; 
 import { useRouter } from 'next/navigation';
 
 interface AppBarProps extends MuiAppBarProps {
@@ -49,23 +47,9 @@ type NavbarProps = {
 export default function Navbar({ open, handleDrawerOpen }: NavbarProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [logoutDialogOpen, setLogoutDialogOpen] = React.useState(false);
-  const [userName, setUserName] = React.useState<string | null>(null);
   
+  const { data: session, status } = useSession(); // Obtém a sessão atual
   const router = useRouter();
-
-  React.useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userData = await getUserData();
-        console.log('User Data:', userData); // Verifique a resposta da API
-        setUserName(userData.name); // Ajuste conforme a estrutura de dados
-      } catch (error) {
-        console.error('Failed to fetch user data', error);
-      }
-    };
-    
-    fetchUserData();
-  }, []);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -77,13 +61,12 @@ export default function Navbar({ open, handleDrawerOpen }: NavbarProps) {
 
   const handleLogout = async () => {
     try {
-      await logout(); // Chama a função de logout
+      await signOut(); // Chama a função de logout do NextAuth
       router.push('/login'); // Redireciona para a página de login
     } catch (error) {
-      console.error('Logout failed', error);
-    } 
-  }; 
-
+      console.error('Logout falhou', error);
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -122,7 +105,7 @@ export default function Navbar({ open, handleDrawerOpen }: NavbarProps) {
               },
             }}
           >
-            {userName || 'Carregando...'}
+            {status === 'loading' ? 'Carregando...' : session?.user?.name || 'Usuário'}
             <ArrowDropDownIcon sx={{ ml: 1 }} />
           </Button>
           <Menu
@@ -138,9 +121,9 @@ export default function Navbar({ open, handleDrawerOpen }: NavbarProps) {
               horizontal: 'right',
             }}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={() => setLogoutDialogOpen(true)}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>Perfil</MenuItem>
+            <MenuItem onClick={handleClose}>Minha conta</MenuItem>
+            <MenuItem onClick={() => setLogoutDialogOpen(true)}>Sair</MenuItem>
           </Menu>
         </Toolbar>
       </MyAppBar>
