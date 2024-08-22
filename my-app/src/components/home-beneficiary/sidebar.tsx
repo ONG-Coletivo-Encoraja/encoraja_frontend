@@ -13,7 +13,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import Link from '@mui/material/Link';
+import Link from 'next/link';
 
 const drawerWidth = 240;
 
@@ -63,7 +63,12 @@ const MyDrawer = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' }
   }),
 );
 
-export default function Sidebar({ open, handleDrawerClose }) {
+interface SidebarProps {
+  open: boolean;
+  handleDrawerClose: () => void;
+};
+
+export default function Sidebar({ open, handleDrawerClose }: SidebarProps) {
   const theme = useTheme();
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
 

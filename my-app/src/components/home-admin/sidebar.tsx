@@ -13,7 +13,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import Link from '@mui/material/Link';
+import Link from 'next/link';
 
 const drawerWidth = 240;
 
@@ -32,7 +32,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 20px)`, // Ajuste a largura do Drawer quando fechado
+  width: `calc(${theme.spacing(7)} + 20px)`,
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 20px)`,
   },
@@ -41,7 +41,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center', // Centraliza horizontalmente
+  justifyContent: 'center',
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
 }));
@@ -63,7 +63,12 @@ const MyDrawer = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' }
   }),
 );
 
-export default function Sidebar({ open, handleDrawerClose }) {
+interface SidebarProps {
+  open: boolean;
+  handleDrawerClose: () => void;
+}
+
+export default function Sidebar({ open, handleDrawerClose }: SidebarProps) {
   const theme = useTheme();
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
 
@@ -117,7 +122,6 @@ export default function Sidebar({ open, handleDrawerClose }) {
       <CssBaseline />
       <MyDrawer variant="permanent" open={open}>
         <DrawerHeader>
-          {/* Imagem que funciona como botão para fechar o menu */}
           <IconButton onClick={handleDrawerClose}>
             <img src="/img/writted-logo.png" alt="Logo" style={{ height: '50px' }} />
           </IconButton>
