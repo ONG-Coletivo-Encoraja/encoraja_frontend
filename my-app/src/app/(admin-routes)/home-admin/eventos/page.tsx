@@ -2,8 +2,8 @@
 'use client'; // Adicione esta linha para garantir que o código seja executado no lado do cliente
 
 import * as React from 'react';
-import Navbar from '../../../components/home-admin/navbar';
-import Sidebar from '../../../components/home-admin/sidebar';
+import Navbar from '../../../../components/home-admin/navbar';
+import Sidebar from '../../../../components/home-admin/sidebar';
 import EventsForm from '@/components/home-admin/contents/eventsForm';
 
 export default function Home() {
