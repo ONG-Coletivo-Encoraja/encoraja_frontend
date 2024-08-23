@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import Navbar from '../../../components/home-admin/navbar';
-import Sidebar from '../../../components/home-admin/sidebar';
+import Navbar from '../../../components/home-beneficiary/navbar';
+import Sidebar from '../../../components/home-beneficiary/sidebar';
 
 export default function Home() {
   const [open, setOpen] = React.useState(false);
@@ -18,7 +18,11 @@ export default function Home() {
   return (
     <>
       <Navbar open={open} handleDrawerOpen={handleDrawerOpen} />
-      <Sidebar open={open} handleDrawerClose={handleDrawerClose} />
+      <Sidebar
+        open={open}
+        handleDrawerClose={handleDrawerClose}
+        handleDrawerOpen={handleDrawerOpen} 
+      />
     </>
   );
 }
