@@ -1,4 +1,3 @@
-// components/home-admin/contents/eventsForm.tsx
 'use client'; // Adicione esta linha para garantir que o código seja executado no lado do cliente
 
 import Box from '@mui/material/Box';
@@ -11,7 +10,11 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
+
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { registerEvent } from '../../../app/api/auth';
+import { EventData } from '../../../interfaces/IEventData'; 
 
 // Definindo o tema do Material-UI
 const defaultTheme = createTheme({
@@ -30,33 +33,57 @@ const defaultTheme = createTheme({
 // Componente do formulário de eventos
 export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
     // State variables for each form field
-    const [eventName, setEventName] = useState('');
-    const [eventDate, setEventDate] = useState('');
-    const [eventTime, setEventTime] = useState('');
-    const [eventDescription, setEventDescription] = useState('');
-    const [eventType, setEventType] = useState('');
-    const [eventStatus, setEventStatus] = useState('');
-    const [eventMode, setEventMode] = useState('');
-    const [totalSlots, setTotalSlots] = useState('');
-    const [socialSlots, setSocialSlots] = useState('');
-    const [generalSlots, setGeneralSlots] = useState('');
-    const [targetAudience, setTargetAudience] = useState('');
-    const [requiredMaterials, setRequiredMaterials] = useState('');
-    const [interestAreas, setInterestAreas] = useState('');
+    const [name, setName] = useState('');
+    const [date, setDate] = useState('');
+    const [time, setTime] = useState('');
+    const [description, setDescription] = useState('');
+    const [type, setType] = useState('');
+    const [status, setStatus] = useState('');
+    const [modality, setModality] = useState('');
+    const [vacancies, setVacancies] = useState('');
+    const [social_vacancies, setSocialVacancies] = useState('');
+    const [regular_vacancies, setRegularVacancies] = useState('');
+    const [target_audience, setTargetAudience] = useState('');
+    const [material, setMaterial] = useState('');
+    const [interest_area, setInterestArea] = useState('');
     const [price, setPrice] = useState('');
     const [workload, setWorkload] = useState('');
-    const [responsibleVolunteer, setResponsibleVolunteer] = useState('');
+    const [owner, setOwner] = useState('');
 
-    // Event handler for form submission
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const router = useRouter();
+
+    // Marcar a função como async
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        // Add logic to handle form submission
-        console.log({
-            eventName, eventDate, eventTime, eventDescription, eventType,
-            eventStatus, eventMode, totalSlots, socialSlots, generalSlots,
-            targetAudience, requiredMaterials, interestAreas, price, workload,
-            responsibleVolunteer
-        });
+    
+        const data: EventData = {
+            name,
+            description,
+            date,
+            time,
+            modality,
+            status,
+            type,
+            target_audience,
+            vacancies,
+            social_vacancies,
+            regular_vacancies,
+            material,
+            interest_area,
+            price,
+            workload,
+            owner
+        };
+    
+        try {
+            const response = await registerEvent(data);
+            console.log(response);
+            if (response) {
+                alert("Evento cadastrado com sucesso");
+            }
+        } catch (error) {
+            alert('Registration event failed: ' + error);
+        }
     };
 
     return (
@@ -108,13 +135,13 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="eventName"
+                                        id="name"
                                         label="Nome do evento"
-                                        name="eventName"
+                                        name="name"
                                         autoComplete="event-name"
                                         autoFocus
-                                        value={eventName}
-                                        onChange={(e) => setEventName(e.target.value)}
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
                                     />
                                 </Grid>
                                 {/* Segunda linha */}
@@ -123,13 +150,13 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="eventDate"
+                                        id="date"
                                         label="Data do evento"
-                                        name="eventDate"
+                                        name="date"
                                         type="date"
                                         InputLabelProps={{ shrink: true }}
-                                        value={eventDate}
-                                        onChange={(e) => setEventDate(e.target.value)}
+                                        value={date}
+                                        onChange={(e) => setDate(e.target.value)}
                                     />
                                 </Grid>
                                 <Grid item xs={6}>
@@ -137,13 +164,13 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="eventTime"
+                                        id="time"
                                         label="Horário do evento"
-                                        name="eventTime"
+                                        name="time"
                                         type="time"
                                         InputLabelProps={{ shrink: true }}
-                                        value={eventTime}
-                                        onChange={(e) => setEventTime(e.target.value)}
+                                        value={time}
+                                        onChange={(e) => setTime(e.target.value)}
                                     />
                                 </Grid>
                                 {/* Terceira linha */}
@@ -152,13 +179,13 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="eventDescription"
+                                        id="description"
                                         label="Descrição do evento"
-                                        name="eventDescription"
+                                        name="description"
                                         multiline
                                         rows={3}
-                                        value={eventDescription}
-                                        onChange={(e) => setEventDescription(e.target.value)}
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
                                     />
                                 </Grid>
                                 {/* Quarta linha */}
@@ -168,12 +195,12 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="eventType"
+                                            id="type"
                                             label="Tipo de evento"
-                                            name="eventType"
+                                            name="type"
                                             select
-                                            value={eventType}
-                                            onChange={(e) => setEventType(e.target.value)}
+                                            value={type}
+                                            onChange={(e) => setType(e.target.value)}
                                         >
                                             <MenuItem value="Seminário">Seminário</MenuItem>
                                             <MenuItem value="Workshop">Workshop</MenuItem>
@@ -186,12 +213,12 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="eventStatus"
+                                            id="status"
                                             label="Status do evento"
-                                            name="eventStatus"
+                                            name="status"
                                             select
-                                            value={eventStatus}
-                                            onChange={(e) => setEventStatus(e.target.value)}
+                                            value={status}
+                                            onChange={(e) => setStatus(e.target.value)}
                                         >
                                             <MenuItem value="Ativo">Ativo</MenuItem>
                                             <MenuItem value="Inativo">Inativo</MenuItem>
@@ -202,12 +229,12 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="eventMode"
+                                            id="madality"
                                             label="Modalidade do evento"
-                                            name="eventMode"
+                                            name="modality"
                                             select
-                                            value={eventMode}
-                                            onChange={(e) => setEventMode(e.target.value)}
+                                            value={modality}
+                                            onChange={(e) => setModality(e.target.value)}
                                         >
                                             <MenuItem value="Presencial">Presencial</MenuItem>
                                             <MenuItem value="Online">Online</MenuItem>
@@ -222,12 +249,12 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="totalSlots"
+                                            id="vacancies"
                                             label="Total de vagas"
-                                            name="totalSlots"
+                                            name="vacancies"
                                             type="number"
-                                            value={totalSlots}
-                                            onChange={(e) => setTotalSlots(e.target.value)}
+                                            value={vacancies}
+                                            onChange={(e) => setVacancies(e.target.value)}
                                         />
                                     </Grid>
                                     <Grid item xs={4}>
@@ -235,12 +262,12 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="socialSlots"
+                                            id="social_vacancies"
                                             label="Vagas sociais"
-                                            name="socialSlots"
+                                            name="social_vacancies"
                                             type="number"
-                                            value={socialSlots}
-                                            onChange={(e) => setSocialSlots(e.target.value)}
+                                            value={social_vacancies}
+                                            onChange={(e) => setSocialVacancies(e.target.value)}
                                         />
                                     </Grid>
                                     <Grid item xs={4}>
@@ -248,12 +275,12 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="generalSlots"
+                                            id="regular_vacancies"
                                             label="Vagas gerais"
                                             name="generalSlots"
                                             type="number"
-                                            value={generalSlots}
-                                            onChange={(e) => setGeneralSlots(e.target.value)}
+                                            value={regular_vacancies}
+                                            onChange={(e) => setRegularVacancies(e.target.value)}
                                         />
                                     </Grid>
                                 </Grid>
@@ -264,10 +291,10 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="targetAudience"
+                                            id="target_audience"
                                             label="Público alvo"
-                                            name="targetAudience"
-                                            value={targetAudience}
+                                            name="target_audience"
+                                            value={target_audience}
                                             onChange={(e) => setTargetAudience(e.target.value)}
                                         />
                                     </Grid>
@@ -276,11 +303,11 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                             margin="normal"
                                             required
                                             fullWidth
-                                            id="interestAreas"
+                                            id="interest_area"
                                             label="Áreas de interesse"
-                                            name="interestAreas"
-                                            value={interestAreas}
-                                            onChange={(e) => setInterestAreas(e.target.value)}
+                                            name="interest_area"
+                                            value={interest_area}
+                                            onChange={(e) => setInterestArea(e.target.value)}
                                         />
                                     </Grid>
                                 </Grid>
@@ -288,14 +315,13 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                 <Grid item xs={12}>
                                     <TextField
                                         margin="normal"
+                                        required
                                         fullWidth
-                                        id="requiredMaterials"
+                                        id="material"
                                         label="Materiais necessários"
-                                        name="requiredMaterials"
-                                        multiline
-                                        rows={2}
-                                        value={requiredMaterials}
-                                        onChange={(e) => setRequiredMaterials(e.target.value)}
+                                        name="material"
+                                        value={material}
+                                        onChange={(e) => setMaterial(e.target.value)}
                                     />
                                 </Grid>
                                 {/* Oitava linha */}
@@ -333,23 +359,23 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="responsibleVolunteer"
+                                        id="owner"
                                         label="Voluntário responsável"
-                                        name="responsibleVolunteer"
-                                        value={responsibleVolunteer}
-                                        onChange={(e) => setResponsibleVolunteer(e.target.value)}
+                                        name="owner"
+                                        type="number"
+                                        value={owner}
+                                        onChange={(e) => setOwner(e.target.value)}
                                     />
                                 </Grid>
-                                <Grid item xs={12} sx={{ textAlign: 'right' }} >
-                                    <Button
-                                        type="submit"
-                                        variant="contained"
-                                        sx={{ mt: 3, mb: 2 }}
-                                    >
-                                        Criar evento
-                                    </Button>
-                                </Grid>
                             </Grid>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                            >
+                                Cadastrar Evento
+                            </Button>
                         </Box>
                     </Box>
                 </Container>
