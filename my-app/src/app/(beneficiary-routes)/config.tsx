@@ -1,6 +1,6 @@
 import { usePathname } from 'next/navigation';
 
-import { Bell, Briefcase, Home, Settings, User } from 'lucide-react';
+import { Calendar, Home, Users, HandHeart } from 'lucide-react';
 
 export const NavItems = () => {
   const pathname = usePathname();
@@ -12,38 +12,31 @@ export const NavItems = () => {
   return [
     {
       name: 'Home',
-      href: '/',
+      href: '/home',
       icon: <Home size={25} color="#702054" />,
       active: pathname === '/',
       position: 'top',
     },
     {
-      name: 'Perfil',
-      href: '/Perfil',
-      icon: <User size={25} color="#702054" />,
-      active: isNavItemActive(pathname, '/perfil'),
+      name: 'Seja Voluntário',
+      href: '/volunteers',
+      icon: <HandHeart size={25} color="#702054" />,
+      active: isNavItemActive(pathname, '/volunteers'),
       position: 'top',
     },
     {
-      name: 'Notifications',
-      href: '/notifications',
-      icon: <Bell size={20} color="#702054" />,
-      active: isNavItemActive(pathname, '/notifications'),
+      name: 'Minhas inscrições',
+      href: '/inscriptions',
+      icon: <Users size={25} color="#702054" />,
+      active: isNavItemActive(pathname, '/inscriptions'),
       position: 'top',
     },
     {
-      name: 'Events',
+      name: 'Eventos',
       href: '/events',
-      icon: <Briefcase size={20} color="#702054" />,
+      icon: <Calendar size={25} color="#702054" />,
       active: isNavItemActive(pathname, '/events'),
       position: 'top',
-    },
-    {
-      name: 'events',
-      href: '/events',
-      icon: <Settings size={20} color="#702054" />,
-      active: isNavItemActive(pathname, '/events'),
-      position: 'bottom',
     },
   ];
 };

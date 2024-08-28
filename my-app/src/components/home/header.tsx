@@ -13,15 +13,18 @@ import IconButton from '@mui/material/IconButton';
 import LogoutConfirmation from '@/components/pop-ups/LogoutConfirmation';
 import { signOut, useSession } from 'next-auth/react'; 
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const MyAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
   backgroundColor: '#702054',
 }));
 
-type NavbarProps = {};
+type HeaderProps = {
+    className?: string;
+};
 
-export default function Navbar({}: NavbarProps) {
+export default function Header({}: HeaderProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [logoutDialogOpen, setLogoutDialogOpen] = React.useState(false);
 
@@ -93,7 +96,9 @@ export default function Navbar({}: NavbarProps) {
               horizontal: 'right',
             }}
           >
-            <MenuItem onClick={handleClose}>Perfil</MenuItem>
+            <MenuItem onClick={handleClose}>
+            <Link href="/Perfil" style={{ textDecoration: 'none', color: 'inherit' }}>Perfil</Link>
+            </MenuItem>
             <MenuItem onClick={handleClose}>Minha conta</MenuItem>
             <MenuItem onClick={() => setLogoutDialogOpen(true)}>Sair</MenuItem>
           </Menu>

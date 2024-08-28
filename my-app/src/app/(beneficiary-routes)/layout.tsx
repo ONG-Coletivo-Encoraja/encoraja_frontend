@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 
 import Header from "@/components/home/header";
 import Sidebar from "@/components/home/sidebar";
-import ContextProvider from "@/components/home/context-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,19 +24,18 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-          <Header />
-          <div className="flex">
-            <Sidebar />
-            <div className="w-full overflow-x-auto">
-              <div className="sm:h-[calc(99vh-60px)] overflow-auto ">
-                <div className="w-full flex justify-center mx-auto   overflow-auto h-[calc(100vh - 120px)] overflow-y-auto relative">
-                  <div className="w-full md:max-w-6xl">{children}</div>
-                </div>
+        <Header className="fixed top-0 w-full z-10" />
+        <div className="flex pt-[60px]">
+          <Sidebar />
+          <div className="flex-1 overflow-hidden">
+            <div className="flex flex-col h-screen overflow-hidden">
+              <div className="flex-1 overflow-auto">
+                {children}
               </div>
             </div>
           </div>
+        </div>
       </body>
     </html>
   );
 }
-

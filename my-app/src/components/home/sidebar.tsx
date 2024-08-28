@@ -6,7 +6,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { NavItems } from '@/app/(beneficiary-routes)/config';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { ThemeToggle } from '@/components/home/theme-toggle';
 
 export default function SideNav() {
   const navItems = NavItems();
@@ -40,9 +39,8 @@ export default function SideNav() {
       <div
         className={cn(
           isSidebarExpanded ? 'w-[200px]' : 'w-[68px]',
-          'border-r transition-all duration-300 ease-in-out transform hidden sm:flex h-full bg-accent',
+          'border-r transition-all duration-300 ease-in-out transform hidden sm:flex h-full bg-white',
         )}
-        style={{ marginTop: '64px' }} // Ajuste a altura para compensar a altura do AppBar
       >
         <aside className="flex h-full flex-col w-full break-words px-4 overflow-x-hidden columns-1">
           {/* Top */}
@@ -69,7 +67,6 @@ export default function SideNav() {
           </div>
           {/* Bottom */}
           <div className="sticky bottom-0 mt-auto whitespace-nowrap mb-4 transition duration-200 block">
-            <ThemeToggle isDropDown={true} />
             {navItems.map((item, idx) => {
               if (item.position === 'bottom') {
                 return (
