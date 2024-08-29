@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { registerEvent } from '../../../app/api/auth';
+import { registerEvent } from '../../api/auth';
 import { EventData } from '../../../interfaces/IEventData'; 
 
 // Definindo o tema do Material-UI

@@ -19,8 +19,12 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
   if (!session) {
     redirect("/login");
     return null;
-  }
+  } 
 
+  console.log("Sessão:", session);
+
+  if (session.user.permission == "beneficiary") { 
+    
   return (
     <html lang="pt-br">
       <body className={inter.className}>
@@ -38,4 +42,12 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
       </body>
     </html>
   );
+} 
+
+if (session.user.permission == "administrator"){
+  redirect("/home-admin");
+} else {
+  redirect("/home-volunteer");
+}
+
 }
