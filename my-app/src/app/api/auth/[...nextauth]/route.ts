@@ -36,7 +36,7 @@ const nextAuthOptions: NextAuthOptions = {
                     return null;
                 }
             },
-
+            
         })
     ],
     pages: {

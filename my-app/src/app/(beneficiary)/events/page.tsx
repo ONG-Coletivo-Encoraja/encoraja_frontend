@@ -1,4 +1,4 @@
-'use client'; // Adicione esta linha para garantir que o código seja executado no lado do cliente
+'use client';
 
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -16,7 +16,6 @@ import { useRouter } from 'next/navigation';
 import { registerEvent } from '../../api/auth';
 import { EventData } from '../../../interfaces/IEventData'; 
 
-// Definindo o tema do Material-UI
 const defaultTheme = createTheme({
     components: { 
         MuiButton: { 
@@ -30,9 +29,8 @@ const defaultTheme = createTheme({
     }
 });
 
-// Componente do formulário de eventos
 export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
-    // State variables for each form field
+
     const [name, setName] = useState('');
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
@@ -52,7 +50,6 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
 
     const router = useRouter();
 
-    // Marcar a função como async
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
     
