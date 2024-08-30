@@ -1,4 +1,4 @@
-'use client'; // Adicione esta linha para garantir que o código seja executado no lado do cliente
+'use client';
 
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';

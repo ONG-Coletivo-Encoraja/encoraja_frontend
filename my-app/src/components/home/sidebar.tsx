@@ -9,30 +9,38 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function SideNav() {
   const navItems = NavItems();
+  
+  // Estado de carregamento para garantir a consistência entre o servidor e o cliente
+  const [isClient, setIsClient] = useState(false);
+  
+  // Estado da barra lateral
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
 
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = window.localStorage.getItem('sidebarExpanded');
-      if (saved === null) {
-        return true;
-      }
-      return JSON.parse(saved);
-    }
-    return true; // default state if window is not defined
-  });
-
+  // Atualiza o estado quando o componente é montado no cliente
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(
-        'sidebarExpanded',
-        JSON.stringify(isSidebarExpanded),
-      );
+    setIsClient(true);
+    const saved = window.localStorage.getItem('sidebarExpanded');
+    if (saved !== null) {
+      setIsSidebarExpanded(JSON.parse(saved));
     }
-  }, [isSidebarExpanded]);
+  }, []);
+  
+  // Atualiza o localStorage quando isSidebarExpanded muda
+  useEffect(() => {
+    if (isClient) {
+      window.localStorage.setItem('sidebarExpanded', JSON.stringify(isSidebarExpanded));
+    }
+  }, [isSidebarExpanded, isClient]);
 
+  // Função para alternar o estado da barra lateral
   const toggleSidebar = () => {
     setIsSidebarExpanded(!isSidebarExpanded);
   };
+
+  // Não renderiza nada até o cliente estar pronto
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div className="flex h-screen">

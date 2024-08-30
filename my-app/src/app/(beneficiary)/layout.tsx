@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import Header from "@/components/home/header";
 import Sidebar from "@/components/home/sidebar";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 interface LayoutProps {
@@ -28,7 +29,7 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-        <Header className="fixed top-0 w-full z-10" />
+      <Header className="fixed top-0 w-full z-10" />
         <div className="flex pt-[60px]">
           <Sidebar />
           <div className="flex-1 overflow-hidden">
