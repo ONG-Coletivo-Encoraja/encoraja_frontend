@@ -24,14 +24,12 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
 
   console.log("Sessão:", session);
 
-  if (session.user.permission == "beneficiary") { 
+  if (session.user.permission == "administrator") { 
     
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-      <Header className="fixed top-0 w-full z-10" />
         <div className="flex pt-[60px]">
-          <Sidebar />
           <div className="flex-1 overflow-hidden">
             <div className="flex flex-col h-screen overflow-hidden">
               <div className="flex-1 overflow-auto">
@@ -45,8 +43,8 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
   );
 } 
 
-if (session.user.permission == "administrator"){
-  redirect("/home-admin");
+if (session.user.permission == "beneficiary"){
+  redirect("/home");
 } else {
   redirect("/home-volunteer");
 }
