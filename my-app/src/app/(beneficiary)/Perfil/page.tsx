@@ -1,15 +1,12 @@
-// pages/index.tsx
 import BackgroundImage from '@/components/ui/background-image';
+import { Profile } from '@/components/beneficiary/profile/profile';
 
 export default function Perfil() {
   return (
     <div className="h-screen">
-      <BackgroundImage className="h-full w-full">
-        <div className="text-white text-center p-10">
-            <h1>teste</h1>
-        </div>
+      <BackgroundImage className="h-full w-full flex items-center justify-center">
+        <Profile />
       </BackgroundImage>
     </div>
   );
 };
-

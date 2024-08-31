@@ -10,13 +10,10 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 export default function SideNav() {
   const navItems = NavItems();
   
-  // Estado de carregamento para garantir a consistência entre o servidor e o cliente
   const [isClient, setIsClient] = useState(false);
   
-  // Estado da barra lateral
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
 
-  // Atualiza o estado quando o componente é montado no cliente
   useEffect(() => {
     setIsClient(true);
     const saved = window.localStorage.getItem('sidebarExpanded');
@@ -25,19 +22,16 @@ export default function SideNav() {
     }
   }, []);
   
-  // Atualiza o localStorage quando isSidebarExpanded muda
   useEffect(() => {
     if (isClient) {
       window.localStorage.setItem('sidebarExpanded', JSON.stringify(isSidebarExpanded));
     }
   }, [isSidebarExpanded, isClient]);
 
-  // Função para alternar o estado da barra lateral
   const toggleSidebar = () => {
     setIsSidebarExpanded(!isSidebarExpanded);
   };
 
-  // Não renderiza nada até o cliente estar pronto
   if (!isClient) {
     return null;
   }
