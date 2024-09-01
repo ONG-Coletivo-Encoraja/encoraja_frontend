@@ -9,6 +9,7 @@ A Organização não Governamental (ONG) **Coletivo Encoraja** apoia mulheres em
 ## Rodando o projeto frontend
 - ```Installar node```
 - ```composer install```: para instalação do composer (caso esteja instalado dê um update ao invés do install)
+- ```.env```: criar arquivo .env
 - ```npm run dev```: rodar nmp no terminal e deixar rodando
 - ```php artisan serve```: subir o servidor do artisan
    <br>
