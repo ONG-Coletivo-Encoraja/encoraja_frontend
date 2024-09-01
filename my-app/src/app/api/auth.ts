@@ -43,6 +43,7 @@ export async function register(data: UserData) {
   }
 }
 
+
 export async function registerEvent(data: EventData) {
   try {
     const response = await API.post('/admin/event', data, {
