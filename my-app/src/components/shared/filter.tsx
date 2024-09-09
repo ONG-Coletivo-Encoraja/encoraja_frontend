@@ -7,7 +7,7 @@ const FilterComponent = () => {
         <div className="mt-5 flex items-center">
             <div className="w-60">
                 <Select>
-                    <SelectTrigger className="border-[#702054] w-full" style={{ backgroundColor: 'white' }}>
+                    <SelectTrigger className="shadow-md border-none bg-white w-full">
                         <Filter color="#702054" />
                         <SelectValue placeholder="Filtrar" className="truncate" />
                     </SelectTrigger>

@@ -55,37 +55,8 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
     // Marcar a função como async
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+    }
     
-        const data: EventData = {
-            name,
-            description,
-            date,
-            time,
-            modality,
-            status,
-            type,
-            target_audience,
-            vacancies,
-            social_vacancies,
-            regular_vacancies,
-            material,
-            interest_area,
-            price,
-            workload,
-            owner
-        };
-    
-        try {
-            const response = await registerEvent(data);
-            console.log(response);
-            if (response) {
-                alert("Evento cadastrado com sucesso");
-            }
-        } catch (error) {
-            alert('Registration event failed: ' + error);
-        }
-    };
-
     return (
         <ThemeProvider theme={defaultTheme}>
             <Box
@@ -382,4 +353,5 @@ export default function EventsForm({ drawerOpen }: { drawerOpen: boolean }) {
             </Box>
         </ThemeProvider>
     );
+
 }
