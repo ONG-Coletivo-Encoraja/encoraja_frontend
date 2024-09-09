@@ -1,33 +1,29 @@
-import { Select, SelectContent, SelectTrigger, SelectItem } from "../ui/select";
-import { Input } from "../ui/input";
+import { Select, SelectContent, SelectTrigger, SelectItem, SelectValue } from "../ui/select";
 import { Button } from "../ui/button";
+import { Filter } from 'lucide-react';
 
 const FilterComponent = () => {
-  return (
-    <div className="filter-container p-4 bg-gray-100 rounded-lg shadow">
-      <h2 className="text-lg font-semibold mb-4">Filtros</h2>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Categoria</label>
-        <Select>
-            <SelectTrigger></SelectTrigger>
-            <SelectContent>
-            <SelectItem value="teste">Categoria 1</SelectItem>
-          <SelectItem value="teste">Categoria 2</SelectItem>
-          <SelectItem value="teste">Categoria 3</SelectItem>
-
-            </SelectContent>
-
-        </Select>
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Pesquisa</label>
-        <Input placeholder="Digite sua pesquisa..." />
-      </div>
-      <Button className="w-full">
-        Aplicar Filtros
-      </Button>
-    </div>
-  );
+    return (
+        <div className="mt-5 flex items-center">
+            <div className="w-60">
+                <Select>
+                    <SelectTrigger className="border-[#702054] w-full" style={{ backgroundColor: 'white' }}>
+                        <Filter color="#702054" />
+                        <SelectValue placeholder="Filtrar" className="truncate" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="createdforme">Criados por mim</SelectItem>
+                        <SelectItem value="active">Ativos</SelectItem>
+                        <SelectItem value="finished">Finalizados</SelectItem>
+                        <SelectItem value="inactive">Inativos</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+            <Button className="ml-2">
+                Criar
+            </Button>
+        </div>
+    );
 };
 
 export default FilterComponent;
