@@ -5,7 +5,8 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 import Header from "@/components/shared/header";
-import Sidebar from "@/components/administrator/sidebar/sidebar";
+import Sidebar from "@/components/volunteer/sidebar/sidebar";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,25 +24,27 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
 
   console.log("Sessão:", session);
 
-  if (session.user.permission == "administrator") { 
-    return (
-      <html lang="pt-br">
-        <body className={inter.className}>
-          <Header className="fixed top-0 w-full z-10" />
-          <div className="flex">
-            <Sidebar />
+  if (session.user.permission == "volunteer") { 
+    
+  return (
+    <html lang="pt-br">
+      <body className={inter.className}>
+      <Header className="fixed top-0 w-full z-10" />
+        <div className="flex pt-[60px]">
+          <Sidebar />
+          <div className="flex-1 overflow-hidden">
+            {children}
           </div>
-          <div className="flex-1 pt-[70px] ml-60 overflow-hidden">
-              {children}
-          </div>
-        </body>
-      </html>
-    );
-  } 
+        </div>
+      </body>
+    </html>
+  );
+} 
 
-  if (session.user.permission == "beneficiary"){
-    redirect("/home");
-  } else {
-    redirect("/home-voluntario");
-  }
+if (session.user.permission == "administrator"){
+  redirect("/home-admin");
+} else {
+  redirect("/home");
+}
+
 }

@@ -11,31 +11,24 @@ export const NavItems = () => {
 
   return [
     {
-      name: 'Home',
-      href: '/home',
+      name: 'Página Inicial',
+      href: '/home-voluntario',
       icon: <Home size={25} color="#702054" />,
-      active: pathname === '/',
-      position: 'top',
-    },
-    {
-      name: 'Seja Voluntário',
-      href: '/seja-voluntario',
-      icon: <HandHeart size={25} color="#702054" />,
-      active: isNavItemActive(pathname, '/seja-voluntario'),
+      active: pathname === '/home-voluntario',
       position: 'top',
     },
     {
       name: 'Minhas inscrições',
-      href: '/minhas-inscricoes',
+      href: '/inscricoes',
       icon: <Users size={25} color="#702054" />,
-      active: isNavItemActive(pathname, '/minhas-inscricoes'),
+      active: isNavItemActive(pathname, '/inscricoes'),
       position: 'top',
     },
     {
       name: 'Eventos',
-      href: '/todos-os-eventos',
+      href: '/eventos',
       icon: <Calendar size={25} color="#702054" />,
-      active: isNavItemActive(pathname, '/todos-os-eventos'),
+      active: isNavItemActive(pathname, '/eventos'),
       position: 'top',
     },
   ];

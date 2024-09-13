@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <>
-      <a>teste</a>
+      <a>Home Beneficiário</a>
     </>
   );
 }

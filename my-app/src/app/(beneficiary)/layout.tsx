@@ -44,7 +44,7 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
 if (session.user.permission == "administrator"){
   redirect("/home-admin");
 } else {
-  redirect("/home-volunteer");
+  redirect("/home-voluntario");
 }
 
 }
