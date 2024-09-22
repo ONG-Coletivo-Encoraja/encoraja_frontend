@@ -1,12 +1,12 @@
-'use client';
+import BackgroundImage from '@/components/ui/background-image';
+import { BeAVolunteer } from '@/components/beneficiary/beavolunteer/volunteerform';
 
-import * as React from 'react';
-
-export default function Home() {
-
+export default function Perfil() {
   return (
-    <>
-      <a>Seja Voluntário</a>
-    </>
+    <div className="h-screen">
+      <BackgroundImage className="h-full w-full flex items-center justify-center">
+        <BeAVolunteer />
+      </BackgroundImage>
+    </div>
   );
-}
+};
