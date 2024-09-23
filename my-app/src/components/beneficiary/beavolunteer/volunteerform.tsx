@@ -68,7 +68,7 @@ export function BeAVolunteer() {
       ], value: profileData?.gender || "" },
     { id: "permission", label: "Disponibilidade", readOnly: true, value: permission || "" },
     { id: "permission", label: "Expectativa", readOnly: true, value: permission || "" },
-    { id: "permission", label: "Experiência", readOnly: true, value: permission || "" },
+
   ];
 
   if (isLoading) {
