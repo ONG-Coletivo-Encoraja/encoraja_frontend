@@ -3,10 +3,11 @@ import { BeAVolunteer } from '@/components/beneficiary/beavolunteer/volunteerfor
 
 export default function Perfil() {
   return (
-    <div className="h-screen">
-      <BackgroundImage className="h-full w-full flex items-center justify-center">
+    <div className='h-screen'>
+    <BackgroundImage className="h-full w-full flex items-center justify-center">
         <BeAVolunteer />
-      </BackgroundImage>
+    </BackgroundImage>
     </div>
+
   );
 };

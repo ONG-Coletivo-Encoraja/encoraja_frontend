@@ -4,7 +4,7 @@ export interface UserData {
     password: string;
     cpf: string;
     date_birthday: string;
-    race: string;
+    ethnicity: string;
     gender: string;
     image_term: boolean;
     data_term: boolean;

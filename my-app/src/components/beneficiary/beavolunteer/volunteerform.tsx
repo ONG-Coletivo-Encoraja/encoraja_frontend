@@ -44,10 +44,10 @@ export function BeAVolunteer() {
     { id: "phone", label: "Telefone", type: "text", placeholder: "Seu telefone", value: profileData?.phone || "" },
     { id: "race", label: "Raça", type: "select", options: [
       { value: "white", label: "Branca" },
-      { value: "indigenous", label: "Indígena" },
-      { value: "brown", label: "Parda" },
-      { value: "Preta", label: "Preta" }
-    ], value: profileData?.race || "" },
+      { value: "asian", label: "Amarela" },
+      { value: "mixed", label: "Parda" },
+      { value: "black", label: "Preta" }
+    ], value: profileData?.ethnicity || "" },
     { id: "gender", label: "Gênero", type: "select", options: [
       { value: "male", label: "Masculino" },
       { value: "female", label: "Feminino" },
@@ -61,10 +61,21 @@ export function BeAVolunteer() {
     { id: "neighborhood", label: "Bairro", type: "text", placeholder: "Seu bairro", value: profileData?.neighbourhood || "" },
     { id: "city", label: "Cidade", type: "text", placeholder: "Sua cidade", value: profileData?.city || "" },
     { id: "permission", label: "Tipo de usuário", readOnly: true, value: permission || "" },
+<<<<<<< HEAD
     { id: "how_know", label: "Como soube da vaga?", type: "text", },
     { id: "permission", label: "Disponibilidade", type: "text",},
     { id: "availability", label: "Expectativa", type: "text",},
     { id: "course_experience", label: "Experiência", type: "text",},
+=======
+    { id: "gender", label: "Como soube da vaga?", type: "select", options: [
+        { value: "male", label: "Masculino" },
+        { value: "female", label: "Feminino" },
+        { value: "outher", label: "Prefiro não dizer" }
+      ], value: profileData?.gender || "" },
+    { id: "permission", label: "Disponibilidade", readOnly: true, value: permission || "" },
+    { id: "permission", label: "Expectativa", readOnly: true, value: permission || "" },
+
+>>>>>>> origin/SCRUM-201-Evaluation-form-screen
   ];
 
   if (isLoading) {

@@ -7,8 +7,8 @@ import SearchComponent from "@/components/shared/search";
 
 export function EventsList() {
   return (
-    <div className="m-10">
-      <div className="pt-60 flex justify-end">
+    <div>
+      <div className=" pt-60 flex justify-end">
         <SearchComponent />
       </div>
       <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[34px]">Eventos cadastrados</h1>
