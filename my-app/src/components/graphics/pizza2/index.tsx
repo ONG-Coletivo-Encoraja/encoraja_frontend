@@ -23,7 +23,7 @@ const PieChart: React.FC<{ title: string }> = ({ title }) => {
     const fetchData = async () => {
       if (session?.token) {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/api/graphics/ethnicity', {
+          const response = await axios.get('http://127.0.0.1:8000/api/graphics/age', {
             headers: {
               'Authorization': `Bearer ${session.token}`,
               'Content-Type': 'application/json',

@@ -1,8 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 Chart.register(...registerables);
 
@@ -12,7 +16,41 @@ interface EventData {
   total_presents: number;
 }
 
-const BarChart: React.FC<{ data: EventData[]; title: string }> = ({ data = [], title }) => {
+const BarChart: React.FC<{ title: string }> = ({ title }) => {
+  const { data: session } = useSession();
+  const [data, setData] = useState<EventData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (session?.token) {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/api/graphics/present', {
+            headers: {
+              'Authorization': `Bearer ${session.token}`,
+              'Content-Type': 'application/json',
+            },
+          });
+          setData(response.data);
+        } catch (error) {
+          console.error('Erro ao buscar os dados:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+  }, [session]);
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+        <CircularProgress color="secondary" />
+      </Box>
+    );
+  }
+
   if (!Array.isArray(data) || data.length === 0) {
     return <p>Nenhum dado disponível para exibir o gráfico</p>;
   }
@@ -22,7 +60,7 @@ const BarChart: React.FC<{ data: EventData[]; title: string }> = ({ data = [], t
   const totalPresents = data.map(event => event.total_presents);
 
   const truncateLabel = (label: string) => {
-    return label.length > 10 ? label.substring(0) + '...' : label;
+    return label.length > 10 ? label.substring(0, 10) + '...' : label;
   };
 
   const chartData = {
@@ -34,7 +72,7 @@ const BarChart: React.FC<{ data: EventData[]; title: string }> = ({ data = [], t
         backgroundColor: '#FF6D01',
       },
       {
-        label: 'Total Presente',
+        label: 'Total Presentes',
         data: totalPresents,
         backgroundColor: '#741B47',
       },
@@ -56,7 +94,7 @@ const BarChart: React.FC<{ data: EventData[]; title: string }> = ({ data = [], t
         display: true,
         text: title,
         font: {
-          size: 20, 
+          size: 20,
           weight: 'bold' as const,
         },
       },
@@ -69,7 +107,7 @@ const BarChart: React.FC<{ data: EventData[]; title: string }> = ({ data = [], t
           maxRotation: 0,
           minRotation: 0,
           font: {
-            size: 15, 
+            size: 15,
           },
         },
       },
@@ -87,7 +125,7 @@ const BarChart: React.FC<{ data: EventData[]; title: string }> = ({ data = [], t
   };
 
   return (
-    <div style={{ width: '100%', height: '100%', minWidth:'500px'}}>
+    <div style={{ width: '100%', height: '100%', minWidth: '500px' }}>
       <Bar data={chartData} options={options} />
     </div>
   );
