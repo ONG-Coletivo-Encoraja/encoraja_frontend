@@ -44,10 +44,10 @@ export function BeAVolunteer() {
     { id: "phone", label: "Telefone", type: "text", placeholder: "Seu telefone", value: profileData?.phone || "" },
     { id: "race", label: "Raça", type: "select", options: [
       { value: "white", label: "Branca" },
-      { value: "indigenous", label: "Indígena" },
-      { value: "brown", label: "Parda" },
-      { value: "Preta", label: "Preta" }
-    ], value: profileData?.race || "" },
+      { value: "asian", label: "Amarela" },
+      { value: "mixed", label: "Parda" },
+      { value: "black", label: "Preta" }
+    ], value: profileData?.ethnicity || "" },
     { id: "gender", label: "Gênero", type: "select", options: [
       { value: "male", label: "Masculino" },
       { value: "female", label: "Feminino" },

@@ -11,7 +11,7 @@ const BackgroundImage: React.FC<BackgroundImageProps> = ({ children, className }
   return (
     <div
       className={`relative bg-no-repeat ${className}`}
-      style={{ backgroundImage: 'url("/img/background-girls.png")' }}
+      style={{ backgroundImage: 'url("/img/backgroundgirls.png")' }}
     >
       <div>
         {children}

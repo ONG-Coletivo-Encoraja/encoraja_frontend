@@ -43,7 +43,7 @@ export default function RegistrationForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [cpf, setCpf] = useState('');
   const [date_birthday, setDateBirthday] = useState('');
-  const [race, setRace] = useState('');
+  const [ethnicity, setEthnicity] = useState('');
   const [gender, setGender] = useState('');
   const [image_term, setImageTerm] = useState(false);
   const [data_term, setDataTerm] = useState(false);
@@ -70,7 +70,7 @@ export default function RegistrationForm() {
       password,
       cpf,
       date_birthday,
-      race,
+      ethnicity,
       gender,
       image_term,
       data_term,
@@ -177,18 +177,19 @@ export default function RegistrationForm() {
                 {/* Terceira linha */}
                 <Grid item xs={12} sm={6}>
                   <FormControl fullWidth margin="normal" required>
-                    <InputLabel id="race-label">Raça</InputLabel>
+                    <InputLabel id="ethnicity-label">Raça</InputLabel>
                     <Select
-                      labelId="race-label"
-                      id="race"
-                      name="race"
-                      value={race}
-                      onChange={(e) => setRace(e.target.value)}
+                      labelId="ethnicity-label"
+                      id="ethnicity"
+                      name="ethnicity"
+                      value={ethnicity}
+                      onChange={(e) => setEthnicity(e.target.value)}
                     >
-                      <MenuItem value="Branca">Branca</MenuItem>
-                      <MenuItem value="Preta">Preta</MenuItem>
-                      <MenuItem value="Parda">Parda</MenuItem>
-                      <MenuItem value="Amarela">Amarela</MenuItem>
+                      <MenuItem value="white">Branca</MenuItem>
+                      <MenuItem value="black">Preta</MenuItem>
+                      <MenuItem value="mixed">Parda</MenuItem>
+                      <MenuItem value="asian">Amarela</MenuItem>
+                      <MenuItem value="other">Outra</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
