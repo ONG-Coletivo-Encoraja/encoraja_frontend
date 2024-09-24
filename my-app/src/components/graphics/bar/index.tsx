@@ -36,10 +36,19 @@ const BarChart: React.FC<{ data: EventData[]; title: string }> = ({ data = [], t
     plugins: {
       legend: {
         position: 'top' as const,
+        labels: {
+          font: {
+            size: 15,
+          },
+        },
       },
       title: {
         display: true,
         text: title,
+        font: {
+          size: 20,
+          weight: 'bold' as const,
+        },
       },
     },
     scales: {
@@ -47,10 +56,13 @@ const BarChart: React.FC<{ data: EventData[]; title: string }> = ({ data = [], t
         ticks: {
           maxRotation: 0,
           minRotation: 0,
+          font: {
+            size: 15,
+          },
           callback: function (value: string | number, index: number) {
             const label = labels[index];
             if (label.length > maxLabelLength) {
-              return label.substring(0, maxLabelLength) + '...'; 
+              return label.substring(0) + '...'; 
             }
             return label;
           },
@@ -62,6 +74,9 @@ const BarChart: React.FC<{ data: EventData[]; title: string }> = ({ data = [], t
         max: 5,
         ticks: {
           stepSize: 1,
+          font: {
+            size: 15,
+          },
           callback: function (value: any) {
             return value;
           },
@@ -72,7 +87,7 @@ const BarChart: React.FC<{ data: EventData[]; title: string }> = ({ data = [], t
   };
 
   return (
-    <div style={{ width: '600px', height: '200px' }}>
+    <div style={{ width: '100%', height: '100%', minWidth: '500px' }}>
       <Bar data={chartData} options={options} />
     </div>
   );

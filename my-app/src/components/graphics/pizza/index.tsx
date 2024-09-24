@@ -14,7 +14,7 @@ const PieChart: React.FC<{ data: Data; title: string }> = ({ data, title }) => {
     datasets: [
       {
         data: Object.values(data),
-        backgroundColor: ['#702054', '#FF6D01', '#68D4F6', '#2F713A', '#B9B6B6'],
+        backgroundColor: ['#702054', '#FF6D01', '#68D4F6', '#2F713A', '#B9B6B6', '#674EA7'],
       },
     ],
   };
@@ -22,20 +22,30 @@ const PieChart: React.FC<{ data: Data; title: string }> = ({ data, title }) => {
   const options: ChartOptions<'pie'> = {
     plugins: {
       legend: {
-        position: 'right' as const,
+        position: 'top' as const,
+        labels: {
+          padding: 5,
+          font: {
+            size: 15,
+          },
+        },
       },
       title: {
         display: true,
         text: title,
+        font: {
+          size: 20,
+          weight: 'bold' as const,
+        },
       },
     },
   };
 
   return (
-    <div style={{ width: '600px', height: '200px' }}>
-      <Pie data={chartData} options={options} />
-    </div>
-  )
+      <div style={{ width: '100%', height: '100%', marginLeft:'20px', display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
+        <Pie data={chartData} options={options} />
+      </div>
+  );
 };
 
 export default PieChart;

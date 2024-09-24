@@ -28,10 +28,20 @@ const LineChart: React.FC<{ data: Record<string, number>; title: string }> = ({ 
     plugins: {
       legend: {
         position: 'top' as const,
+        labels: {
+          font: {
+            size: 15,
+            weight: 'normal' as const,
+          },
+        },
       },
       title: {
         display: true,
         text: title,
+        font: {
+          size: 20,
+          weight: 'bold' as const,
+        },
       },
     },
     scales: {
@@ -46,12 +56,19 @@ const LineChart: React.FC<{ data: Record<string, number>; title: string }> = ({ 
           },
         },
       },
+      x: {
+        ticks: {
+          font: {
+            size: 15,
+          },
+        },
+      },
     },
     maintainAspectRatio: false,
   };
 
   return (
-    <div style={{ width: '600px', height: '300px' }}>
+    <div style={{ width: '100%', height: '100%', minWidth:'500px' }}>
       <Line data={chartData} options={options} />
     </div>
   );
