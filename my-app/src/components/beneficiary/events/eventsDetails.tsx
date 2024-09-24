@@ -18,10 +18,10 @@ export default function EventsDetails() {
             <CardDescription className="text-[#F69053]">Próximos eventos</CardDescription>
             <CardTitle>Curso de costura</CardTitle>
             <ul className="flex space-x-4">
-              <li><Badge variant={'secondary'}>14H</Badge></li>
-              <li><Badge>14H</Badge></li>
-              <li><Badge>14H</Badge></li>
-              <li><Badge variant={'tertiary'}>14H</Badge></li>
+              <li><Badge variant={'secondary'}>14:00</Badge></li>
+              <li><Badge>Presencial</Badge></li>
+              <li><Badge>Oficina</Badge></li>
+              <li><Badge variant={'tertiary'}>Finalizado</Badge></li>
               <li><Badge className="h-[50px] rounded-[25%]" variant={'quaternary'}>14/07</Badge></li>
             </ul>
             <Label className="text-[#727272]">Responsável: Juliana Baiçar</Label>
