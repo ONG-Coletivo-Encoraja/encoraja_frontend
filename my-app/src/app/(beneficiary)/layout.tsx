@@ -32,7 +32,7 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
       <Header className="fixed top-0 w-full z-10" />
         <div className="flex pt-[60px]">
           <Sidebar />
-          <div className="flex-1 overflow-hidden">
+          <div className="flex-1 overflow-hidden bg-[#EDEDED]">
             {children}
           </div>
         </div>

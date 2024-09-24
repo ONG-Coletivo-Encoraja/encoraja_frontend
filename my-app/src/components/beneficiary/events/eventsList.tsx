@@ -7,7 +7,7 @@ import SearchComponent from "@/components/shared/search";
 
 export function EventsList() {
   return (
-    <div>
+    <div className="m-10">
       <div className="pt-60 flex justify-end">
         <SearchComponent />
       </div>
