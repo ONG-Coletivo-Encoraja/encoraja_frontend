@@ -5,13 +5,23 @@ import PieChart from '@/components/graphics/pizza';
 import BarChart from '@/components/graphics/bar';
 import Bar2Chart from '@/components/graphics/bar2';
 import LineChart from '@/components/graphics/lines';
+import PieChart2 from '@/components/graphics/pizza2';
+import ExportButton from '@/components/pop-ups/ExportButton';
+
 
 export default function Home() {
   return (
     <>
       <div className='w-full bg-[#EDEDED] m-0'>
-        <div className='w-full flex justify-center items-center text-2xl font-bold text-[#666666]'>
-          <h1>Relatórios Gerais</h1>
+        <div>
+          <div className='w-full flex items-center text-2xl font-bold text-[#666666] justify-between p-3'>
+            <div>
+              <h1>Relatórios Gerais</h1>
+            </div>
+            <div>
+              <ExportButton/>
+            </div>
+          </div>
         </div>
         <div className='flex flex-col gap-10'>
           <div className='w-full p-5 bg-white flex justify-around items-center h-96 mb-4'>
@@ -32,7 +42,7 @@ export default function Home() {
           </div>
           <div className='w-full  p-5 bg-white flex justify-center items-center h-96'>
             <div style={{ width: '80%', height: '100%' }}>
-              <PieChart title="Distribuição Faixa Etária" />
+              <PieChart2 title="Distribuição Faixa Etária" />
             </div>
           </div>
         </div>
