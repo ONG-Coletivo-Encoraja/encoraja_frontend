@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import StarRating from '@/components/ui/rating';
 import { Button } from '@/components/ui/button';
+import DialogReview from './dialogReview';
 
 export default function EventsDetails() {
   return (
@@ -52,7 +53,7 @@ export default function EventsDetails() {
           </CardContent>
           <Separator />
           <CardFooter className='m-6 justify-center'>
-            <Button>Deixe aqui a sua avaliação</Button>
+            <DialogReview />
           </CardFooter>
         </div>
       </Card>
