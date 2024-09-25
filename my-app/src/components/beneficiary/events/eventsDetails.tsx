@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation'; 
 import BackgroundImage from '@/components/ui/background-image';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -10,9 +11,11 @@ import { Button } from '@/components/ui/button';
 import DialogReview from './dialogReview';
 
 export default function EventsDetails() {
+  const router = useRouter(); 
+
   return (
     <div>
-      <Button className="mb-5">Voltar</Button>
+      <Button onClick={() => router.back()} className="mb-5">Voltar</Button>
       <Card className="w-[1200px] h-[600px] flex">
         <div className='m-5'>
           <CardHeader>
