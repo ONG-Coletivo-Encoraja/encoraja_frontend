@@ -1,6 +1,7 @@
 import { DefaultCard } from '@/components/beneficiary/home/defaultcard';
 import { NextEventsCard } from '@/components/beneficiary/home/nexteventscard';
 import { Separator } from '@/components/ui/separator';
+import Link from 'next/link';
 import * as React from 'react';
 
 
@@ -13,9 +14,14 @@ export default function Home() {
       </div>
       <Separator />
       <div className="flex justify-center mt-5">
-        <DefaultCard />
+        <Link href='/minhas-inscricoes'>
+          <DefaultCard />
+        </Link>
         <div className='ml-8'></div>
-        <NextEventsCard />
+        <Link href='/todos-os-eventos'>
+          <NextEventsCard />
+        </Link>
+        
       </div>
     </div>
   );
