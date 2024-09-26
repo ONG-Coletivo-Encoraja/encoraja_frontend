@@ -1,12 +1,15 @@
 'use client';
 
+import ReportAdmin from '@/components/administrator/report/table';
 import * as React from 'react';
 
-export default function Home() {
+export default function EventReport() {
 
   return (
     <>
-      <a>RELATÓRIOS DE EVENTOS</a>
+      <div className='flex flex-col items-center w-full bg-[#EDEDED] h-screen'>
+        <ReportAdmin/>
+      </div>
     </>
   );
 }

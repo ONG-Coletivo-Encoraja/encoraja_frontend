@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart, registerables, ChartOptions } from 'chart.js';
-import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import API from "@/services/api";
 
 Chart.register(...registerables);
 
@@ -23,7 +23,7 @@ const PieChart: React.FC<{ title: string }> = ({ title }) => {
     const fetchData = async () => {
       if (session?.token) {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/api/graphics/age', {
+          const response = await API.get('/graphics/age', {
             headers: {
               'Authorization': `Bearer ${session.token}`,
               'Content-Type': 'application/json',
