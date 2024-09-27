@@ -7,7 +7,7 @@ export default function EventReport() {
 
   return (
     <>
-      <div className='flex flex-col items-center w-full bg-[#EDEDED] h-screen'>
+      <div className='flex flex-col items-center w-full bg-[#EDEDED] h-[88vh]'>
         <ReportAdmin/>
       </div>
     </>

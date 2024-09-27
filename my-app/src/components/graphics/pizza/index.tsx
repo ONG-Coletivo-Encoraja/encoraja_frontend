@@ -23,12 +23,13 @@ const PieChart: React.FC<{ title: string }> = ({ title }) => {
     const fetchData = async () => {
       if (session?.token) {
         try {
-          const response = await API.get('/api/graphics/ethnicity', {
+          const response = await API.get('/graphics/ethnicity', {
             headers: {
               'Authorization': `Bearer ${session.token}`,
               'Content-Type': 'application/json',
             },
           });
+
           setData(response.data);
         } catch (error) {
           console.error('Erro ao buscar os dados:', error);

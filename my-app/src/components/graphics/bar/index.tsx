@@ -30,7 +30,11 @@ const BarChart: React.FC<{ title: string }> = ({ title }) => {
               'Content-Type': 'application/json',
             },
           });
+          console.log("bom dia")
+          console.log(response.data)
           setData(response.data);
+          console.log("bom dia")
+          console.log(response.data)
         } catch (error) {
           console.error('Erro ao buscar os dados:', error);
         } finally {
