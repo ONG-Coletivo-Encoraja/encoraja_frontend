@@ -4,7 +4,7 @@ import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import Header from "@/components/shared/header";
+import Header from "@/components/beneficiary/header/header";
 import Sidebar from "@/components/beneficiary/sidebar/sidebar";
 
 

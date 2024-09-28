@@ -60,14 +60,10 @@ export function BeAVolunteer() {
     { id: "number", label: "Número", type: "text", placeholder: "Seu número", value: profileData?.number || "" },
     { id: "neighborhood", label: "Bairro", type: "text", placeholder: "Seu bairro", value: profileData?.neighbourhood || "" },
     { id: "city", label: "Cidade", type: "text", placeholder: "Sua cidade", value: profileData?.city || "" },
-    { id: "permission", label: "Tipo de usuário", readOnly: true, value: permission || "" },
-    { id: "gender", label: "Como soube da vaga?", type: "select", options: [
-        { value: "male", label: "Masculino" },
-        { value: "female", label: "Feminino" },
-        { value: "outher", label: "Prefiro não dizer" }
-      ], value: profileData?.gender || "" },
-    { id: "permission", label: "Disponibilidade", readOnly: true, value: permission || "" },
-    { id: "permission", label: "Expectativa", readOnly: true, value: permission || "" },
+    { id: "how_know", label: "Como soube da vaga?", type: "text", },
+    { id: "availability", label: "Disponibilidade", type: "text", },
+    { id: "expectations", label: "Expectativa", type: "text", },
+    { id: "course_experience", label: "Experiência", type: "text", },
 
   ];
 

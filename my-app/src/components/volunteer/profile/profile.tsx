@@ -60,8 +60,12 @@ export function Profile() {
     { id: "number", label: "Número", type: "text", placeholder: "Seu número", value: profileData?.number || "" },
     { id: "neighborhood", label: "Bairro", type: "text", placeholder: "Seu bairro", value: profileData?.neighbourhood || "" },
     { id: "city", label: "Cidade", type: "text", placeholder: "Sua cidade", value: profileData?.city || "" },
+    { id: "availability", label: "Disponibilidade", type: "text", },
+    { id: "course_experience", label: "Experiência", type: "text", },
+    { id: "expectations", label: "Expectativas", type: "text", },
+    { id: "how_know", label: "Como soube?", type: "text", },
     { id: "permission", label: "Tipo de usuário", readOnly: true, value: permission || "" },
-    
+
   ];
 
   if (isLoading) {
