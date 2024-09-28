@@ -16,17 +16,17 @@ export function EventsList() {
       <div>
         <FilterComponent/>
       </div>
-      <div className="grid grid-cols-3 gap-4 mt-6">
-      <Link href="/detalhes-do-evento">
+      <div className="grid grid-cols-2 gap-4 mt-6">
+      <Link href="/event-details">
         <EventCard />
       </Link>
-      <Link href="/detalhes-do-evento">
+      <Link href="/event-details">
         <EventCard />
       </Link>
-      <Link href="/detalhes-do-evento">
+      <Link href="/event-details">
         <EventCard />
       </Link>
-      <Link href="/detalhes-do-evento">
+      <Link href="/event-details">
         <EventCard />
       </Link>
       </div>
