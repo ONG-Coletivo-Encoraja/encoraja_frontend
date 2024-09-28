@@ -15,13 +15,13 @@ export default function Home() {
       </div>
       <Separator />
       <div className="grid grid-cols-2 gap-1 justify-center mt-5">
-        <Link href='/minhas-inscricoes'>
+        <Link href='/accept-volunteers'>
           <DefaultCard />
         </Link>
-        <Link href='/todos-os-eventos'>
+        <Link href='/all-events'>
           <NextEventsCard />
         </Link>
-        <Link href='/minhas-inscricoes'>
+        <Link href='/all-inscriptions'>
           <DefaultCard />
         </Link>
       </div>
