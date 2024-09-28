@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center">
       <div className='m-5'>
         <img src='/img/girlshome.png' />
       </div>

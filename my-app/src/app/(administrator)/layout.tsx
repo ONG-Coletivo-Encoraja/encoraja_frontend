@@ -4,7 +4,7 @@ import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import Header from "@/components/shared/header";
+import Header from "@/components/administrator/header/header";
 import Sidebar from "@/components/administrator/sidebar/sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
