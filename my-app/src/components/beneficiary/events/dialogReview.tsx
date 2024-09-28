@@ -25,7 +25,7 @@ export default function DialogReview() {
       <DialogTrigger asChild>
         <Button id="open-review-dialog">Deixe aqui a sua avaliação</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-l">
+      <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Deixe sua Avaliação</DialogTitle>
           <DialogDescription>
