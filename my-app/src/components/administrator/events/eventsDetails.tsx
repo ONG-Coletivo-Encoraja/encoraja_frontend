@@ -9,6 +9,7 @@ import StarRating from '@/components/ui/rating';
 import { Button } from '@/components/ui/button';
 import ReviewUser from './reviewUser';
 import DialogReview from './dialogReview';
+import DialogInscriptions from './dialogInscriptions';
 
 export default function EventsDetails() {
   const router = useRouter(); 
@@ -39,7 +40,7 @@ export default function EventsDetails() {
               <Label>Materiais necessários: Tesoura</Label>
               <Label>Valor do curso: R$ 10,00</Label>
             </div>
-            <Button className="mt-5" variant={'terciary'}>Inscritos</Button>
+            <DialogInscriptions />
             <div className='flex justify-center mt-[70px]'>
               <Button className="mt-5">Visualizar relatório</Button>
             </div>
