@@ -18,7 +18,7 @@ const EventDetailModal: React.FC<EventDetailModalProps> = ({ isOpen, onClose, se
     return (
         <div>
             <Dialog open={isOpen} onOpenChange={onClose}>
-                <DialogContent className="bg-white p-6 rounded-lg shadow-lg">
+                <DialogContent className="bg-white p-6 rounded-lg shadow-lg sm:max-w-[900px]">
                     <DialogHeader className="flex gap-3 flex-col">
                         <DialogTitle className="text-lg font-bold">Relatório</DialogTitle>
                         {selectedEvent && (
@@ -35,6 +35,9 @@ const EventDetailModal: React.FC<EventDetailModalProps> = ({ isOpen, onClose, se
                                             <div>
                                                 <strong>Tipo:</strong> {selectedEvent.relates_event.event.type}
                                             </div>
+                                            <div>
+                                                <strong>Público alvo:</strong> {selectedEvent.relates_event.event.target_audience}
+                                            </div>
                                         </div>
 
                                         <div className="flex flex-wrap gap-4">
@@ -47,18 +50,16 @@ const EventDetailModal: React.FC<EventDetailModalProps> = ({ isOpen, onClose, se
                                             <div>
                                                 <strong>Horário:</strong> {selectedEvent.relates_event.event.time}
                                             </div>
+                                            <div>
+                                                <strong>Participantes:</strong> {selectedEvent.qtt_person}
+                                            </div>
                                         </div>
 
                                         <div className="flex flex-wrap gap-4">
                                             <div>
-                                                <strong>Participantes:</strong> {selectedEvent.qtt_person}
-                                            </div>
-                                            <div>
                                                 <strong>Responsável:</strong> {selectedEvent.relates_event.user.name}
                                             </div>
-                                            <div>
-                                                <strong>Público alvo:</strong> {selectedEvent.relates_event.event.target_audience}
-                                            </div>
+                                            
                                         </div>
 
                                         <div>
