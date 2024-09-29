@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 
 import { SIDENAV_ITEMS } from '@/app/(administrator)/config';
 import { SideNavItem } from '@/app/(administrator)/types';
-import { Icon } from '@iconify/react';
 import { ChevronDown } from 'lucide-react';
 
 const SideNav = () => {
