@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import ReviewUser from './reviewUser';
 import DialogReview from './dialogReview';
 import DialogInscriptions from './dialogInscriptions';
+import Link from 'next/link';
 
 export default function EventsDetails() {
   const router = useRouter(); 
@@ -42,7 +43,9 @@ export default function EventsDetails() {
             </div>
             <DialogInscriptions />
             <div className='flex justify-center mt-[70px]'>
-              <Button className="mt-5">Relatório</Button>
+              <Link href="/relatorio-do-evento">
+                <Button className="mt-5">Relatório</Button>
+              </Link>
             </div>
             
           </CardContent>
