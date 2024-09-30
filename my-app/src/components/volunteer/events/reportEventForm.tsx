@@ -59,10 +59,10 @@ export default function ReportEvent() {
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="col-span-3 md:col-span-1">
+                <FormItem className="col-span-3">
                   <FormLabel>Nome do evento</FormLabel>
                   <FormControl>
-                    <Input placeholder="Curso de costura" className="w-[300px]" {...field} />
+                    <Input placeholder="Curso de costura" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -74,7 +74,7 @@ export default function ReportEvent() {
               control={form.control}
               name="date"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="col-span-2">
                   <FormLabel>Data do evento</FormLabel>
                   <FormControl>
                     <Input type="date" className="flex justify-end" {...field} />
@@ -89,7 +89,7 @@ export default function ReportEvent() {
               name="time"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Horário do evento</FormLabel>
+                  <FormLabel className="col-span-2">Horário do evento</FormLabel>
                   <FormControl>
                     <Input type="time" className="flex justify-end" {...field} />
                   </FormControl>
@@ -162,7 +162,7 @@ export default function ReportEvent() {
               control={form.control}
               name="owner"
               render={({ field }) => (
-                <FormItem className="col-span-3 md:col-span-1">
+                <FormItem className="col-span-2">
                   <FormLabel>Voluntário responsável</FormLabel>
                   <FormControl>
                     <Input placeholder="Nome do responsável" {...field} />
