@@ -42,7 +42,7 @@ export function RequestVolunteerDetailsCard() {
         </SelectTrigger>
         <SelectContent>
             <SelectGroup>
-            <SelectItem value="Pendente">Pendete</SelectItem>
+            <SelectItem value="Pendente">Pendente</SelectItem>
             <SelectItem value="Aprovado">Aprovado</SelectItem>
             <SelectItem value="Rejeitado">Rejeitado</SelectItem>
             </SelectGroup>
