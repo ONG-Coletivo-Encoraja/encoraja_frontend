@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { RequestVolunteerList } from "@/components/administrator/users/requestVolunteerList";
+import { RequestVolunteerDetailsCard } from "@/components/administrator/users/requestVolunteerDetails";
 import BackgroundImage from '@/components/ui/background-image';
 
 export default function RequestVolunteer() {
@@ -10,7 +10,7 @@ export default function RequestVolunteer() {
     <div className="h-screen">
       <BackgroundImage className="h-full w-full flex items-center justify-center">
         
-        <RequestVolunteerList />
+       <RequestVolunteerDetailsCard />
       </BackgroundImage>
     </div>
   );

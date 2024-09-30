@@ -4,7 +4,7 @@ import * as React from 'react';
 import { UsersList } from "@/components/administrator/users/usersList";
 import BackgroundImage from '@/components/ui/background-image';
 
-export default function Events() {
+export default function Users() {
 
   return (
     <div className="h-screen">
