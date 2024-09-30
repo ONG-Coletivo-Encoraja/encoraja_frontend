@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import API from "@/services/api";
 
 Chart.register(...registerables);
 
@@ -19,7 +20,7 @@ const LineChart: React.FC<{ title: string }> = ({ title }) => {
     const fetchData = async () => {
       if (session?.token) {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/api/graphics/participation', {
+          const response = await API.get('/graphics/participation', {
             headers: {
               'Authorization': `Bearer ${session.token}`,
               'Content-Type': 'application/json',

@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import API from "@/services/api";
 
 Chart.register(...registerables);
 
@@ -24,13 +24,17 @@ const BarChart: React.FC<{ title: string }> = ({ title }) => {
     const fetchData = async () => {
       if (session?.token) {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/api/graphics/rating', {
+          const response = await API.get('/graphics/rating', {
             headers: {
               'Authorization': `Bearer ${session.token}`,
               'Content-Type': 'application/json',
             },
           });
+          console.log("bom dia")
+          console.log(response.data)
           setData(response.data);
+          console.log("bom dia")
+          console.log(response.data)
         } catch (error) {
           console.error('Erro ao buscar os dados:', error);
         } finally {

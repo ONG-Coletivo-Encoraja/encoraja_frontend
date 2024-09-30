@@ -48,7 +48,7 @@ export default function Navbar({ open, handleDrawerOpen }: NavbarProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [logoutDialogOpen, setLogoutDialogOpen] = React.useState(false);
   
-  const { data: session, status } = useSession(); // Obtém a sessão atual
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -61,8 +61,8 @@ export default function Navbar({ open, handleDrawerOpen }: NavbarProps) {
 
   const handleLogout = async () => {
     try {
-      await signOut(); // Chama a função de logout do NextAuth
-      router.push('/login'); // Redireciona para a página de login
+      await signOut(); 
+      router.push('/login'); 
     } catch (error) {
       console.error('Logout falhou', error);
     }
