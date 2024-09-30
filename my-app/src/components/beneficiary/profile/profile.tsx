@@ -47,7 +47,7 @@ export function Profile() {
       { value: "indigenous", label: "Indígena" },
       { value: "brown", label: "Parda" },
       { value: "Preta", label: "Preta" }
-    ], value: profileData?.race || "" },
+    ], value: profileData?.ethnicity || "" },
     { id: "gender", label: "Gênero", type: "select", options: [
       { value: "male", label: "Masculino" },
       { value: "female", label: "Feminino" },

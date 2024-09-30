@@ -51,7 +51,7 @@ export default function LoginForm() {
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: '100vh',
-          backgroundImage: 'url("/img/background-girls.png")', 
+          backgroundImage: 'url("/img/backgroundgirls.png")', 
           backgroundSize: 'cover'
         }}
       >
