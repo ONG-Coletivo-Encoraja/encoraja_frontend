@@ -1,12 +1,13 @@
-'use client';
+// 'use client';
 
+import Events from '@/components/shared/eventForm';
 import * as React from 'react';
 
-export default function Events() {
-
+export default function EventFormPage() {
   return (
-    <>
-        <h1>Cadastrar evento</h1>
-    </>
+    <div>
+      <Events />
+    </div>
   );
 }
+
