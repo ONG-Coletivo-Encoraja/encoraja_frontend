@@ -19,7 +19,7 @@ const FilterComponent = () => {
                     </SelectContent>
                 </Select>
             </div>
-            <Button c>
+            <Button className="ml-2">
                 Criar
             </Button>
         </div>
