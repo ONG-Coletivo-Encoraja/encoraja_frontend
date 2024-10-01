@@ -2,7 +2,7 @@ import { Select, SelectContent, SelectTrigger, SelectItem, SelectValue } from ".
 import { Button } from "../ui/button";
 import { Filter } from 'lucide-react';
 
-const FilterComponent = () => {
+const FilterInscriptions = () => {
     return (
         <div className="mt-5 flex items-center">
             <div className="w-60">
@@ -12,18 +12,15 @@ const FilterComponent = () => {
                         <SelectValue placeholder="Filtrar" className="truncate" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="createdforme">Criados por mim</SelectItem>
+                        {/* PRECISA DECIDIR O QUE SERA ADICIONADO NESSE FILTRO */}
                         <SelectItem value="active">Ativos</SelectItem>
                         <SelectItem value="finished">Finalizados</SelectItem>
                         <SelectItem value="inactive">Inativos</SelectItem>
                     </SelectContent>
                 </Select>
             </div>
-            <Button c>
-                Criar
-            </Button>
         </div>
     );
 };
 
-export default FilterComponent;
+export default FilterInscriptions;
