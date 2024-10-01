@@ -1,13 +1,11 @@
-'use client';
-
-import { EventForm } from '@/components/shared/eventForm';
 import * as React from 'react';
+import EventForm from "@/components/volunteer/events/eventForm";
 
-export default function Events() {
+export default function FormScreen() {
 
   return (
     <>
-        <EventForm/>
+      < EventForm /> 
     </>
   );
 }

@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from "react";
 import { CalendarDays } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -32,7 +30,6 @@ export default function Events(): React.JSX.Element {
 
         <CardContent>
           <form className="flex flex-wrap gap-4">
-            {/* Campos existentes */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Nome</Label>
               <Input

@@ -1,12 +1,11 @@
-'use client';
-
 import * as React from 'react';
+import EventForm from "@/components/administrator/events/eventForm";
 
-export default function Events() {
+export default function FormScreen() {
 
   return (
     <>
-        <h1>Cadastrar evento</h1>
+      < EventForm /> 
     </>
   );
 }
