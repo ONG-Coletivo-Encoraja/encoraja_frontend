@@ -60,11 +60,29 @@ export function BeAVolunteer() {
     { id: "number", label: "Número", type: "text", placeholder: "Seu número", value: profileData?.number || "" },
     { id: "neighborhood", label: "Bairro", type: "text", placeholder: "Seu bairro", value: profileData?.neighbourhood || "" },
     { id: "city", label: "Cidade", type: "text", placeholder: "Sua cidade", value: profileData?.city || "" },
+<<<<<<< HEAD
     { id: "how_know", label: "Como soube da vaga?", type: "text", },
     { id: "availability", label: "Disponibilidade", type: "text", },
     { id: "expectations", label: "Expectativa", type: "text", },
     { id: "course_experience", label: "Experiência", type: "text", },
+=======
+    { id: "permission", label: "Tipo de usuário", readOnly: true, value: permission || "" },
+<<<<<<< HEAD
+    { id: "how_know", label: "Como soube da vaga?", type: "text", },
+    { id: "permission", label: "Disponibilidade", type: "text",},
+    { id: "availability", label: "Expectativa", type: "text",},
+    { id: "course_experience", label: "Experiência", type: "text",},
+=======
+    { id: "gender", label: "Como soube da vaga?", type: "select", options: [
+        { value: "male", label: "Masculino" },
+        { value: "female", label: "Feminino" },
+        { value: "outher", label: "Prefiro não dizer" }
+      ], value: profileData?.gender || "" },
+    { id: "permission", label: "Disponibilidade", readOnly: true, value: permission || "" },
+    { id: "permission", label: "Expectativa", readOnly: true, value: permission || "" },
+>>>>>>> SCRUM-200-Event-form-screen
 
+>>>>>>> origin/SCRUM-201-Evaluation-form-screen
   ];
 
   if (isLoading) {
