@@ -1,4 +1,3 @@
-
 import React from 'react';
 import EventsDatails from '@/components/beneficiary/events/eventsDetails';
 import BackgroundImage from '@/components/ui/background-image';
@@ -12,7 +11,5 @@ export default function Events() {
             <EventsDatails />
         </BackgroundImage>
     </div>
-        
-
   );
 };
