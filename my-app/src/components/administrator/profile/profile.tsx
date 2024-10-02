@@ -31,10 +31,7 @@ export function Profile() {
   }, []);
 
   const handleProfileSubmit = async (formData: UserData) => {
-
-
       console.log("teste");
-
   };
 
 
@@ -44,14 +41,15 @@ export function Profile() {
     { id: "phone", label: "Telefone", type: "text", placeholder: "Seu telefone", value: profileData?.phone || "" },
     { id: "race", label: "Raça", type: "select", options: [
       { value: "white", label: "Branca" },
-      { value: "indigenous", label: "Indígena" },
-      { value: "brown", label: "Parda" },
-      { value: "Preta", label: "Preta" }
+      { value: "asian", label: "Asiática" },
+      { value: "mixed", label: "Parda" },
+      { value: "black", label: "Preta" },
+      { value: "other", label: "Outro" }
     ], value: profileData?.ethnicity || "" },
     { id: "gender", label: "Gênero", type: "select", options: [
       { value: "male", label: "Masculino" },
       { value: "female", label: "Feminino" },
-      { value: "outher", label: "Prefiro não dizer" }
+      { value: "prefer not say", label: "Prefiro não dizer" }
     ], value: profileData?.gender || "" },
     { id: "email", label: "Email", type: "text", placeholder: "Seu email", value: profileData?.email || "" },
     { id: "cpf", label: "CPF", type: "text", placeholder: "Seu CPF", value: profileData?.cpf || "" },

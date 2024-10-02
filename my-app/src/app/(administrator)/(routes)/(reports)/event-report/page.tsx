@@ -1,5 +1,3 @@
-'use client';
-
 import ReportAdmin from '@/components/administrator/report/table';
 import * as React from 'react';
 

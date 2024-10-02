@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import PieChart from '@/components/graphics/pizza';
 import BarChart from '@/components/graphics/bar';

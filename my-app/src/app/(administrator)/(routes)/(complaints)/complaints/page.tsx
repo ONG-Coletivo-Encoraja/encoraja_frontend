@@ -1,5 +1,3 @@
-'use client';
-
 import AccordionComplaince from '@/components/administrator/complaince';
 import * as React from 'react';
 
