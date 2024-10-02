@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { EventsList } from "@/components/volunteer/events/eventsList";
 import BackgroundImage from '@/components/ui/background-image';

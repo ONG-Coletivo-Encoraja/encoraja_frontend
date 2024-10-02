@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { Profile } from '@/components/volunteer/profile/profile';
 import BackgroundImage from '@/components/ui/background-image';

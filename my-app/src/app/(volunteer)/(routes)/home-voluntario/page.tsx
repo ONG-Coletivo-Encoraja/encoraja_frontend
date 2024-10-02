@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import Link from 'next/link';
 import { DefaultCard } from '@/components/volunteer/home/defaultcard';
@@ -10,7 +8,7 @@ export default function Home() {
 
   return (
     <>
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center bg-[#ededed]">
       <div className='m-5'>
         <img src='/img/girlshome.png' />
       </div>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import EventsDatails from '@/components/volunteer/events/eventsDetails';
 import BackgroundImage from '@/components/ui/background-image';
