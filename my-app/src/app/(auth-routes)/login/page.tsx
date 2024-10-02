@@ -1,6 +1,3 @@
-'use client';
-
-
 import LoginForm from "../../../components/login/loginform"
 
 
