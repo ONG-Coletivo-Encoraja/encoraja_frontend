@@ -1,7 +1,7 @@
 import AccordionComplaince from '@/components/administrator/complaince';
 import * as React from 'react';
 
-export default function Home() {
+export default function ComplaincePage() {
 
   return (
     <>

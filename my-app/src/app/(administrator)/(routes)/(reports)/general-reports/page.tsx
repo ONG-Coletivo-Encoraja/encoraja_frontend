@@ -7,7 +7,7 @@ import PieChart2 from '@/components/graphics/pizza2';
 import ExportButton from '@/components/pop-ups/ExportButton';
 
 
-export default function Home() {
+export default function GraphicsPage() {
   return (
     <>
       <div className='w-full bg-[#EDEDED] m-0'>

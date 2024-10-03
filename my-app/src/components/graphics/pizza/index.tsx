@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart, registerables, ChartOptions } from 'chart.js';
 import { useSession } from 'next-auth/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import API from "@/services/api";
+import { fetchDataPieChart } from '@/app/api/graphics/graph';
 
 Chart.register(...registerables);
 
@@ -14,32 +14,26 @@ interface Data {
   [key: string]: number;
 }
 
-const PieChart: React.FC<{ title: string }> = ({ title }) => {
+const PieChart: FC<{ title: string }> = ({ title }) => {
   const { data: session } = useSession();
   const [data, setData] = useState<Data>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getData = async () => {
       if (session?.token) {
         try {
-          const response = await API.get('/graphics/ethnicity', {
-            headers: {
-              'Authorization': `Bearer ${session.token}`,
-              'Content-Type': 'application/json',
-            },
-          });
-
-          setData(response.data);
+          const result = await fetchDataPieChart(session.token);
+          setData(result);
         } catch (error) {
-          console.error('Erro ao buscar os dados:', error);
+          console.log(error)
         } finally {
           setLoading(false);
         }
       }
     };
 
-    fetchData();
+    getData();
   }, [session]);
 
   const chartData = {
