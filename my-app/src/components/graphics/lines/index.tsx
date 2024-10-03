@@ -1,42 +1,36 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import API from "@/services/api";
+import { fetchParticipationData } from '@/app/api/graphics/graph';
 
 Chart.register(...registerables);
 
-const LineChart: React.FC<{ title: string }> = ({ title }) => {
+const LineChart: FC<{ title: string }> = ({ title }) => {
   const { data: session } = useSession();
   const [data, setData] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getData = async () => {
       if (session?.token) {
         try {
-          const response = await API.get('/graphics/participation', {
-            headers: {
-              'Authorization': `Bearer ${session.token}`,
-              'Content-Type': 'application/json',
-            },
-          });
-          setData(response.data);
-          console.log(response)
+          const result = await fetchParticipationData(session.token);
+          setData(result);
+          console.log(result);
         } catch (error) {
-          console.error('Erro ao buscar os dados:', error);
+          console.log(error);
         } finally {
           setLoading(false);
         }
       }
     };
 
-    fetchData();
+    getData();
   }, [session]);
 
   const labels = Object.keys(data);

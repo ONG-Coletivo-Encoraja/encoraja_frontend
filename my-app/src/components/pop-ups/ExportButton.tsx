@@ -1,3 +1,5 @@
+'use client';
+
 import {
     Dialog,
     DialogContent,
@@ -8,32 +10,11 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import { FileDown } from "lucide-react";
-import API from "@/services/api";
 import { useSession } from "next-auth/react";
+import { handleDownload } from '@/app/api/graphics/graph';
 
 const ExportButton = () => {
     const { data: session } = useSession();
-
-    const handleDownload = async (endpoint: string, filename: string) => {
-        try {
-            const response = await API.get(endpoint, {
-                responseType: 'blob',
-                headers: {
-                    Authorization: `Bearer ${session?.token}`,
-                },
-            });
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-        } catch (error) {
-            console.error('Erro ao baixar o arquivo:', error);
-        }
-    };
 
     return (
         <Dialog>
@@ -42,16 +23,16 @@ const ExportButton = () => {
                 <DialogHeader className="flex gap-3 flex-col">
                     <DialogTitle>Relatórios disponíveis para exportação em CSV</DialogTitle>
                     <DialogDescription className="flex flex-col gap-3">
-                        <Button variant="csv" onClick={() => handleDownload('/report/events', 'relatorio_evento.csv')}>
+                        <Button variant="csv" onClick={() => handleDownload('/report/events', 'relatorio_evento.csv', session?.token)}>
                             RELATÓRIO DE EVENTO E AVALIAÇÃO <FileDown />
                         </Button>
-                        <Button variant="csv" onClick={() => handleDownload('/report/inscriptions', 'relatorio_inscricao.csv')}>
+                        <Button variant="csv" onClick={() => handleDownload('/report/inscriptions', 'relatorio_inscricao.csv', session?.token)}>
                             RELATÓRIO DE INSCRIÇÃO E AVALIAÇÃO <FileDown />
                         </Button>
-                        <Button variant="csv" onClick={() => handleDownload('/report/users', 'relatorio_usuarios.csv')}>
+                        <Button variant="csv" onClick={() => handleDownload('/report/users', 'relatorio_usuarios.csv', session?.token)}>
                             RELATÓRIO DE USUÁRIOS <FileDown />
                         </Button>
-                        <Button variant="csv" onClick={() => handleDownload('/report/compliance', 'relatorio_denuncias.csv')}>
+                        <Button variant="csv" onClick={() => handleDownload('/report/compliance', 'relatorio_denuncias.csv', session?.token)}>
                             RELATÓRIO DE DENÚNCIAS <FileDown />
                         </Button>
                     </DialogDescription>

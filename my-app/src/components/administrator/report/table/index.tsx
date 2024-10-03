@@ -1,19 +1,14 @@
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+'use client';
+
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import { useSession } from 'next-auth/react';
-import API from "@/services/api";
+import { fetchReportData } from '@/app/api/graphics/graph';
 import PaginationComponent from "@/components/shared/paginator";
 import CircularProgress from '@mui/material/CircularProgress';
 import { Eye } from "lucide-react";
 import EventDetailModal from "@/components/pop-ups/ReportAdmin"; 
-import { IRelatesEvent, IReportAdmin } from "@/interfaces/IReportAdmin";
+import { IReportAdmin } from "@/interfaces/IReportAdmin";
 
 const ReportAdmin = () => {
     const { data: session } = useSession();
@@ -29,16 +24,11 @@ const ReportAdmin = () => {
             if (session?.token) {
                 setLoading(true);
                 try {
-                    const response = await API.get(`/admin/report?page=${currentPage}`, {
-                        headers: {
-                            'Authorization': `Bearer ${session.token}`,
-                            'Content-Type': 'application/json',
-                        },
-                    });
-                    setData(response.data.data);
-                    setTotalPages(response.data.last_page);
+                    const result = await fetchReportData(session.token, currentPage);
+                    setData(result.data);
+                    setTotalPages(result.last_page);
                 } catch (error) {
-                    console.error('Erro ao buscar os dados:', error);
+                    console.log(error);
                 } finally {
                     setLoading(false);
                 }

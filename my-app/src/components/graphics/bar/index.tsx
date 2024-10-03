@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { useSession } from 'next-auth/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import API from "@/services/api";
+import { fetchRatingData } from '@/app/api/graphics/graph';
 
 Chart.register(...registerables);
 
@@ -15,35 +15,26 @@ interface EventData {
   average_rating: number | string;
 }
 
-const BarChart: React.FC<{ title: string }> = ({ title }) => {
+const BarChart: FC<{ title: string }> = ({ title }) => {
   const { data: session } = useSession();
   const [data, setData] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getData = async () => {
       if (session?.token) {
         try {
-          const response = await API.get('/graphics/rating', {
-            headers: {
-              'Authorization': `Bearer ${session.token}`,
-              'Content-Type': 'application/json',
-            },
-          });
-          console.log("bom dia")
-          console.log(response.data)
-          setData(response.data);
-          console.log("bom dia")
-          console.log(response.data)
+          const result = await fetchRatingData(session.token);
+          setData(result);
         } catch (error) {
-          console.error('Erro ao buscar os dados:', error);
+          console.log(error);
         } finally {
           setLoading(false);
         }
       }
     };
 
-    fetchData();
+    getData();
   }, [session]);
 
   if (loading) {
