@@ -31,7 +31,7 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
           <div className="flex">
             <Sidebar />
           </div>
-          <div className="flex-1 pt-[70px] ml-60 overflow-hidden">
+          <div className="flex-1 pt-[70px] ml-60 overflow-hidden bg-[#ededed]">
               {children}
           </div>
         </body>
