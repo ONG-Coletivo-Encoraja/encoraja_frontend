@@ -19,27 +19,25 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
   if (!session) {
     redirect("/login");
     return null;
-  } 
+  }
 
   console.log("Sessão:", session);
 
-  if (session.user.permission == "administrator") { 
+  if (session.user.permission == "administrator") {
     return (
-      <html lang="pt-br">
-        <body className={inter.className}>
-          <Header className="fixed top-0 w-full z-10" />
-          <div className="flex">
-            <Sidebar />
-          </div>
-          <div className="flex-1 pt-[70px] ml-60 overflow-hidden bg-[#ededed]">
-              {children}
-          </div>
-        </body>
-      </html>
+      <>
+        <Header className="fixed top-0 w-full z-10" />
+        <div className="flex">
+          <Sidebar />
+        </div>
+        <div className="flex-1 pt-[70px] ml-60 overflow-hidden bg-[#ededed]">
+          {children}
+        </div>
+      </>
     );
-  } 
+  }
 
-  if (session.user.permission == "beneficiary"){
+  if (session.user.permission == "beneficiary") {
     redirect("/home");
   } else {
     redirect("/home-voluntario");
