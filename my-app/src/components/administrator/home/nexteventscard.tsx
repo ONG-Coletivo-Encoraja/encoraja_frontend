@@ -12,8 +12,6 @@ import {
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 
-
-
 export function NextEventsCard() {
   return (
     <Card className="w-[500px]">

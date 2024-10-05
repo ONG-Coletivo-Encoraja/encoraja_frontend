@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { DefaultCard } from '@/components/administrator/home/defaultcard';
 import { NextEventsCard } from '@/components/administrator/home/nexteventscard';

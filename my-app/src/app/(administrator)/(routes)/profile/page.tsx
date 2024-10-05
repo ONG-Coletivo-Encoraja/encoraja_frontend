@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React from 'react';
 import { Profile } from '@/components/administrator/profile/profile';
-import BackgroundImage from '@/components/ui/background-image';
 
 export default function ProfilePage() {
 
