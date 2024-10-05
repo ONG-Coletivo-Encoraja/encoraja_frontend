@@ -4,9 +4,13 @@ import { Profile } from '@/components/beneficiary/profile/profile';
 export default function Perfil() {
   return (
     <div className="h-screen">
-      <BackgroundImage className="h-full w-full flex items-center justify-center">
+      <div className="h-full w-full flex items-center justify-center" style={{
+      backgroundImage: "url('/img/backgroundgirls.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}>
         <Profile />
-      </BackgroundImage>
+      </div>
     </div>
   );
 };

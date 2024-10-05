@@ -39,13 +39,19 @@ export function Profile() {
     { id: "name", label: "Nome completo", type: "text", placeholder: "Seu nome", value: profileData?.name || "" },
     { id: "date_birthday", label: "Data de nascimento", type: "date", value: profileData?.date_birthday || "" },
     { id: "phone", label: "Telefone", type: "text", placeholder: "Seu telefone", value: profileData?.phone || "" },
-    { id: "race", label: "Raça", type: "select", options: [
-      { value: "white", label: "Branca" },
-      { value: "asian", label: "Asiática" },
-      { value: "mixed", label: "Parda" },
-      { value: "black", label: "Preta" },
-      { value: "other", label: "Outro" }
-    ], value: profileData?.ethnicity || "" },
+    { 
+      id: "ethnicity", 
+      label: "Raça", 
+      type: "select", 
+      options: [
+        { value: "white", label: "Branca" },
+        { value: "asian", label: "Asiática" },
+        { value: "mixed", label: "Parda" },
+        { value: "black", label: "Preta" },
+        { value: "other", label: "Outro" }
+      ], 
+      value: profileData?.ethnicity || "" 
+    },
     { id: "gender", label: "Gênero", type: "select", options: [
       { value: "male", label: "Masculino" },
       { value: "female", label: "Feminino" },
@@ -53,11 +59,11 @@ export function Profile() {
     ], value: profileData?.gender || "" },
     { id: "email", label: "Email", type: "text", placeholder: "Seu email", value: profileData?.email || "" },
     { id: "cpf", label: "CPF", type: "text", placeholder: "Seu CPF", value: profileData?.cpf || "" },
-    { id: "zip_code", label: "CEP", type: "text", placeholder: "Seu CEP", value: profileData?.zip_code || "" },
-    { id: "street", label: "Rua", type: "text", placeholder: "Sua rua", value: profileData?.street || "" },
-    { id: "number", label: "Número", type: "text", placeholder: "Seu número", value: profileData?.number || "" },
-    { id: "neighborhood", label: "Bairro", type: "text", placeholder: "Seu bairro", value: profileData?.neighbourhood || "" },
-    { id: "city", label: "Cidade", type: "text", placeholder: "Sua cidade", value: profileData?.city || "" },
+    { id: "zip_code", label: "CEP", type: "text", placeholder: "Seu CEP", value: profileData?.address?.zip_code || "" },
+    { id: "street", label: "Rua", type: "text", placeholder: "Sua rua", value: profileData?.address?.street || "" },
+    { id: "number", label: "Número", type: "text", placeholder: "Seu número", value: profileData?.address?.number || "" },
+    { id: "neighbourhood", label: "Bairro", type: "text", placeholder: "Seu bairro", value: profileData?.address?.neighbourhood || "" },
+    { id: "city", label: "Cidade", type: "text", placeholder: "Sua cidade", value: profileData?.address?.city || "" },
     { id: "permission", label: "Tipo de usuário", readOnly: true, value: permission || "" },
   ];
 
