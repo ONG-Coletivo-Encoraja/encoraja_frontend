@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import DialogReview from './dialogReview';
+import DialogInscriptions from './dialogInscriptions'; // Importando o DialogInscriptions
 import { fetchEventById } from '@/app/api/events/eventService';
 import { Event } from '@/interfaces/IEventData';
 import { useSession } from 'next-auth/react';
@@ -24,6 +25,7 @@ export default function EventsDetails() {
   const { data: session } = useSession();
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [inscriptionsDialogOpen, setInscriptionsDialogOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,10 +88,16 @@ export default function EventsDetails() {
               <div className='flex justify-start flex-wrap gap-5'>
                 {(event?.status === 'finished' || event?.status === 'active') && (
                   <div>
-                    <Button>Ver inscritos</Button>
+                    <Button onClick={() => setInscriptionsDialogOpen(true)}>Ver Inscritos</Button> 
+                    <DialogInscriptions
+                      open={inscriptionsDialogOpen}
+                      onClose={() => setInscriptionsDialogOpen(false)}
+                      eventId={eventId}
+                      eventStatus={event?.status}
+                    />
                   </div>
                 )}
-                {event?.status != 'finished' && (
+                {event?.status !== 'finished' && (
                   <div>
                     <Button>Editar evento</Button>
                   </div>
