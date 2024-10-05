@@ -11,10 +11,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import InputMask from "react-input-mask";
 import { Checkbox } from "@/components/ui/checkbox";  
 import { useEffect } from "react";
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register } from '../../app/api/auth';
 import { UserData } from '../../interfaces/IUserData'; 
+import { useToast } from "@/hooks/use-toast";
+import { AxiosError } from "axios";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "O nome deve ter pelo menos 2 caracteres." }),
@@ -40,6 +41,7 @@ const formSchema = z.object({
 
 export default function RegisterForm() {
   const router = useRouter();
+  const { toast } = useToast();
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -89,13 +91,35 @@ export default function RegisterForm() {
 
     try {
       const response = await register(data);
+      toast({
+        title: "Sucesso!",
+        description: response.message,
+        variant: "default",
+      });
       console.log(response);
       if (response) {
         router.push('/login');
       }
     } catch (error) {
-      alert('Falha no registro: ' + error);
-    }
+      if (error instanceof AxiosError && error.response) {
+        const errors = error.response.data.errors;
+    
+        const firstKey = Object.keys(errors)[0];
+    
+        const firstErrorMessage = errors[firstKey][0];
+    
+        console.log(firstErrorMessage);
+    
+        toast({
+          title: "Falha no cadastro!",
+          description: firstErrorMessage,
+          variant: "destructive",
+        });
+      } else {
+        console.error('Erro inesperado:', error);
+        alert('Ocorreu um erro inesperado.');
+      }
+    }  
   };
 
   useEffect(() => {
@@ -246,7 +270,7 @@ export default function RegisterForm() {
                       <SelectContent>
                         <SelectItem value="male">Masculino</SelectItem>
                         <SelectItem value="female">Feminino</SelectItem>
-                        <SelectItem value="other">Outro</SelectItem>
+                        <SelectItem value="prefer not say">Prefiro não dizer</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>

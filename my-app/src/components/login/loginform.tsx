@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form"; 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,15 +11,16 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react'; 
 import Link from 'next/link';
-
+import { useToast } from "@/hooks/use-toast";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido").nonempty("Email é obrigatório"),
-  password: z.string().nonempty("Senha é obrigatória")
+  password: z.string().nonempty("Senha é obrigatória"),
 });
 
 export default function LoginForm() {
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -29,14 +30,23 @@ export default function LoginForm() {
     const result = await signIn('credentials', {
       email: data.email,
       password: data.password,
-      redirect: false
+      redirect: false,
     });
 
     if (result?.error) {
-      console.error(result.error); 
+      console.error(result.error);
+      toast({
+        title: "Erro ao fazer login",
+        description: "Por favor, insira as credenciais corretas.",
+        variant: "destructive",
+      });
       return; 
     }
-
+    toast({
+      title: "Login bem-sucedido!",
+      description: "Você será redirecionado para a página inicial.",
+      variant: "default",
+    });
     router.replace('/home');
   };
 
@@ -76,14 +86,14 @@ export default function LoginForm() {
                 </FormItem>
               )}
             />
+            <Button type="submit" className="mt-4">Entrar</Button>
           </form>
         </Form>
       </CardContent>
       <CardFooter className="flex flex-col justify-center gap-4">
-        <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
-          Entrar
-        </Button>
-        <Label className="underline">Esqueci minha senha</Label>
+        <Link href="/forgot-password">
+          <Label className="underline">Esqueci minha senha</Label>
+        </Link>
         <Link href="/register">
           <Label className="underline">Criar conta</Label>
         </Link>
