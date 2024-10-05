@@ -18,7 +18,10 @@ export interface EventData {
 }
 
 export interface UserOwner {
+  id: number;
   name: string;
+  email: string;
+  permission: string;
 }
 
 export interface Event {
@@ -30,8 +33,14 @@ export interface Event {
   modality: string;
   status: string;
   type: string;
-  material: string,
-  price: string,
+  target_audience: string;
+  vacancies: number;
+  social_vacancies: number;
+  regular_vacancies: number;
+  material: string;
+  interest_area: string;
+  price: string;
+  workload: number;
   user_owner: UserOwner;
 }
 

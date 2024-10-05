@@ -11,43 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from 'react';
-import API from "@/services/api";
-import { useSession } from "next-auth/react";
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  permission: string;
-}
-
-interface Event {
-  id: number;
-  name: string;
-  description: string;
-  date: string;
-  time: string;
-  modality: string;
-  status: string;
-  type: string;
-  target_audience: string;
-  vacancies: number;
-  social_vacancies: number;
-  regular_vacancies: number;
-  material: string;
-  interest_area: string;
-  price: string;
-  workload: number;
-  user_owner: User;
-}
-
-interface Inscription {
-  id: number;
-  user: User;
-  event: Event;
-  status: string; 
-  present: number;
-}
+import { useDialogInscriptionsFunctions } from '@/app/api/inscriptions/inscriptionsService';
+import { Inscription } from "@/interfaces/IInscription";
 
 interface DialogInscriptionsProps {
   open: boolean;
@@ -56,74 +21,17 @@ interface DialogInscriptionsProps {
   eventStatus: string;
 }
 
-interface InscriptionsResponse {
-  status: boolean;
-  inscriptions: {
-    current_page: number;
-    data: Inscription[];
-    first_page_url: string;
-    from: number;
-    last_page: number;
-    last_page_url: string;
-    links: Array<{ url: string | null; label: string; active: boolean }>;
-    next_page_url: string | null;
-    path: string;
-    per_page: number;
-    prev_page_url: string | null;
-    to: number;
-    total: number;
-  };
-}
-
 export default function DialogInscriptions({ open, onClose, eventId, eventStatus }: DialogInscriptionsProps) {
   const [inscriptions, setInscriptions] = useState<Inscription[]>([]);
   const [checkboxStates, setCheckboxStates] = useState<Record<number, boolean>>({});
-  const { data: session } = useSession();
+
+  const { fetchInscriptions, handleCheckboxChange } = useDialogInscriptionsFunctions(eventId, setInscriptions, setCheckboxStates, open);
 
   useEffect(() => {
     if (open && eventId) {
-      const fetchInscriptions = async () => {
-        try {
-          const response = await API.get<InscriptionsResponse>(`/admin/inscriptions/event/${eventId}`, {
-            headers: {
-              'Authorization': `Bearer ${session?.token}`,
-              'Content-Type': 'application/json',
-            },
-          });
-          
-          const approvedInscriptions = response.data.inscriptions.data.filter(inscription => inscription.status === 'approved');
-          setInscriptions(approvedInscriptions);
-          
-          const initialStates: Record<number, boolean> = {};
-          approvedInscriptions.forEach(inscription => {
-            initialStates[inscription.id] = inscription.present === 0;
-          });
-          setCheckboxStates(initialStates);
-        } catch (error) {
-          console.error("Erro ao buscar inscrições:", error);
-        }
-      };
       fetchInscriptions();
     }
   }, [open, eventId]);
-
-  const handleCheckboxChange = async (id: number) => {
-    try {
-      await API.get(`/present/${id}`, {
-        headers: {
-          'Authorization': `Bearer ${session?.token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      setCheckboxStates((prev) => ({
-        ...prev,
-        [id]: !prev[id],
-      }));
-    } catch (error) {
-      console.error("Erro ao alterar presença:", error);
-    }
-  };
 
   return (
     <Dialog open={open} onOpenChange={onClose}>

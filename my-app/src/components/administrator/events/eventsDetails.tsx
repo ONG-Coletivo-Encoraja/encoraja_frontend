@@ -8,13 +8,12 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import DialogReview from './dialogReview';
-import DialogInscriptions from './dialogInscriptions'; // Importando o DialogInscriptions
-import { fetchEventById } from '@/app/api/events/eventService';
+import DialogInscriptions from './dialogInscriptions';
 import { Event } from '@/interfaces/IEventData';
-import { useSession } from 'next-auth/react';
-import ReviewUser from '@/components/administrator/events/reviewUser';
 import { Review } from '@/interfaces/IReview';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useEventsDetailsFunctions } from '@/app/api/events/eventService';
+import ReviewUser from './reviewUser';
 
 export default function EventsDetails() {
   const router = useRouter();
@@ -22,38 +21,15 @@ export default function EventsDetails() {
   const [event, setEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [reviews, setReviews] = useState<Review[]>([]);
-  const { data: session } = useSession();
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [inscriptionsDialogOpen, setInscriptionsDialogOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (eventId && session?.token) {
-        try {
-          const eventData = await fetchEventById(eventId, session.token);
-          setEvent(eventData);
-          const reviewResponse = await fetch(`http://127.0.0.1:8000/api/reviews/${eventId}`, {
-            headers: { Authorization: `Bearer ${session.token}` },
-          });
-          const reviewData = await reviewResponse.json();
-          setReviews(reviewData.reviews.data);
-        } catch (error) {
-          console.error("Erro ao buscar evento:", error);
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [eventId, session]);
+  const { fetchData, handleReviewClick } = useEventsDetailsFunctions(eventId, setEvent, setReviews, setLoading);
 
-  const handleReviewClick = (review: Review) => {
-    setSelectedReview(review);
-    setDialogOpen(true);
-  };
+  useEffect(() => {
+    fetchData();
+  }, [eventId]);
 
   return (
     <div>
@@ -73,7 +49,7 @@ export default function EventsDetails() {
                 <li><Badge>{event?.modality}</Badge></li>
                 <li><Badge>{event?.type}</Badge></li>
                 <li><Badge variant={'red'}>{event?.status}</Badge></li>
-                <li><Badge className="h-[50px] rounded-[25%]" variant={'quaternary'}>{event?.date}</Badge></li>
+                <li><Badge className="h-[50px] rounded-3xl" variant={'quaternary'}>{event?.date}</Badge></li>
               </ul>
               <Label className="text-[#727272]">Responsável: {event?.user_owner.name}</Label>
             </CardHeader>
@@ -113,7 +89,7 @@ export default function EventsDetails() {
               <div className='flex flex-col gap-4'>
                 {reviews.length > 0 ? (
                   reviews.map((review) => (
-                    <div key={review.id} onClick={() => handleReviewClick(review)}>
+                    <div key={review.id} onClick={() => handleReviewClick(review, setSelectedReview, setDialogOpen)}>
                       <ReviewUser
                         userName={review.user.name}
                         rating={review.rating}

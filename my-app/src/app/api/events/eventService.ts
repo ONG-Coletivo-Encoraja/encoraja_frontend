@@ -1,5 +1,8 @@
 import API from "@/services/api";
 import { ApiResponse, Event } from "@/interfaces/IEventData";
+import { useSession } from "next-auth/react";
+import { Review } from "@/interfaces/IReview";
+import { Dispatch, SetStateAction } from "react";
 
 export const fetchEvents = async (
   statusFilter?: string,
@@ -54,4 +57,35 @@ export const fetchEventById = async (eventId: string, token?: string): Promise<E
     }});
 
   return response.data.event;
+};
+
+export const useEventsDetailsFunctions = (eventId: string, setEvent: Dispatch<SetStateAction<Event | null>>, setReviews: Dispatch<SetStateAction<Review[]>>, setLoading: Dispatch<SetStateAction<boolean>>) => {
+  const { data: session } = useSession();
+
+  const fetchData = async () => {
+    if (eventId && session?.token) {
+      try {
+        const eventData = await fetchEventById(eventId, session.token);
+        setEvent(eventData);
+        
+        const reviewResponse = await API.get(`/reviews/${eventId}`, {
+          headers: { Authorization: `Bearer ${session.token}` },
+        });
+        setReviews(reviewResponse.data.reviews.data);
+      } catch (error) {
+        console.error("Erro ao buscar evento:", error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setLoading(false);
+    }
+  };
+
+  const handleReviewClick = (review: Review, setSelectedReview: Dispatch<SetStateAction<Review | null>>, setDialogOpen: Dispatch<SetStateAction<boolean>>) => {
+    setSelectedReview(review);
+    setDialogOpen(true);
+  };
+
+  return { fetchData, handleReviewClick };
 };
