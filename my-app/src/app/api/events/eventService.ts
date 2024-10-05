@@ -45,3 +45,13 @@ export const fetchEvents = async (
     },
   };
 };
+
+export const fetchEventById = async (eventId: string, token?: string): Promise<Event> => {
+  const response = await API.get(`/users/events/${eventId}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    }});
+
+  return response.data.event;
+};

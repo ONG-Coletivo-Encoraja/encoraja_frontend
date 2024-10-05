@@ -53,7 +53,7 @@ export function EventsList() {
     <div className="w-full min-h-[100vh] p-5">
       <div className="flex justify-between flex-wrap gap-3">
         <div>
-          <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[34px]">Eventos cadastrados</h1>
+          <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[30px]">Eventos cadastrados</h1>
           <div>
             <FilterComponent onFilterChange={setStatusFilter} />
           </div>

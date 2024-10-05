@@ -30,6 +30,8 @@ export interface Event {
   modality: string;
   status: string;
   type: string;
+  material: string,
+  price: string,
   user_owner: UserOwner;
 }
 

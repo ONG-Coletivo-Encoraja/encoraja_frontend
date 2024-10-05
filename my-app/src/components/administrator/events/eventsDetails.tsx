@@ -1,75 +1,135 @@
 'use client';
 
-import { useRouter } from 'next/navigation'; 
+import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import StarRating from '@/components/ui/rating';
 import { Button } from '@/components/ui/button';
-import ReviewUser from './reviewUser';
 import DialogReview from './dialogReview';
-import DialogInscriptions from './dialogInscriptions';
+import { fetchEventById } from '@/app/api/events/eventService';
+import { Event } from '@/interfaces/IEventData';
+import { useSession } from 'next-auth/react';
+import ReviewUser from '@/components/administrator/events/reviewUser';
+import { Review } from '@/interfaces/IReview';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function EventsDetails() {
-  const router = useRouter(); 
+  const router = useRouter();
+  const { eventId } = useParams<{ eventId: string }>();
+  const [event, setEvent] = useState<Event | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const { data: session } = useSession();
+  const [selectedReview, setSelectedReview] = useState<Review | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (eventId && session?.token) {
+        try {
+          const eventData = await fetchEventById(eventId, session.token);
+          setEvent(eventData);
+          const reviewResponse = await fetch(`http://127.0.0.1:8000/api/reviews/${eventId}`, {
+            headers: { Authorization: `Bearer ${session.token}` },
+          });
+          const reviewData = await reviewResponse.json();
+          setReviews(reviewData.reviews.data);
+        } catch (error) {
+          console.error("Erro ao buscar evento:", error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [eventId, session]);
+
+  const handleReviewClick = (review: Review) => {
+    setSelectedReview(review);
+    setDialogOpen(true);
+  };
 
   return (
     <div>
       <Button onClick={() => router.back()} className="mb-5">Voltar</Button>
-      <Card className="w-[1000px] h-[600px] flex">
-        <div className='m-5'>
-          <CardHeader>
-            <CardDescription className="text-[#F69053]">Próximos eventos</CardDescription>
-            <CardTitle>Curso de costura</CardTitle>
-            <ul className="flex space-x-4">
-              <li><Badge variant={'secondary'}>14:00</Badge></li>
-              <li><Badge>Presencial</Badge></li>
-              <li><Badge>Oficina</Badge></li>
-              <li><Badge variant={'red'}>Finalizado</Badge></li>
-              <li><Badge className="h-[50px] rounded-[25%]" variant={'quaternary'}>14/07</Badge></li>
-            </ul>
-            <Label className="text-[#727272]">Responsável: Juliana Baiçar</Label>
-          </CardHeader>
-          <CardContent>
-            <Separator />
-            <br />
-            <Label className="text-[#727272]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit incidunt praesentium laborum illum voluptates.</Label>
-            <div className='mt-5 flex flex-col items-start space-y-3'>
-              <Label>Local do evento: R. exemplo 1 Nº 810, Centro</Label>
-              <Label>Materiais necessários: Tesoura</Label>
-              <Label>Valor do curso: R$ 10,00</Label>
-            </div>
-            <DialogInscriptions />
-            <div className='flex justify-center mt-[70px]'>
-              <Button className="mt-5">Visualizar relatório</Button>
-            </div>
-            
-          </CardContent>
+      {loading ? (
+        <div className="flex justify-center items-center h-screen">
+          <CircularProgress />
         </div>
-        <div className="flex items-center">
-          <div className="border-l border-[#DCDCDC] h-[550px] mx-4"></div>
-        </div>
-        <div className='m-5'>
-          <CardHeader className='w-[400px]'>
-            <div className='flex justify-between'>
+      ) : (
+        <Card className="w-[1000px] h-[600px] flex flex-wrap">
+          <div className='m-5'>
+            <CardHeader>
+              <CardDescription className="text-[#F69053]">Próximos eventos</CardDescription>
+              <CardTitle>{event?.name}</CardTitle>
+              <ul className="flex space-x-4">
+                <li><Badge variant={'secondary'}>{event?.time}</Badge></li>
+                <li><Badge>{event?.modality}</Badge></li>
+                <li><Badge>{event?.type}</Badge></li>
+                <li><Badge variant={'red'}>{event?.status}</Badge></li>
+                <li><Badge className="h-[50px] rounded-[25%]" variant={'quaternary'}>{event?.date}</Badge></li>
+              </ul>
+              <Label className="text-[#727272]">Responsável: {event?.user_owner.name}</Label>
+            </CardHeader>
+            <CardContent className='flex flex-col gap-5'>
+              <Separator />
+              <br />
+              <Label className="text-[#727272]">{event?.description}</Label>
+              <div className='mt-5 flex flex-col items-start space-y-3'>
+                <Label>Materiais necessários: {event?.material}</Label>
+                <Label>Valor do curso: R$ {event?.price}</Label>
+              </div>
+              <div className='flex justify-start flex-wrap gap-5'>
+                {(event?.status === 'finished' || event?.status === 'active') && (
+                  <div>
+                    <Button>Ver inscritos</Button>
+                  </div>
+                )}
+                {event?.status != 'finished' && (
+                  <div>
+                    <Button>Editar evento</Button>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </div>
+          <div className='m-5'>
+            <CardHeader className='w-[400px]'>
               <CardTitle>Avaliações</CardTitle>
-              <StarRating />
-            </div>
-          </CardHeader>
-          <CardContent className='h-[400px] flex items-center'>
-            <div className='flex flex-col gap-4'>
-              <DialogReview />
-              <DialogReview />
-              <DialogReview />
-            </div>
-
-          </CardContent>
-          <Separator />
-          <CardFooter className='m-6 justify-center'>
-          </CardFooter>
-        </div>
-      </Card>
+            </CardHeader>
+            <CardContent className='h-[400px] flex items-center overflow-y-auto'>
+              <div className='flex flex-col gap-4'>
+                {reviews.length > 0 ? (
+                  reviews.map((review) => (
+                    <div key={review.id} onClick={() => handleReviewClick(review)}>
+                      <ReviewUser
+                        userName={review.user.name}
+                        rating={review.rating}
+                        observation={review.observation}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <Label>Nenhuma avaliação encontrada.</Label>
+                )}
+                <DialogReview
+                  rating={selectedReview?.rating || 0}
+                  observation={selectedReview?.observation || ''}
+                  feel_welcomed={selectedReview?.feel_welcomed || false}
+                  recommendation={selectedReview?.recommendation || false}
+                  open={dialogOpen}
+                  onClose={() => setDialogOpen(false)}
+                />
+              </div>
+            </CardContent>
+            <Separator />
+          </div>
+        </Card>
+      )}
     </div>
   );
 }

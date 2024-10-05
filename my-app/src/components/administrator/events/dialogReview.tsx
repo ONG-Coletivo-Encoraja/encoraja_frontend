@@ -1,6 +1,3 @@
-'use client';
-
-import { Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,24 +7,30 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import StarRating from "@/components/ui/rating";
-import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "@/components/ui/textarea";
-import ReviewUser from "./reviewUser";
 
-export default function DialogReview() {
+interface DialogReviewProps {
+  rating: number;
+  observation: string;
+  open: boolean;
+  feel_welcomed: boolean;
+  recommendation: boolean; 
+  onClose: () => void;
+}
+
+export default function DialogReview({
+  rating,
+  observation,
+  open,
+  onClose,
+  feel_welcomed,
+  recommendation,
+}: DialogReviewProps) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <div id="open-review-dialog">
-          <ReviewUser />
-        </div>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Deixe sua Avaliação</DialogTitle>
@@ -36,57 +39,42 @@ export default function DialogReview() {
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center justify-center space-y-4 mt-5">
-            <Label className="text-center">
-                De forma geral, como avalia as atividades ofertadas?
-            </Label>
-            <StarRating />
-            <Label className="text-center">
-                Você se sentiu acolhida em nosso espaço?
-            </Label>
-            <div className="flex items-center justify-center">
-            <RadioGroup defaultValue="option-one" className="flex flex-row space-x-4">
-                <div className="flex items-center space-x-2">
-                <RadioGroupItem value="option-one" id="option-one" />
-                <Label htmlFor="option-one">Sim</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                <RadioGroupItem value="option-two" id="option-two" />
-                <Label htmlFor="option-two">Não</Label>
-                </div>
-            </RadioGroup>
+          <Label className="text-center">De forma geral, como avalia as atividades ofertadas?</Label>
+          <StarRating rating={rating} />
+          <Label className="text-center">Você se sentiu acolhida em nosso espaço?</Label>
+          <RadioGroup value={feel_welcomed ? "sim" : "nao"} disabled>
+            <div className="flex flex-row space-x-4">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="sim" id="feel_welcomed_sim" disabled />
+                <Label htmlFor="feel_welcomed_sim">Sim</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="nao" id="feel_welcomed_nao" disabled />
+                <Label htmlFor="feel_welcomed_nao">Não</Label>
+              </div>
             </div>
-            <Label className="text-center">
-                Você recomendaria nossas atividades para outras mulheres?
-            </Label>
-            <div className="flex items-center justify-center">
-            <RadioGroup defaultValue="option-one" className="flex flex-row space-x-4">
-                <div className="flex items-center space-x-2">
-                <RadioGroupItem value="option-one" id="option-one" />
-                <Label htmlFor="option-one">Sim</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                <RadioGroupItem value="option-two" id="option-two" />
-                <Label htmlFor="option-two">Não</Label>
-                </div>
-            </RadioGroup>
+          </RadioGroup>
+          <Label className="text-center">Você recomendaria nosso espaço?</Label>
+          <RadioGroup value={recommendation ? "sim" : "nao"} disabled>
+            <div className="flex flex-row space-x-4">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="sim" id="recommendation_sim" disabled />
+                <Label htmlFor="recommendation_sim">Sim</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="nao" id="recommendation_nao" disabled />
+                <Label htmlFor="recommendation_nao">Não</Label>
+              </div>
             </div>
-            <Label className="text-center">
-                Gostaria de deixar um depoimento?
-            </Label>
-            <div className="border border-[#F69053] p-4 rounded-md h-20 w-[400px]">
-              <Label className="text-sm text-muted-foreground">
-                O Evento foi sensacional!!!
-              </Label>
-            </div>
-            
-
-
+          </RadioGroup>
+          <Label className="text-center">Gostaria de deixar um depoimento?</Label>
+          <div className="border border-[#F69053] p-4 rounded-md h-20 w-[400px]">
+            <Label className="text-sm text-muted-foreground">{observation}</Label>
+          </div>
         </div>
         <DialogFooter className="sm:justify-end mt-4">
           <DialogClose asChild>
-            <Button type="button">
-              Fechar
-            </Button>
+            <Button type="button" onClick={onClose}>Fechar</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
