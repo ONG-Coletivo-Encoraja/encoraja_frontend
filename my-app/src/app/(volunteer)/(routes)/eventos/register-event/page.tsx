@@ -1,5 +1,5 @@
 import * as React from 'react';
-import EventForm from "@/components/administrator/events/eventForm";
+import EventForm from "@/components/volunteer/events/eventForm";
 
 export default function FormScreen() {
 
