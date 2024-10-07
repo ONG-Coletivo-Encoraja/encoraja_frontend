@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 
 import MyInscriptionsTable from "@/components/shared/myInscriptionsTable";
@@ -18,7 +17,7 @@ export default function MyInscriptions() {
                         < FilterInscriptions />
                     </div>
                     <div> 
-                        < SearchComponent />
+                       {/* < SearchComponent /> */}
                     </div>
                 </div>
 

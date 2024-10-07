@@ -1,3 +1,5 @@
+'use client';
+
 import { Input } from "../ui/input";
 import { Search } from 'lucide-react';
 
