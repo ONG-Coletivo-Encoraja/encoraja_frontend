@@ -1,239 +1,398 @@
-import * as React from "react";
-import { CalendarDays } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Popover, 
-  PopoverTrigger, 
-  PopoverContent
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import Link from "next/link";
+'use client';
 
-export default function Events(): React.JSX.Element {
-  const date = new Date(); // data estática
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import NumberFormat from 'react-number-format';
+import { z } from "zod";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import InputMask from "react-input-mask";
+import { Checkbox } from "@/components/ui/checkbox";  
+import { useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import { registerEvent } from "@/app/api/events/registerEvent";
+import { EventData } from "@/interfaces/IEventData";
+import { useToast } from "@/hooks/use-toast";
+import { AxiosError } from "axios";
+import { NumberFormatBase } from "react-number-format";
+import { Textarea } from "@/components/ui/textarea";
+
+const formSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  date: z.string().refine((val) => !isNaN(Date.parse(val))),
+  time: z.string().regex(/^\d{2}:\d{2}$/, { message: "Insira um horário válido." }),
+  modality: z.string().min(2, { message: "Selecione uma modalidade" }),
+  status: z.string().min(2, { message: "Selecione um status" }),
+  type: z.string().min(2, { message: "Selecione um tipo de evento." }),
+  target_audience: z.string(),
+  vacancies: z.number().min(1, { message: "A quantidade de vagas deve ser no mínimo 1." }),
+  social_vacancies: z.number().min(1, { message: "A quantidade de vagas deve ser no mínimo 1." }),
+  regular_vacancies: z.number().min(1, { message: "A quantidade de vagas deve ser no mínimo 1." }),
+  material: z.string(),
+  interest_area: z.string(),
+  price: z.number(),
+  workload:  z.number(),
+  owner:  z.number(),
+});
+
+export default function RegisterEvent() {
+  const router = useRouter();
+  const { toast } = useToast();
+  
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      description: "",
+      date: "",
+      time: "",
+      modality: "",
+      status: "",
+      type: "",
+      target_audience: "",
+      vacancies: 10,
+      social_vacancies: 10,
+      regular_vacancies: 10,
+      material: "",
+      interest_area: "",
+      price: 0,
+      workload: 0,
+      owner: 0
+  }
+  });
+
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+
+    const data: EventData = {
+      name: values.name,
+      description: values.description,
+      date: values.date,
+      time: values.time,
+      modality: values.modality,
+      status: values.status,
+      type: values.type,
+      target_audience: values.target_audience,
+      vacancies: values.vacancies,
+      social_vacancies: values.social_vacancies,
+      regular_vacancies: values.regular_vacancies,
+      material: values.material,
+      interest_area: values.interest_area,
+      price: values.price,
+      workload: values.workload,
+      owner: values.owner
+    };
+
+    try {
+      const response = await registerEvent(data);
+      toast({
+        title: "Sucesso!",
+        description: response.message,
+        variant: "default",
+      });
+      console.log(response);
+      if (response) {
+        router.push('/home');
+      }
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        const errors = error.response.data.errors;
+    
+        const firstKey = Object.keys(errors)[0];
+    
+        const firstErrorMessage = errors[firstKey][0];
+    
+        console.log(firstErrorMessage);
+    
+        toast({
+          title: "Falha no cadastro!",
+          description: firstErrorMessage,
+          variant: "destructive",
+        });
+      } else {
+        console.error('Erro inesperado:', error);
+        alert('Ocorreu um erro inesperado.');
+      }
+    }  
+  };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <Card className="w-full max-w-5xl">
-        <CardHeader>
+    <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
+      <CardHeader>
           <CardTitle>Cadastro de evento</CardTitle>
         </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-        <CardContent>
-          <form className="flex flex-wrap gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Nome</Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Nome do Evento"
-                value="Exemplo de Evento"
-                className="w-full"
-                readOnly
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Nome</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Nome do evento" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="description">Descrição</Label>
-              <Input
-                id="description"
-                type="text"
-                placeholder="Descrição do Evento"
-                value="Descrição do evento"
-                className="w-full"
-                readOnly
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Data</FormLabel>
+                  <FormControl className="flex justify-end">
+                    <Input type="date" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="time"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Horário</FormLabel>
+                  <FormControl className="flex justify-end">
+                    <InputMask mask="99:99" value={field.value} onChange={field.onChange}>
+                      {(inputProps) => <Input placeholder="00:00" {...inputProps} />}
+                    </InputMask>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="col-span-4">
+                  <FormLabel>Descrição</FormLabel>
+                  <FormControl>
+                  <Textarea placeholder="Descrição do evento" className="border-[#ededed" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="date">Data</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant={"outline"} className="w-full justify-start text-left font-normal">
-                    <CalendarDays className="mr-2 h-4 w-4" />
-                    {date.toLocaleDateString()}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar mode="single" selected={date} />
-                </PopoverContent>
-              </Popover>
-            </div>
+          <FormField
+              control={form.control}
+              name="modality"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Modalidade</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} defaultValue="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="presential">Presencial</SelectItem>
+                        <SelectItem value="hybrid">Híbrido</SelectItem>
+                        <SelectItem value="remote">Remoto</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+{/*
+          <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Status</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} defaultValue="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="active">Ativo</SelectItem>
+                        <SelectItem value="inactive">Inativo</SelectItem>
+                        <SelectItem value="pending">Pendente</SelectItem>
+                        <SelectItem value="finished">Finalizado</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+*/}
+          <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Tipo</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} defaultValue="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="course">Curso</SelectItem>
+                        <SelectItem value="workshop">Workshop</SelectItem>
+                        <SelectItem value="lecture">Palestra</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="time">Horário</Label>
-              <Input
-                id="time"
-                type="text"
-                placeholder="Horário do Evento"
-                value="14:00"
-                className="w-full"
-                readOnly
-              />
-            </div>
+        <FormField
+              control={form.control}
+              name="target_audience"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Público alvo</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Público alvo" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="modality">Modalidade</Label>
-              <Input
-                id="modality"
-                type="text"
-                placeholder="Modalidade"
-                value="Online"
-                className="w-full"
-                readOnly
-              />
-            </div>
+          <FormField
+              control={form.control}
+              name="vacancies"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Total de vagas</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="status">Status</Label>
-              <Input
-                id="status"
-                type="text"
-                placeholder="Status"
-                value="Ativo"
-                className="w-full"
-                readOnly
-              />
-            </div>
+          <FormField
+              control={form.control}
+              name="social_vacancies"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Vagas Sociais</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="type">Tipo</Label>
-              <Input
-                id="type"
-                type="text"
-                placeholder="Tipo"
-                value="Tipo do Evento"
-                className="w-full"
-                readOnly
-              />
-            </div>
+          <FormField
+              control={form.control}
+              name="regular_vacancies"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Vagas Regulares</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="target_audience">Público Alvo</Label>
-              <Input
-                id="target_audience"
-                type="text"
-                placeholder="Público Alvo"
-                value="Público Alvo"
-                className="w-full"
-                readOnly
-              />
-            </div>
+        <FormField
+              control={form.control}
+              name="material"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Material</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Material do evento" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="vacancies">Vagas</Label>
-              <Input
-                id="vacancies"
-                type="number"
-                placeholder="Vagas"
-                value="100"
-                className="w-full"
-                readOnly
-              />
-            </div>
+        <FormField
+              control={form.control}
+              name="interest_area"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Área de interesse</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Área de interesse" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="social_vacancies">Vagas Sociais</Label>
-              <Input
-                id="social_vacancies"
-                type="number"
-                placeholder="Vagas Sociais"
-                value="20"
-                className="w-full"
-                readOnly
-              />
-            </div>
+      <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Preço</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+      
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="regular_vacancies">Vagas Regulares</Label>
-              <Input
-                id="regular_vacancies"
-                type="number"
-                placeholder="Vagas Regulares"
-                value="80"
-                className="w-full"
-                readOnly
-              />
-            </div>
+          <FormField
+              control={form.control}
+              name="workload"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Carga horária</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="material">Material</Label>
-              <Input
-                id="material"
-                type="text"
-                placeholder="Material"
-                value="Material do Evento"
-                className="w-full"
-                readOnly
-              />
-            </div>
-
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="interest_area">Área de Interesse</Label>
-              <Input
-                id="interest_area"
-                type="text"
-                placeholder="Área de Interesse"
-                value="Área de Interesse"
-                className="w-full"
-                readOnly
-              />
-            </div>
-
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="price">Preço</Label>
-              <Input
-                id="price"
-                type="number"
-                placeholder="Preço"
-                value="100"
-                className="w-full"
-                readOnly
-              />
-            </div>
-
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="workload">Carga Horária</Label>
-              <Input
-                id="workload"
-                type="number"
-                placeholder="Carga Horária"
-                value="4"
-                className="w-full"
-                readOnly
-              />
-            </div>
-
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="owner">ID do Proprietário</Label>
-              <Input
-                id="owner"
-                type="number"
-                placeholder="ID do Proprietário"
-                value="1"
-                className="w-full"
-                readOnly
-              />
-            </div>
+          <FormField
+              control={form.control}
+              name="owner"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Voluntário responsável</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
           </form>
-        </CardContent>
-
-        <CardFooter className="flex justify-end space-x-4">
-          <Link href="/home">
-            <Button variant="outline">Cancelar</Button>
-          </Link>
-          <Button type="submit">Salvar</Button>
-        </CardFooter>
-      </Card>
-    </div>
+        </Form>
+      </CardContent>
+      <CardFooter className="flex justify-end gap-4">
+        <Button variant="outline">
+          Cancelar
+        </Button>
+        <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
+          Salvar
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

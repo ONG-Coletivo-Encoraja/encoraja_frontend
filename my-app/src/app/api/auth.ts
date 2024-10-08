@@ -44,18 +44,3 @@ export async function register(data: UserData) {
 }
 
 
-export async function registerEvent(data: EventData) {
-  try {
-    const response = await API.post('/admin/event', data, {
-      headers: { 'Content-Type': 'application/json' },
-    });
-    return response.data;
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      console.error('Error:', error.response?.data || error.message);
-    } else {
-      console.error('Unexpected Error:', error);
-    }
-    throw error;
-  }
-}
