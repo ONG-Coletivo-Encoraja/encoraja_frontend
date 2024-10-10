@@ -26,6 +26,7 @@ export default function RegisterEvent() {
       description: "",
       date: "",
       time: "",
+      status: "pending",
       modality: "",
       type: "",
       target_audience: "",
@@ -36,6 +37,7 @@ export default function RegisterEvent() {
       interest_area: "",
       price: 10,
       workload: 1,
+      owner: 7
     }
   });
 
@@ -301,6 +303,41 @@ export default function RegisterEvent() {
                   <FormLabel>Carga horária</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          
+          <FormField
+              control={form.control}
+              name="owner"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Voluntário responsável</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+      <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Status</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} defaultValue="pending">
+                      <SelectTrigger>
+                        <SelectValue defaultValue="pending" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="pending">Pendente</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

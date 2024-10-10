@@ -3,18 +3,18 @@ import axios from 'axios';
 import { UserData } from '@/interfaces/IUserData';
 import { getSession } from 'next-auth/react';
 
-export async function getUserData(): Promise<UserData[]> { // Altere o tipo para UserData[]
+export async function getUserData(): Promise<UserData[]> { 
   try {
     const session = await getSession();
     const token = session?.token as string;
 
-    const response = await API.get('/admin/users?page=1&permission=volunteer', { // Corrigido para usar & em vez de ?
+    const response = await API.get('/admin/users?page=1&permission=volunteer', {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
     });
     console.log("response: ", response);
-    return response.data; // Supondo que response.data seja um array de usuários
+    return response.data;
   
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
