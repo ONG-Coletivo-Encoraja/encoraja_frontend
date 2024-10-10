@@ -18,14 +18,13 @@ import { getUserData } from "@/app/api/volunteers/getVolunteers";
 import { UserData } from "@/interfaces/IUserData";
 
 export default function RegisterEvent() {
-  const [users, setUsers] = useState<UserData[]>([]); // Iniciar como um array vazio
+  const [users, setUsers] = useState<UserData[]>([]); 
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const userData = await getUserData();
         
-        // Verifica se userData.users.data é um array antes de definir o estado
         if (Array.isArray(userData.users.data)) {
           setUsers(userData.users.data);
         } else {
