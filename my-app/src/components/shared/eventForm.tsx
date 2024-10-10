@@ -120,7 +120,7 @@ export default function RegisterEvent() {
   };
 
   return (
-    <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
+    <Card className="w-full max-w-[1000px] mx-auto mt-10 mb-10 shadow-lg">
       <CardHeader>
           <CardTitle>Cadastro de evento</CardTitle>
         </CardHeader>

@@ -1,50 +1,25 @@
 'use client';
 
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import NumberFormat from 'react-number-format';
-import { z } from "zod";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import InputMask from "react-input-mask";
-import { Checkbox } from "@/components/ui/checkbox";  
-import { useEffect } from "react";
+import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from 'next/navigation';
 import { registerEvent } from "@/app/api/events/registerEvent";
 import { EventData } from "@/interfaces/IEventData";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
-import { NumberFormatBase } from "react-number-format";
-import { Textarea } from "@/components/ui/textarea";
-
-const formSchema = z.object({
-  name: z.string(),
-  description: z.string(),
-  date: z.string().refine((val) => !isNaN(Date.parse(val))),
-  time: z.string().regex(/^\d{2}:\d{2}$/, { message: "Insira um horário válido." }),
-  modality: z.string().min(2, { message: "Selecione uma modalidade" }),
-  status: z.string().min(2, { message: "Selecione um status" }),
-  type: z.string().min(2, { message: "Selecione um tipo de evento." }),
-  target_audience: z.string(),
-  vacancies: z.number().min(1, { message: "A quantidade de vagas deve ser no mínimo 1." }),
-  social_vacancies: z.number().min(1, { message: "A quantidade de vagas deve ser no mínimo 1." }),
-  regular_vacancies: z.number().min(1, { message: "A quantidade de vagas deve ser no mínimo 1." }),
-  material: z.string(),
-  interest_area: z.string(),
-  price: z.number().min(1, { message: "A quantidade de vagas deve ser no mínimo 1." }),
-  workload:  z.number().min(1, { message: "A quantidade de vagas deve ser no mínimo 1." }),
-  owner:  z.number().min(1, { message: "A quantidade de vagas deve ser no mínimo 1." })
-});
+import { useSession } from "next-auth/react";
 
 export default function RegisterEvent() {
   const router = useRouter();
   const { toast } = useToast();
-  
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { data: session } = useSession(); // Mover para o topo do componente para evitar erros de hook
+
+  const form = useForm<EventData>({
     defaultValues: {
       name: "",
       description: "",
@@ -62,61 +37,53 @@ export default function RegisterEvent() {
       price: 10,
       workload: 1,
       owner: 1
-  }
+    }
   });
 
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (values: EventData) => {
+    console.log(values);
 
     const data: EventData = {
-      name: values.name,
-      description: values.description,
-      date: values.date,
-      time: values.time,
-      modality: values.modality,
-      status: values.status,
-      type: values.type,
-      target_audience: values.target_audience,
-      vacancies: values.vacancies,
-      social_vacancies: values.social_vacancies,
-      regular_vacancies: values.regular_vacancies,
-      material: values.material,
-      interest_area: values.interest_area,
-      price: values.price,
-      workload: values.workload,
-      owner: values.owner
+      ...values,
     };
 
+    if (!session?.token) {
+      toast({
+        title: "Erro!",
+        description: "Token não encontrado. Por favor, faça login novamente.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
-      const response = await registerEvent(data);
+      const response = await registerEvent(data, session.token); 
       toast({
         title: "Sucesso!",
         description: response.message,
         variant: "default",
       });
-      console.log(response);
-      if (response) {
-        router.push('/home');
-      }
+      router.push('/home');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errors = error.response.data.errors;
-    
-        const firstKey = Object.keys(errors)[0];
-    
-        const firstErrorMessage = errors[firstKey][0];
-    
-        console.log(firstErrorMessage);
-    
-        toast({
-          title: "Falha no cadastro!",
-          description: firstErrorMessage,
-          variant: "destructive",
-        });
+
+        if (errors && typeof errors === 'object') {
+          const firstKey = Object.keys(errors)[0];
+          const firstErrorMessage = errors[firstKey][0];
+          toast({
+            title: "Falha no cadastro!",
+            description: firstErrorMessage,
+            variant: "destructive",
+          });
+        } else {
+          console.error("Errors object is not defined or not an object");
+        }
       } else {
         console.error('Erro inesperado:', error);
         alert('Ocorreu um erro inesperado.');
       }
-    }  
+    }
   };
 
   return (
@@ -162,9 +129,7 @@ export default function RegisterEvent() {
                 <FormItem>
                   <FormLabel>Horário</FormLabel>
                   <FormControl className="flex justify-end">
-                    <InputMask mask="99:99" value={field.value} onChange={field.onChange}>
-                      {(inputProps) => <Input placeholder="00:00" {...inputProps} />}
-                    </InputMask>
+                    <Input placeholder="00:00" type="time" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -207,31 +172,7 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-{/*
-          <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Status</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} defaultValue="">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="active">Ativo</SelectItem>
-                        <SelectItem value="inactive">Inativo</SelectItem>
-                        <SelectItem value="pending">Pendente</SelectItem>
-                        <SelectItem value="finished">Finalizado</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-*/}
+
           <FormField
               control={form.control}
               name="type"
@@ -376,6 +317,30 @@ export default function RegisterEvent() {
                   <FormLabel>Voluntário responsável</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          
+          <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Status</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} defaultValue="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="active">Ativo</SelectItem>
+                        <SelectItem value="inactive">Inativo</SelectItem>
+                        <SelectItem value="pending">Pendente</SelectItem>
+                        <SelectItem value="finished">Finalizado</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
