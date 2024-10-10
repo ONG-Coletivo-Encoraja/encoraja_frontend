@@ -13,11 +13,35 @@ import { EventData } from "@/interfaces/IEventData";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { getUserData } from "@/app/api/volunteers/getVolunteers";
+import { UserData } from "@/interfaces/IUserData";
 
 export default function RegisterEvent() {
+  const [users, setUsers] = useState<UserData[]>([]); // Iniciar como um array vazio
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const userData = await getUserData();
+        
+        // Verifica se userData.users.data é um array antes de definir o estado
+        if (Array.isArray(userData.users.data)) {
+          setUsers(userData.users.data);
+        } else {
+          console.error('Expected userData.users.data to be an array but got:', userData.users.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch users:', error);
+      }
+    };
+  
+    fetchUsers();
+  }, []);
+
   const router = useRouter();
   const { toast } = useToast();
-  const { data: session } = useSession(); // Mover para o topo do componente para evitar erros de hook
+  const { data: session } = useSession(); 
 
   const form = useForm<EventData>({
     defaultValues: {
@@ -89,13 +113,12 @@ export default function RegisterEvent() {
   return (
     <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
       <CardHeader>
-          <CardTitle>Cadastro de evento</CardTitle>
-        </CardHeader>
+        <CardTitle>Cadastro de evento</CardTitle>
+      </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-4 gap-6">
-
-            <FormField
+          <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
@@ -309,21 +332,32 @@ export default function RegisterEvent() {
               )}
             />
 
-          <FormField
+            <FormField
               control={form.control}
               name="owner"
               render={({ field }) => (
                 <FormItem className="col-span-2">
                   <FormLabel>Voluntário responsável</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Select onValueChange={field.onChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione um voluntário" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Array.isArray(users) && users.map(user => ( 
+                          <SelectItem value={user.id.toString()}> 
+                            {user.name} 
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          
-          <FormField
+
+      <FormField
               control={form.control}
               name="status"
               render={({ field }) => (
@@ -346,7 +380,6 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-            
           </form>
         </Form>
       </CardContent>
