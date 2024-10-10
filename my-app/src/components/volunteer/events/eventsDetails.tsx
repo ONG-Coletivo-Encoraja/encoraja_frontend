@@ -57,7 +57,6 @@ export default function EventsDetails() {
           <CardHeader className='w-[400px]'>
             <div className='flex justify-between'>
               <CardTitle>Avaliações</CardTitle>
-              <StarRating />
             </div>
           </CardHeader>
           <CardContent className='h-[400px] flex items-center'>

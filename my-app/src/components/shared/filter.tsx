@@ -1,6 +1,7 @@
 import { Select, SelectContent, SelectTrigger, SelectItem, SelectValue } from "../ui/select";
 import { Button } from "../ui/button";
 import { Filter } from 'lucide-react';
+import Link from "next/link";
 
 interface FilterComponentProps {
     onFilterChange: (status: string | undefined) => void;
@@ -28,9 +29,11 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange }) => 
                     </SelectContent>
                 </Select>
             </div>
-            <Button className="ml-2">
-                Criar
-            </Button>
+            <Link href="/eventos/cadastrar-evento">
+                <Button className="ml-2">
+                    Criar
+                </Button>
+            </Link>
         </div>
     );
 };

@@ -8,13 +8,13 @@ export async function getUserData(): Promise<UserData[]> {
     const session = await getSession();
     const token = session?.token as string;
 
-    const response = await API.get('/admin/users?page=1&permission=volunteer', {
+    const response = await API.get('/admin/users/volunteers', {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
     });
     console.log("response: ", response);
-    return response.data;
+    return response.data.volunteers; 
   
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

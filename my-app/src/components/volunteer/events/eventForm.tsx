@@ -35,7 +35,7 @@ export default function RegisterEvent() {
       regular_vacancies: 10,
       material: "",
       interest_area: "",
-      price: 10,
+      price: 10.00,
       workload: 1,
       owner: 7
     }
@@ -287,7 +287,7 @@ export default function RegisterEvent() {
                 <FormItem>
                   <FormLabel>Preço</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input type="number" step="0.01" min="0.01" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -314,35 +314,28 @@ export default function RegisterEvent() {
               name="owner"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Voluntário responsável</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input type="hidden" value={ session?.user?.id || "" } />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-      <FormField
+
+        <FormField
               control={form.control}
               name="status"
               render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Status</FormLabel>
+                <FormItem>
                   <FormControl>
-                    <Select onValueChange={field.onChange} defaultValue="pending">
-                      <SelectTrigger>
-                        <SelectValue defaultValue="pending" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pending">Pendente</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Input type="hidden" value="pending" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
           </form>
         </Form>
       </CardContent>

@@ -18,18 +18,16 @@ import { getUserData } from "@/app/api/volunteers/getVolunteers";
 import { UserData } from "@/interfaces/IUserData";
 
 export default function RegisterEvent() {
-  const [users, setUsers] = useState<UserData[]>([]); 
+  const [users, setUsers] = useState<UserData[]>([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const userData = await getUserData();
         
-        if (Array.isArray(userData.users.data)) {
-          setUsers(userData.users.data);
-        } else {
-          console.error('Expected userData.users.data to be an array but got:', userData.users.data);
-        }
+        if (Array.isArray(userData)) {
+          setUsers(userData);
+        } 
       } catch (error) {
         console.error('Failed to fetch users:', error);
       }

@@ -1,4 +1,5 @@
 export interface UserData {
+    id: number;
     name: string;
     email: string;
     password: string;
@@ -15,4 +16,3 @@ export interface UserData {
     zip_code: string;
     phone: string;
   }
-  
