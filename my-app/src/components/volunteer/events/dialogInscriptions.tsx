@@ -1,72 +1,67 @@
 'use client';
 
-import { Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogFooter,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import StarRating from "@/components/ui/rating";
-import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "@/components/ui/textarea";
-import ReviewUser from "./reviewUser";
+import { useEffect, useState } from 'react';
+import { useDialogInscriptionsFunctions } from '@/app/api/inscriptions/inscriptionsService';
+import { Inscription } from "@/interfaces/IInscription";
 
-export default function DialogInscriptions() {
+interface DialogInscriptionsProps {
+  open: boolean;
+  onClose: () => void;
+  eventId: string;
+  eventStatus: string;
+}
+
+export default function DialogInscriptions({ open, onClose, eventId, eventStatus }: DialogInscriptionsProps) {
+  const [inscriptions, setInscriptions] = useState<Inscription[]>([]);
+  const [checkboxStates, setCheckboxStates] = useState<Record<number, boolean>>({});
+
+  const { fetchInscriptions, handleCheckboxChange } = useDialogInscriptionsFunctions(eventId, setInscriptions, setCheckboxStates, open);
+
+  useEffect(() => {
+    if (open && eventId) {
+      fetchInscriptions();
+    }
+  }, [open, eventId]);
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button id="open-review-dialog" className="mt-5" variant={'terciary'}>Inscritos</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[700px]">
         <DialogHeader>
-          <DialogTitle>Total de inscitos: 3</DialogTitle>
+          <DialogTitle>Total de inscritos: {inscriptions.length}</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col justify-center items-center m-4 gap-4">
-          <div className="bg-[#ECEAEA] h-[80px] w-[600px] rounded-lg flex justify-between items-center px-4">
-            <div className="flex flex-col gap-2">
-              <Label className="text-[#F69053]">Juliana Baiçar</Label>
-              <Label className="font-normal">juliana@email.com</Label>
+          {inscriptions.map((inscription) => (
+            <div key={inscription.id} className="bg-[#ECEAEA] h-[80px] w-[600px] rounded-lg flex justify-between items-center px-4">
+              <div className="flex flex-col gap-2">
+                <Label className="text-[#F69053]">{inscription.user.name}</Label>
+                <Label className="font-normal">{inscription.user.email}</Label>
+              </div>
+              <div className="mr-4 flex items-center gap-2">
+                <Label className="font-normal">Presença:</Label>
+                <input
+                  type="checkbox"
+                  checked={checkboxStates[inscription.id] || false} 
+                  onChange={() => handleCheckboxChange(inscription.id)} 
+                  disabled={eventStatus === 'finished'}
+                />
+              </div>
             </div>
-            <div className="mr-4 flex items-center gap-2">
-              <Label className="font-normal">Presença:</Label>
-              <Checkbox />
-            </div>
-          </div>
-          <div className="bg-[#ECEAEA] h-[80px] w-[600px] rounded-lg flex justify-between items-center px-4">
-            <div className="flex flex-col gap-2">
-              <Label className="text-[#F69053]">Juliana Baiçar</Label>
-              <Label className="font-normal">juliana@email.com</Label>
-            </div>
-            <div className="mr-4 flex items-center gap-2">
-              <Label className="font-normal">Presença:</Label>
-              <Checkbox />
-            </div>
-          </div>
-          <div className="bg-[#ECEAEA] h-[80px] w-[600px] rounded-lg flex justify-between items-center px-4">
-            <div className="flex flex-col gap-2">
-              <Label className="text-[#F69053]">Juliana Baiçar</Label>
-              <Label className="font-normal">juliana@email.com</Label>
-            </div>
-            <div className="mr-4 flex items-center gap-2">
-              <Label className="font-normal">Presença:</Label>
-              <Checkbox />
-            </div>
-          </div>
+          ))}
         </div>
-
         <DialogFooter className="sm:justify-between ml-7 mr-7">
           <Button>Adicionar participante</Button>
           <DialogClose asChild>
-            <Button type="button">
+            <Button type="button" onClick={onClose}>
               Fechar
             </Button>
           </DialogClose>

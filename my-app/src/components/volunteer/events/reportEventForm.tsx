@@ -1,194 +1,106 @@
 'use client';
 
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-const formSchema = z.object({
-  name: z.string().min(2, { message: "O nome deve ter pelo menos 2 caracteres." }),
-  description: z.string().min(2, { message: "A descrição deve ter pelo menos 2 caracteres." }),
-  date: z.string().refine((val) => !isNaN(Date.parse(val)), { message: "Insira uma data válida." }),
-  time: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, { message: "Insira um horário no formato HH:MM." }),
-  modality: z.enum(["online", "presencial", "híbrido"], { message: "Selecione uma modalidade válida." }),
-  status: z.enum(["ativo", "inativo", "pendente"], { message: "Selecione um status válido." }),
-  type: z.enum(["palestra", "workshop", "curso"], { message: "Selecione um tipo de evento válido." }),
-  workload: z.number().min(1, { message: "A carga horária deve ser no mínimo 1 hora." }),
-  owner: z.string().min(2, { message: "O responsável deve ter pelo menos 2 caracteres." }),
-  results: z.string().min(2, { message: "Os resultados devem ter pelo menos 2 caracteres." }),
-  observation: z.string().min(2, { message: "A observação deve ter pelo menos 2 caracteres." }),
-});
+import { useEventsDetailsFunctions } from '@/app/api/events/eventService';
+import { Event } from '@/interfaces/IEventData';
+import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { Label } from "@/components/ui/label";
+import { useSession } from "next-auth/react";
+import { Review } from '@/interfaces/IReview';
 
 export default function ReportEvent() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { data: session } = useSession(); 
+  const router = useRouter();
+  const { eventId } = useParams<{ eventId: string }>();
+  const [event, setEvent] = useState<Event | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [selectedReview, setSelectedReview] = useState<Review | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [inscriptionsDialogOpen, setInscriptionsDialogOpen] = useState(false);
+
+  const { fetchData, handleReviewClick } = useEventsDetailsFunctions(eventId, setEvent, setReviews, setLoading);
+
+
+  useEffect(() => {
+    fetchData();
+  }, [eventId, session?.token]);
+  console.log("Dados do evento:", event, "Id do evento:", eventId);
+
+
+  const form = useForm({
     defaultValues: {
-      name: "",
+      qtt_person: 0,
       description: "",
-      date: "",
-      time: "",
-      modality: "presencial",
-      status: "ativo",
-      type: "palestra",
-      workload: 10,
-      owner: "",
       results: "",
       observation: "",
+      relates_event_id: 0,
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values) {
     console.log(values);
   }
 
   return (
-    <Card className="w-full max-w-[2000px] mx-auto mt-10 shadow-lg">
+    <Card className="w-full max-w-[800px] mx-auto mt-10 shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Relatório do Evento</CardTitle>
       </CardHeader>
       <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="col-span-3">
+            <Label>Nome do evento</Label>
+            <Input value={event?.name} />
+          </div>
+          <div>
+          <Label>Status do evento</Label>
+          <Input value={event?.status} />
+          </div>
+          <div>
+            <Label>Data do evento</Label>
+            <Input value={event?.date} />
+          </div>
+          <div>
+            <Label>Horário do evento</Label>
+            <Input value={event?.time} />
+          </div>
+          <div>
+            <Label>Modalidade do evento</Label>
+            <Input value={event?.modality} />
+          </div>
+          <div>
+            <Label>Tipo do evento</Label>
+            <Input value={event?.type} />
+          </div>
+          <div>
+            <Label>Carga horária</Label>
+            <Input value={event?.workload} />
+          </div>
+          <div className="col-span-3">
+            <Label>Voluntário responsável</Label>
+            <Input value={event?.user_owner.name} />
+          </div>
+        </div>
+
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
+          <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          
             <FormField
               control={form.control}
-              name="name"
+              name="qtt_person"
               render={({ field }) => (
-                <FormItem className="col-span-3">
-                  <FormLabel>Nome do evento</FormLabel>
+                <FormItem className="col-span-2 flex items-center">
+                  <FormLabel className="mr-2">Quantas pessoas participaram do evento?</FormLabel>
                   <FormControl>
-                    <Input placeholder="Curso de costura" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Data do evento</FormLabel>
-                  <FormControl>
-                    <Input type="date" className="flex justify-end" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="time"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="col-span-2">Horário do evento</FormLabel>
-                  <FormControl>
-                    <Input type="time" className="flex justify-end" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="modality"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Modalidade do evento</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione a modalidade" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="presencial">Presencial</SelectItem>
-                        <SelectItem value="online">Online</SelectItem>
-                        <SelectItem value="híbrido">Híbrido</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tipo de evento</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione o tipo de evento" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="palestra">Palestra</SelectItem>
-                        <SelectItem value="workshop">Workshop</SelectItem>
-                        <SelectItem value="curso">Curso</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="workload"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Carga horária</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="owner"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Voluntário responsável</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Nome do responsável" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Status do evento</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione o status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="ativo">Ativo</SelectItem>
-                        <SelectItem value="inativo">Inativo</SelectItem>
-                        <SelectItem value="pendente">Pendente</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Input type="number" className="w-16" {...field} /> 
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -238,9 +150,10 @@ export default function ReportEvent() {
             />
           </form>
         </Form>
+
       </CardContent>
       <CardFooter className="flex justify-end gap-4">
-        <Button variant="outline">
+        <Button onClick={() => router.back()} variant="outline">
           Cancelar
         </Button>
         <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
