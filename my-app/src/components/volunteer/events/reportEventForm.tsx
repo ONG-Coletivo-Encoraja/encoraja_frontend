@@ -14,6 +14,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
 import { Review } from '@/interfaces/IReview';
+import { IReportAdmin } from '@/interfaces/IReportAdmin';
+import { registerReportAdmin } from "@/app/api/volunteers/reportAdmin";
+import { AxiosError } from 'axios';
 
 export default function ReportEvent() {
   const { data: session } = useSession(); 
@@ -35,19 +38,47 @@ export default function ReportEvent() {
   console.log("Dados do evento:", event, "Id do evento:", eventId);
 
 
-  const form = useForm({
+  const form = useForm<IReportAdmin>({
     defaultValues: {
+      //relates_event:,
       qtt_person: 0,
       description: "",
-      results: "",
-      observation: "",
-      relates_event_id: 0,
+      results:  "",
+      observation:  ""
     },
   });
 
-  function onSubmit(values) {
+
+  const handleSubmit = async (values: IReportAdmin) => {
     console.log(values);
-  }
+
+    const data: IReportAdmin = {
+      ...values,
+    };
+
+    if (!session?.token) {
+      return;
+    }
+
+    try {
+      const response = await registerReportAdmin(data, session.token); 
+      router.push('/home');
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        const errors = error.response.data.errors;
+
+        if (errors && typeof errors === 'object') {
+          const firstKey = Object.keys(errors)[0];
+          const firstErrorMessage = errors[firstKey][0];
+        } else {
+          console.error("Errors object is not defined or not an object");
+        }
+      } else {
+        console.error('Erro inesperado:', error);
+        alert('Ocorreu um erro inesperado.');
+      }
+    }
+  };
 
   return (
     <Card className="w-full max-w-[800px] mx-auto mt-10 shadow-lg">
@@ -91,7 +122,7 @@ export default function ReportEvent() {
         </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           
             <FormField
               control={form.control}
@@ -156,7 +187,7 @@ export default function ReportEvent() {
         <Button onClick={() => router.back()} variant="outline">
           Cancelar
         </Button>
-        <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
+        <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
           Salvar
         </Button>
       </CardFooter>
