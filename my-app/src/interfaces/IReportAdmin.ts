@@ -33,7 +33,7 @@ export interface IRelatesEvent {
 
 export interface IReportAdmin {
     id: number;
-    relates_event: IRelatesEvent;
+    event_id: number;
     qtt_person: number; 
     description: string; 
     results: string; 

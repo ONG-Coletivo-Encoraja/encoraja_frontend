@@ -37,16 +37,21 @@ export default function ReportEvent() {
   }, [eventId, session?.token]);
   console.log("Dados do evento:", event, "Id do evento:", eventId);
 
-
   const form = useForm<IReportAdmin>({
     defaultValues: {
-      //relates_event:,
       qtt_person: 0,
+      event_id: event?.id,
       description: "",
       results:  "",
       observation:  ""
     },
   });
+
+  useEffect(() => {
+    if (event && event.id) {
+      form.setValue("event_id", event.id);
+    }
+  }, [event, form]);
 
 
   const handleSubmit = async (values: IReportAdmin) => {
@@ -62,6 +67,7 @@ export default function ReportEvent() {
 
     try {
       const response = await registerReportAdmin(data, session.token); 
+      console.log(response);
       router.push('/home');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
@@ -124,6 +130,18 @@ export default function ReportEvent() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           
+          <FormField
+            control={form.control}
+            name="event_id"
+            render={({ field }) => (
+              <FormItem className="col-span-2 flex items-center">
+                <FormControl>
+                  <Input type="hidden" {...field} value={field.value || ''} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
             <FormField
               control={form.control}
               name="qtt_person"
