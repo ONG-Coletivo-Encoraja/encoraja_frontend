@@ -27,6 +27,30 @@ export async function getUserData(): Promise<UserData> {
   }
 }
 
+export async function updateUserData(data: UserData): Promise<UserData> {
+  try {
+    const session = await getSession();
+    const token = session?.token as string;
+
+    const response = await API.put('/users/me', data, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log("response: ", response);
+    return response.data;
+  
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error:', error.response?.data || error.message);
+    } else {
+      console.error('Unexpected Error:', error);
+    }
+    throw error;
+  }
+}
+
 export async function register(data: UserData) {
   try {
     const response = await API.post('/users', data, {

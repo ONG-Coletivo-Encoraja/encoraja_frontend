@@ -34,7 +34,7 @@ export function ProfileForm({ formData, onSubmit }: any) {
   const [date, setDate] = React.useState<Date>();
 
   return (
-    <Card className="w-full max-w-5xl mx-auto">
+   <Card className="w-full max-w-5xl mx-auto">
       <CardHeader>
         <CardTitle>Meu perfil</CardTitle>
         <div className="flex items-center justify-center h-full">
@@ -60,7 +60,7 @@ export function ProfileForm({ formData, onSubmit }: any) {
                         !date && "text-muted-foreground"
                       )}
                     >
-                      <CalendarDays className="mr-2 h-4 w-4" />
+                      <CalendarDays cl assName="mr-2 h-4 w-4" />
                       {date
                         ? format(date, "P", { locale: ptBR })
                         : <span>{field.placeholder || "Selecione a data"}</span>}
