@@ -55,7 +55,6 @@ export function EventCard({ event }: EventCardProps) {
         <Label className="text-[#727272]">{event.description}</Label>
       </CardContent>
       <CardFooter className="flex justify-end">
-        {/* {event.status === 'finished' && (<StarRating />)} */}
         {event.status != 'finished' && (<Button>Editar</Button>)}
       </CardFooter>
     </Card>

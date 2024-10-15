@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
 
-    <div className="mt-0">
+    <div className="bg-[#ededed]">
         <EventsList />
     </div>
   );
