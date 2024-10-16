@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 import Header from "@/components/volunteer/header/header";
 import Sidebar from "@/components/volunteer/sidebar/sidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -34,6 +35,7 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
           <Sidebar />
           <div className="flex-1 overflow-hidden">
             {children}
+            <Toaster />
           </div>
         </div>
       </body>

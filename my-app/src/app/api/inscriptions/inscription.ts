@@ -40,4 +40,27 @@ export async function deleteInscription(token: string, id: string): Promise<Insc
       throw error;
     }
   }
+
+  export async function createInscription(event_id: number, token: string): Promise<any> {
+    try {
+      const response = await API.post(
+        '/inscription',
+        { event_id },  
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      return response.data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error('Error:', error.response?.data || error.message);
+      } else {
+        console.error('Unexpected Error:', error);
+      }
+      throw error;
+    }
+  }
   

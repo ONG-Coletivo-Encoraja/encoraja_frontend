@@ -8,14 +8,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Inscription } from "@/interfaces/IInscription";
-import { getMyInscriptions, deleteInscription } from '@/app/api/inscriptions/getMyInscriptions';
+import { getMyInscriptions, deleteInscription } from '@/app/api/inscriptions/inscription';
 import { Event } from '@/interfaces/IEventData';
 import { useSession } from "next-auth/react";
+import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 
 export default function MyInscriptions() {
+    const { toast } = useToast();
     const [statusFilter, setStatusFilter] = useState<string | undefined>(undefined);
     const [nameFilter, setNameFilter] = useState<string>("");
     const { data: session } = useSession();
@@ -51,8 +53,16 @@ export default function MyInscriptions() {
             try {
                 await deleteInscription(session.token, String(id));
                 setData(prevData => prevData.filter(item => item.id !== id));
+                toast ({
+                    description: "Inscrição cancelada com sucesso!",
+                });
             } catch (error) {
                 console.error('Error deleting inscription:', error);
+                toast({
+                    title: "Erro!",
+                    description: "Não foi possível cancelar a inscrição.",
+                    variant: "destructive",
+                  });
             }
         }
     };

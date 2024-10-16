@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import StarRating from "../ui/rating";
 import { Button } from "../ui/button";
 import { Event } from "@/interfaces/IEventData";
+import { useSession } from "next-auth/react";
 
 interface EventCardProps {
   event: Event;
@@ -35,6 +36,8 @@ export function EventCard({ event }: EventCardProps) {
       break;
   }
 
+  const { data: session } = useSession(); 
+
   return (
     <Card className="w-full rounded-xl min-h-[350px] max-h-[500px]">
       <CardHeader className="">
@@ -54,9 +57,11 @@ export function EventCard({ event }: EventCardProps) {
         <br />
         <Label className="text-[#727272]">{event.description}</Label>
       </CardContent>
-      <CardFooter className="flex justify-end">
-        {event.status != 'finished' && (<Button>Editar</Button>)}
+      {/*
+     <CardFooter className="flex justify-end">
+        {event.status != 'finished' && event.user_owner.id === session?.user.id && (<Button>Editar</Button>)}
       </CardFooter>
+          */}
     </Card>
   );
 }

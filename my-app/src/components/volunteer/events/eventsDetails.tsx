@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
@@ -15,9 +16,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useEventsDetailsFunctions } from '@/app/api/events/eventService';
 import ReviewUser from './reviewUser';
 import { useSession } from "next-auth/react";
+import { useToast } from "@/hooks/use-toast";
+import { createInscription } from '@/app/api/inscriptions/inscription';
+
 import Link from 'next/link';
 
 export default function EventsDetails() {
+  const { toast } = useToast();
   const { data: session } = useSession(); 
   const router = useRouter();
   const { eventId } = useParams<{ eventId: string }>();
@@ -33,6 +38,24 @@ export default function EventsDetails() {
   useEffect(() => {
     fetchData();
   }, [eventId]);
+
+  const handleCreateInscription = async () => {
+    if (session?.token) {
+      try {
+        await createInscription(Number(eventId), session.token); 
+        toast({
+          description: "Inscrição realizada com sucesso!",
+        })
+      } catch (error) {
+        toast({
+          title: "Erro!",
+          description: "Não foi possível realizar a inscrição.",
+          variant: "destructive",
+        })
+      }
+    }
+  };
+
 
 
   return (
@@ -77,12 +100,12 @@ export default function EventsDetails() {
                     />
                   </div>
                 )}
-                {event?.status !== 'finished' && (
+                {event?.status !== 'finished' && event?.user_owner.id === session?.user.id && (
                   <div>
                     <Button>Editar evento</Button>
                   </div>
                 )}
-                {event?.user_owner.id === session?.user.id && (
+                {event?.user_owner.id === session?.user.id && event?.status === 'finished' && (
                 <Link href={`/detalhe-do-evento/${eventId}/relatorio-do-evento`}>
                 <Button>
                   Relatório
@@ -91,6 +114,27 @@ export default function EventsDetails() {
               )}
               </div>
             </CardContent>
+            <CardFooter className='mt-16 flex items-end justify-center'>
+              {event?.status !== 'finished' && event?.user_owner.id !== session?.user.id && (
+                  <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button>Se inscrever</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Inscrição</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Você deseja se inscrever no evento {event?.name}, que ocorrerá no dia {event?.date} às {event?.time}?
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleCreateInscription}>Sim</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                  )}
+            </CardFooter>
           </div>
           <div className='m-5'>
             <CardHeader className='w-[400px]'>
