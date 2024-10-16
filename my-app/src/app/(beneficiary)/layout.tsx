@@ -4,6 +4,7 @@ import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
+import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/beneficiary/header/header";
 import Sidebar from "@/components/beneficiary/sidebar/sidebar";
 
@@ -34,6 +35,7 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
           <Sidebar />
           <div className="flex-1 overflow-hidden bg-[#EDEDED]">
             {children}
+            <Toaster />
           </div>
         </div>
       </body>

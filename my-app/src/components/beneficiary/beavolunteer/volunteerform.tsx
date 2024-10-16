@@ -2,9 +2,23 @@
 
 import * as React from "react";
 import { VolunteerForm } from "@/components/shared/volunteerForm";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Form, FormField, FormMessage, FormItem, FormControl, FormLabel } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { getUserData } from "@/app/api/auth";
 import { UserData } from "@/interfaces/IUserData";
+import { Textarea } from "@/components/ui/textarea";
+import { IRelatesEvent } from "@/interfaces/IReportAdmin";
+import { IRequestVolunteer } from "@/interfaces/IRequestVolunteer";
+import { requestVolunteer } from "@/app/api/volunteers/beAVolunteer";
+import { AxiosError } from "axios";
+import { useParams, useRouter } from 'next/navigation';
+import { useForm } from "react-hook-form";
+import { useToast } from "@/hooks/use-toast";
+
 
 export function BeAVolunteer() {
   const { data: session } = useSession();
@@ -12,6 +26,9 @@ export function BeAVolunteer() {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
   const permission = session?.user?.permission;
+  const router = useRouter();
+  const { toast } = useToast();
+
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -30,70 +47,178 @@ export function BeAVolunteer() {
     fetchData();
   }, []);
 
-  const handleProfileSubmit = async (formData: UserData) => {
+  const form = useForm<IRequestVolunteer>({
+    defaultValues: {
+      availability: "",
+      course_experience: "",
+      how_know: "",
+      expectations: "",
+    },
+  });
 
+  const handleSubmit = async (values: IRequestVolunteer) => {
+    console.log(values);
 
-      console.log("teste");
+    const data: IRequestVolunteer = {
+      ...values,
+    };
 
+    if (!session?.token) {
+      return;
+    }
+
+    try {
+      const response = await requestVolunteer(data, session.token); 
+      console.log(response);
+      toast({
+        title: "Solicitação enviada",
+        description: "Solicitação de voluntariado enviada com sucesso!",
+      });
+      router.push('/home');
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        const errors = error.response.data.errors;
+        toast({
+          title: "Erro ao enviar solicitação",
+          description: "Solicitação de voluntariado não enviada.",
+          variant: "destructive",
+        });
+
+        if (errors && typeof errors === 'object') {
+          const firstKey = Object.keys(errors)[0];
+          const firstErrorMessage = errors[firstKey][0];
+        } else {
+          console.error("Errors object is not defined or not an object");
+        }
+      } else {
+        console.error('Erro inesperado:', error);
+        alert('Ocorreu um erro inesperado.');
+      }
+    }
   };
 
-
-  const profileFormData = [
-    { id: "name", label: "Nome completo", type: "text", placeholder: "Seu nome", value: profileData?.name || "" },
-    { id: "date_birthday", label: "Data de nascimento", type: "date", value: profileData?.date_birthday || "" },
-    { id: "phone", label: "Telefone", type: "text", placeholder: "Seu telefone", value: profileData?.phone || "" },
-    { id: "race", label: "Raça", type: "select", options: [
-      { value: "white", label: "Branca" },
-      { value: "asian", label: "Amarela" },
-      { value: "mixed", label: "Parda" },
-      { value: "black", label: "Preta" }
-    ], value: profileData?.ethnicity || "" },
-    { id: "gender", label: "Gênero", type: "select", options: [
-      { value: "male", label: "Masculino" },
-      { value: "female", label: "Feminino" },
-      { value: "outher", label: "Prefiro não dizer" }
-    ], value: profileData?.gender || "" },
-    { id: "email", label: "Email", type: "text", placeholder: "Seu email", value: profileData?.email || "" },
-    { id: "cpf", label: "CPF", type: "text", placeholder: "Seu CPF", value: profileData?.cpf || "" },
-    { id: "zip_code", label: "CEP", type: "text", placeholder: "Seu CEP", value: profileData?.zip_code || "" },
-    { id: "street", label: "Rua", type: "text", placeholder: "Sua rua", value: profileData?.street || "" },
-    { id: "number", label: "Número", type: "text", placeholder: "Seu número", value: profileData?.number || "" },
-    { id: "neighborhood", label: "Bairro", type: "text", placeholder: "Seu bairro", value: profileData?.neighbourhood || "" },
-    { id: "city", label: "Cidade", type: "text", placeholder: "Sua cidade", value: profileData?.city || "" },
-<<<<<<< HEAD
-    { id: "how_know", label: "Como soube da vaga?", type: "text", },
-    { id: "availability", label: "Disponibilidade", type: "text", },
-    { id: "expectations", label: "Expectativa", type: "text", },
-    { id: "course_experience", label: "Experiência", type: "text", },
-=======
-    { id: "permission", label: "Tipo de usuário", readOnly: true, value: permission || "" },
-<<<<<<< HEAD
-    { id: "how_know", label: "Como soube da vaga?", type: "text", },
-    { id: "permission", label: "Disponibilidade", type: "text",},
-    { id: "availability", label: "Expectativa", type: "text",},
-    { id: "course_experience", label: "Experiência", type: "text",},
-=======
-    { id: "gender", label: "Como soube da vaga?", type: "select", options: [
-        { value: "male", label: "Masculino" },
-        { value: "female", label: "Feminino" },
-        { value: "outher", label: "Prefiro não dizer" }
-      ], value: profileData?.gender || "" },
-    { id: "permission", label: "Disponibilidade", readOnly: true, value: permission || "" },
-    { id: "permission", label: "Expectativa", readOnly: true, value: permission || "" },
->>>>>>> SCRUM-200-Event-form-screen
-
->>>>>>> origin/SCRUM-201-Evaluation-form-screen
-  ];
-
-  if (isLoading) {
-    return <p>Carregando...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
   return (
-    <VolunteerForm formData={profileFormData} onSubmit={handleProfileSubmit} />
+    <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
+    <CardHeader>
+      <CardTitle className="text-2xl font-bold">Seja voluntário</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="col-span-3">
+          <Label>Nome</Label>
+          <Input readOnly value={profileData?.name} />
+        </div>
+        <div>
+        <Label>CPF</Label>
+        <Input readOnly value={profileData?.cpf} />
+        </div>
+        <div className="col-span-2">
+        <Label>Email</Label>
+        <Input readOnly value={profileData?.email} />
+        </div>
+        <div>
+        <Label>Data de nascimento</Label>
+        <Input readOnly value={profileData?.date_birthday} />
+        </div>
+        <div>
+        <Label>Telefone</Label>
+        <Input readOnly value={profileData?.phone} />
+        </div>
+        <div className="col-span-2">
+        <Label>Raça</Label>
+        <Input readOnly value={profileData?.ethnicity} />
+        </div>
+        <div className="col-span-2">
+        <Label>Genero</Label>
+        <Input readOnly value={profileData?.gender} />
+        </div>
+        <div>
+        <Label>CEP</Label>
+        <Input readOnly value={profileData?.address.zip_code} />
+        </div>
+        <div className="col-span-2">
+        <Label>Rua</Label>
+        <Input readOnly value={profileData?.address.street} />
+        </div>
+        <div>
+        <Label>Número</Label>
+        <Input readOnly value={profileData?.address.number} />
+        </div>
+        <div className="col-span-2">
+        <Label>Bairro</Label>
+        <Input readOnly value={profileData?.address.neighbourhood} />
+        </div>
+        <div className="col-span-2">
+        <Label>Cidade</Label>
+        <Input readOnly value={profileData?.address.city} />
+        </div>
+    </div>
+    <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
+          
+          <FormField
+            control={form.control}
+            name="availability"
+            render={({ field }) => (
+              <FormItem className="col-span-2">
+                <FormLabel>Disponilibilidade</FormLabel>
+                <FormControl>
+                  <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="course_experience"
+            render={({ field }) => (
+              <FormItem className="col-span-2">
+                <FormLabel>Experiência</FormLabel>
+                <FormControl>
+                  <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        <FormField
+            control={form.control}
+            name="how_know"
+            render={({ field }) => (
+              <FormItem className="col-span-2">
+                <FormLabel>Como soube?</FormLabel>
+                <FormControl>
+                  <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        <FormField
+            control={form.control}
+            name="expectations"
+            render={({ field }) => (
+              <FormItem className="col-span-2">
+                <FormLabel>Expectativas</FormLabel>
+                <FormControl>
+                  <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </form>
+    </Form>
+    </CardContent>
+    <CardFooter className="flex justify-end gap-4">
+        <Button onClick={() => router.back()} variant="outline">
+          Cancelar
+        </Button>
+        <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
+          Salvar
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

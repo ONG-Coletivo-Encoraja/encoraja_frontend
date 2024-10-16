@@ -95,35 +95,35 @@ export default function ReportEvent() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="col-span-3">
             <Label>Nome do evento</Label>
-            <Input value={event?.name} />
+            <Input readOnly value={event?.name} />
           </div>
           <div>
           <Label>Status do evento</Label>
-          <Input value={event?.status} />
+          <Input readOnly value={event?.status} />
           </div>
           <div>
             <Label>Data do evento</Label>
-            <Input value={event?.date} />
+            <Input readOnly value={event?.date} />
           </div>
           <div>
             <Label>Horário do evento</Label>
-            <Input value={event?.time} />
+            <Input readOnly value={event?.time} />
           </div>
           <div>
             <Label>Modalidade do evento</Label>
-            <Input value={event?.modality} />
+            <Input readOnly value={event?.modality} />
           </div>
           <div>
             <Label>Tipo do evento</Label>
-            <Input value={event?.type} />
+            <Input readOnly value={event?.type} />
           </div>
           <div>
             <Label>Carga horária</Label>
-            <Input value={event?.workload} />
+            <Input readOnly value={event?.workload} />
           </div>
           <div className="col-span-3">
             <Label>Voluntário responsável</Label>
-            <Input value={event?.user_owner.name} />
+            <Input readOnly value={event?.user_owner.name} />
           </div>
         </div>
 
