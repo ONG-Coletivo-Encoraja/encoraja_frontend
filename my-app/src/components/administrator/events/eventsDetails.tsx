@@ -14,6 +14,8 @@ import { Review } from '@/interfaces/IReview';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useEventsDetailsFunctions } from '@/app/api/events/eventService';
 import ReviewUser from './reviewUser';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export default function EventsDetails() {
   const router = useRouter();
@@ -24,12 +26,13 @@ export default function EventsDetails() {
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [inscriptionsDialogOpen, setInscriptionsDialogOpen] = useState(false);
+  const { data: session } = useSession(); 
 
   const { fetchData, handleReviewClick } = useEventsDetailsFunctions(eventId, setEvent, setReviews, setLoading);
 
   useEffect(() => {
     fetchData();
-  }, [eventId]);
+  }, [eventId, session]);
 
   return (
     <div>
@@ -75,7 +78,7 @@ export default function EventsDetails() {
                 )}
                 {event?.status !== 'finished' && (
                   <div>
-                    <Button>Editar evento</Button>
+                    <Link key={eventId} href={`/update-event/${eventId}`}><Button>Editar evento</Button></Link>
                   </div>
                 )}
               </div>
