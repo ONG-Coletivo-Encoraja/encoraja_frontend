@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-
+import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/administrator/header/header";
 import Sidebar from "@/components/administrator/sidebar/sidebar";
 
@@ -32,6 +32,7 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
         </div>
         <div className="flex-1 pt-[70px] ml-60 overflow-hidden bg-[#ededed]">
           {children}
+          <Toaster />
         </div>
       </>
     );

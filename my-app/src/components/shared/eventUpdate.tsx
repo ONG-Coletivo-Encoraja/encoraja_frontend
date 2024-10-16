@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { CalendarDays } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,7 +20,6 @@ import Link from "next/link";
 
 export default function Events(): React.JSX.Element {
   const date = new Date(); 
-  // data estática
 
   return (
     <div className="flex items-center justify-center min-h-screen">
