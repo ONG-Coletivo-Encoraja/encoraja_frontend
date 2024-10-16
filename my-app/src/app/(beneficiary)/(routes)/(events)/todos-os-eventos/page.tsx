@@ -1,11 +1,13 @@
-import { EventsList } from '@/components/beneficiary/events/eventsList';
+import * as React from 'react';
+import { EventsList } from "@/components/beneficiary/events/eventsList";
+import BackgroundImage from '@/components/ui/background-image';
 
-export default function Events() {
+export default function Home() {
+
   return (
-    <div className="h-screen">
-      <div className="h-full w-full flex items-center justify-center bg-[#ededed]" >
+
+    <div className="bg-[#ededed]">
         <EventsList />
-      </div>
     </div>
   );
-};
+}

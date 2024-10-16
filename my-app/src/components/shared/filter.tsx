@@ -2,12 +2,14 @@ import { Select, SelectContent, SelectTrigger, SelectItem, SelectValue } from ".
 import { Button } from "../ui/button";
 import { Filter } from 'lucide-react';
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface FilterComponentProps {
     onFilterChange: (status: string | undefined) => void;
 }
 
 const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange }) => {
+    const { data: session } = useSession();
     const handleFilterChange = (value: string) => {
         onFilterChange(value === "all" ? undefined : value); 
     };
@@ -29,11 +31,13 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange }) => 
                     </SelectContent>
                 </Select>
             </div>
+            {session?.user.permission === 'volunteer' && (
             <Link href="/eventos/cadastrar-evento">
                 <Button className="ml-2">
                     Criar
                 </Button>
             </Link>
+            )}
         </div>
     );
 };
