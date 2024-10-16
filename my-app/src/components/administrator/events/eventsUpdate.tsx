@@ -91,6 +91,7 @@ export default function EventUpdate() {
     //   alert("O campo horário deve estar no formato HH:mm.");
     //   return;
     // }
+    console.log(eventData?.time);
 
     try {
       await API.put(`/admin/event/${eventId}`, {
@@ -115,6 +116,8 @@ export default function EventUpdate() {
       }));
     }
   };
+
+  console.log(eventData?.user_owner?.name)
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -320,12 +323,22 @@ export default function EventUpdate() {
             </div>
 
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="owner">Responsável</Label>
+              <Label htmlFor="nameOwner">Responsável</Label>
               <Input
-                id="owner"
+                id="nameOwner"
                 type="text"
                 placeholder="Nome do Proprietário"
                 value={eventData?.user_owner?.name || ''}
+                className="w-full"
+                readOnly
+              />
+            </div>
+
+            <div className="flex flex-col space-y-1.5">
+              <Input
+                id="owner"
+                type="hidden"
+                value={eventData?.user_owner?.id || ''}
                 className="w-full"
                 readOnly
               />
