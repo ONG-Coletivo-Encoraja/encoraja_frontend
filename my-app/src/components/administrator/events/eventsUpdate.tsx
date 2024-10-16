@@ -5,6 +5,7 @@ import { CalendarDays } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Card,
   CardContent,
@@ -22,7 +23,7 @@ import Link from "next/link";
 import API from '@/services/api';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { Event, UserOwner } from "@/interfaces/IEventData";
+import { Event } from "@/interfaces/IEventData";
 
 export default function EventUpdate() {
   const [eventData, setEventData] = useState<Event | null>(null);
@@ -42,8 +43,7 @@ export default function EventUpdate() {
           },
         });
 
-        const fetchedEvent = response.data.event;
-
+        const fetchedEvent: Event = response.data.event;
         const parsedDate = new Date(fetchedEvent.date);
         setEventData(fetchedEvent);
         setDate(parsedDate);
@@ -60,30 +60,61 @@ export default function EventUpdate() {
     fetchEventData();
   }, [eventId, token]);
 
-  console.log()
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     if (eventData) {
-      setEventData({
-        ...eventData,
-        [id]: id === 'vacancies' || id === 'social_vacancies' || id === 'regular_vacancies' || id === 'workload'
-          ? Number(value)
-          : value
-      });
+      const newValue = id === 'vacancies' || id === 'social_vacancies' || id === 'regular_vacancies' || id === 'workload'
+        ? Number(value)
+        : value;
+
+      setEventData(prev => ({
+        ...prev!,
+        [id]: newValue
+      }));
     }
   };
 
   const handleDateChange = (selectedDate: Date | undefined) => {
-    console.log("handleDateChange chamado");
     if (selectedDate) {
       const localDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
-      
-      console.log("Data local ajustada:", localDate);
       setDate(localDate);
     }
   };
 
+  const validateTimeFormat = (time: string) => {
+    const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    return timePattern.test(time);
+  };
+
+  const handleSave = async () => {
+    // if (eventData?.time && !validateTimeFormat(eventData.time)) {
+    //   alert("O campo horário deve estar no formato HH:mm.");
+    //   return;
+    // }
+
+    try {
+      await API.put(`/admin/event/${eventId}`, {
+        ...eventData,
+        date: date?.toISOString().split('T')[0],
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+      });
+    } catch (error) {
+      console.error('Erro ao salvar os dados:', error);
+    }
+  };
+
+  const handleSelectChange = (field: keyof Event) => (value: string) => {
+    if (eventData) {
+      setEventData(prev => ({
+        ...prev!,
+        [field]: value
+      }));
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -131,7 +162,7 @@ export default function EventUpdate() {
                   <Calendar
                     mode="single"
                     selected={date}
-                    onSelect={(selectedDate) => handleDateChange(selectedDate)}
+                    onSelect={handleDateChange}
                   />
                 </PopoverContent>
               </Popover>
@@ -141,8 +172,8 @@ export default function EventUpdate() {
               <Label htmlFor="time">Horário</Label>
               <Input
                 id="time"
-                type="text"
-                placeholder="Horário do Evento"
+                type="time"
+                placeholder="Horário do Evento (HH:mm)"
                 value={eventData?.time || ''}
                 className="w-full"
                 onChange={handleInputChange}
@@ -151,38 +182,45 @@ export default function EventUpdate() {
 
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="modality">Modalidade</Label>
-              <Input
-                id="modality"
-                type="text"
-                placeholder="Modalidade"
-                value={eventData?.modality || ''}
-                className="w-full"
-                onChange={handleInputChange}
-              />
+              <Select value={eventData?.modality || ''} onValueChange={handleSelectChange('modality')}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="presential">Presencial</SelectItem>
+                  <SelectItem value="hybrid">Híbrido</SelectItem>
+                  <SelectItem value="remote">Remoto</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="status">Status</Label>
-              <Input
-                id="status"
-                type="text"
-                placeholder="Status"
-                value={eventData?.status || ''}
-                className="w-full"
-                onChange={handleInputChange}
-              />
+              <Select value={eventData?.status || ''} onValueChange={handleSelectChange('status')}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="active">Ativo</SelectItem>
+                  <SelectItem value="inactive">Inativo</SelectItem>
+                  <SelectItem value="pending">Pendente</SelectItem>
+                  <SelectItem value="finished">Finalizado</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="type">Tipo</Label>
-              <Input
-                id="type"
-                type="text"
-                placeholder="Tipo"
-                value={eventData?.type || ''}
-                className="w-full"
-                onChange={handleInputChange}
-              />
+              <Select value={eventData?.type || ''} onValueChange={handleSelectChange('type')}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="course">Curso</SelectItem>
+                  <SelectItem value="workshop">Workshop</SelectItem>
+                  <SelectItem value="lecture">Palestra</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="flex flex-col space-y-1.5">
@@ -287,20 +325,15 @@ export default function EventUpdate() {
                 id="owner"
                 type="text"
                 placeholder="Nome do Proprietário"
-                value={eventData?.user_owner.name || ''}
+                value={eventData?.user_owner?.name || ''}
                 className="w-full"
-                onChange={(e) =>
-                  setEventData({
-                    ...eventData!,
-                    user_owner: {
-                      ...eventData!.user_owner,
-                      name: e.target.value
-                    }
-                  })
-                }
                 readOnly
               />
             </div>
+
+            <Button type="button" onClick={handleSave} className="mt-4">
+              Salvar
+            </Button>
           </form>
         </CardContent>
 
@@ -308,7 +341,6 @@ export default function EventUpdate() {
           <Link href="/home">
             <Button variant="outline">Cancelar</Button>
           </Link>
-          <Button type="submit">Salvar</Button>
         </CardFooter>
       </Card>
     </div>
