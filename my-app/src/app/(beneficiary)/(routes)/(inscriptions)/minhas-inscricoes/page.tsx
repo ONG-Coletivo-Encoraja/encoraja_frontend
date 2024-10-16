@@ -1,13 +1,13 @@
 import * as React from 'react';
-import MyInscriptions from "@/components/beneficiary/inscriptions/page";
 import BackgroundImage from '@/components/ui/background-image';
+import MyInscriptions from '@/components/shared/myInscriptionsTable';
 
 export default function InscriptionsScreen() {
     return (
-        <div>
-          <BackgroundImage className="h-full w-full flex items-center justify-center">
-            < MyInscriptions />
-          </BackgroundImage>
-        </div>
+      <div className="h-screen flex flex-col items-center bg-[#ededed]">
+      <div className="mt-12">
+        < MyInscriptions />
+      </div>
+    </div>
     );
   }
