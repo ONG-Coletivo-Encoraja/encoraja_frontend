@@ -3,6 +3,7 @@ import PieChart from '@/components/graphics/pizza';
 import BarChart from '@/components/graphics/bar';
 import Bar2Chart from '@/components/graphics/bar2';
 import LineChart from '@/components/graphics/lines';
+import LineChart2 from '@/components/graphics/lines2';
 import PieChart2 from '@/components/graphics/pizza2';
 import ExportButton from '@/components/pop-ups/ExportButton';
 
@@ -41,6 +42,9 @@ export default function GraphicsPage() {
           <div className='w-full  p-5 bg-white flex justify-center items-center h-96'>
             <div style={{ width: '80%', height: '100%' }}>
               <PieChart2 title="Distribuição Faixa Etária" />
+            </div>
+            <div style={{ width: '45%', height: '100%' }}>
+              <LineChart2 title="Total denúncias" />
             </div>
           </div>
         </div>

@@ -45,6 +45,22 @@ export const fetchParticipationData = async (token: string) => {
   }
 };
 
+export const fetchComplainceData = async (token: string) => {
+  try {
+    const response = await API.get('/graphics/compliance', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar os dados:', error);
+    throw error;
+  }
+};
+
+
 export const fetchRatingData = async (token: string) => {
   try {
     const response = await API.get('/graphics/rating', {
