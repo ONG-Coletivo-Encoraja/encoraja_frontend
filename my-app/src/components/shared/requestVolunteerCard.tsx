@@ -1,6 +1,5 @@
 'use client';
 
-import { Badge } from "@/components/ui/badge"
 import {
   Card,
   CardContent,
@@ -10,14 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-import StarRating from "../ui/rating";
 import { CircleUserIcon } from "lucide-react";
 import Link from "next/link";
 
+interface RequestCardProps {
+  request: IRequestVolunteer
+}
 
-
-export function RequestVolunteerCard() {
+export function RequestVolunteerCard({ request }: RequestCardProps) {
   return (
     <Card className="w-[400px]">
       <CardHeader className="flex items-center">
@@ -25,11 +24,10 @@ export function RequestVolunteerCard() {
       </CardHeader>
       <CardContent>
       <div className="flex flex-col gap-2">
-        <Label className=" text-[#727272]"><b>Nome:</b> Maria Eduarda </Label>
-        <Label className=" text-[#727272]"><b>Email:</b> maria@email.com </Label>
-        <Label className=" text-[#727272]"><b>Telefone:</b> (41) 99127-9729</Label>
-        <Label className=" text-[#727272]"><b>Disponibilidade:</b> todas as manhãs</Label>
-        <Label className=" text-[#727272]"><b>Experiência:</b> Programação</Label>
+        <Label className=" text-[#727272]"><b>Nome:</b>{request.user?.name} </Label>
+        <Label className=" text-[#727272]"><b>Email:</b> {request.user?.email} </Label>
+        <Label className=" text-[#727272]"><b>Disponibilidade:</b>{request.availability}</Label>
+        <Label className=" text-[#727272]"><b>Experiência:</b> {request.course_experience}</Label>
       </div>
       </CardContent>
       <CardFooter className="flex justify-center">
