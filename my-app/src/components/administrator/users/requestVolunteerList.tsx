@@ -73,9 +73,7 @@ export function RequestVolunteerList() {
       ) : (
         <div className="flex flex-wrap gap-4 mt-6">
           {data.map((request) => (
-            <Link key={request.id} href={`/accept-volunteers/details/${request.id}`}>
               <RequestVolunteerCard request={request} />
-            </Link>
           ))}
         </div>
       )}

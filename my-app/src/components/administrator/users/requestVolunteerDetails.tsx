@@ -72,6 +72,7 @@ export function RequestVolunteerDetailsCard() {
             }
           }
         );
+        router.push('/accept-volunteers');
         toast({
           title: "Sucesso!",
           description: "Status atualizado com sucesso.",

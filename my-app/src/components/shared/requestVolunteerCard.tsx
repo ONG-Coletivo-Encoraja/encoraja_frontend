@@ -23,15 +23,15 @@ export function RequestVolunteerCard({ request }: RequestCardProps) {
         <CircleUserIcon className="w-12 h-12 text-[#5E5E5E]" />
       </CardHeader>
       <CardContent>
-      <div className="flex flex-col gap-2">
-        <Label className=" text-[#727272]"><b>Nome:</b>{request.user?.name} </Label>
-        <Label className=" text-[#727272]"><b>Email:</b> {request.user?.email} </Label>
-        <Label className=" text-[#727272]"><b>Disponibilidade:</b>{request.availability}</Label>
-        <Label className=" text-[#727272]"><b>Experiência:</b> {request.course_experience}</Label>
-      </div>
+        <div className="flex flex-col gap-2">
+          <Label className=" text-[#727272]"><b>Nome:</b>{request.user?.name} </Label>
+          <Label className=" text-[#727272]"><b>Email:</b> {request.user?.email} </Label>
+          <Label className=" text-[#727272]"><b>Disponibilidade:</b>{request.availability}</Label>
+          <Label className=" text-[#727272]"><b>Experiência:</b> {request.course_experience}</Label>
+        </div>
       </CardContent>
       <CardFooter className="flex justify-center">
-        <Link href="/accept-volunteers/details">
+        <Link key={request.id} href={`/accept-volunteers/details/${request.id}`}>
           <Label className="text-[#F69053] underline">Ver candidatura</Label>
         </Link>
       </CardFooter>
