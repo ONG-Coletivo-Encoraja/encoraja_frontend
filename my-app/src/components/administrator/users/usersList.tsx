@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { UserCard } from "@/components/shared/userCard";
-import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import API from "@/services/api";
@@ -73,9 +72,7 @@ export function UsersList() {
       </div>
       <div className="grid grid-cols-2 gap-4 mt-6">
         {users.map((user) => (
-          <Link href="/detalhe-do-evento">
             <UserCard user={user} />
-          </Link>
         ))}
       </div>
       <PaginationComponent

@@ -31,9 +31,9 @@ export function RequestVolunteerCard({ request }: RequestCardProps) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-center">
-        <Link key={request.id} href={`/accept-volunteers/details/${request.id}`}>
-          <Label className="text-[#F69053] underline">Ver candidatura</Label>
-        </Link>
+
+        <Label className="text-[#F69053] underline"><Link key={request.id} href={`/accept-volunteers/details/${request.id}`}>Ver candidatura </Link></Label>
+
       </CardFooter>
     </Card>
   )
