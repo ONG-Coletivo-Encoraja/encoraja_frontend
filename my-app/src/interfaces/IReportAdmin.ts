@@ -38,4 +38,5 @@ export interface IReportAdmin {
     description: string; 
     results: string; 
     observation: string; 
+    relates_event: IRelatesEvent
 }

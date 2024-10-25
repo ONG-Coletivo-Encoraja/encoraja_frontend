@@ -1,13 +1,31 @@
+'use client'
 
-import * as React from 'react';
+import React from 'react';
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import CircularProgress from '@mui/material/CircularProgress';
 
-const AccordionComplaince = () => {
+interface ICompliance {
+    name: string
+    email: string
+    phone_number: string
+    description: string
+    relation: string
+    motivation: string
+    ip_address: string
+    browser: string
+    created_at: Date
+}
+
+interface ComplianceAccordionProps {
+    compliance: ICompliance
+}
+
+export function AccordionComplaince({compliance}: ComplianceAccordionProps ) {
     return (
         <>
             <Accordion type="single" collapsible className='flex justify-center bg-white p-5 rounded-lg w-[50vw]'>
@@ -16,26 +34,26 @@ const AccordionComplaince = () => {
                     <AccordionContent className='sm:max-w-[900px] flex flex-col gap-5'>
                         <div className='flex justify-between w-10/12'>
                             <div>
-                                <p className='font-bold'>Nome:</p>
+                                <p className='font-bold'>Nome: {compliance.name}</p>
                             </div>
                             <div>
-                                <p className='font-bold'>Email:</p>
+                                <p className='font-bold'>Email: {compliance.email}</p>
                             </div>
                             <div>
-                                <p className='font-bold'>Telefone:</p>
+                                <p className='font-bold'>Telefone: {compliance.phone_number}</p>
                             </div>
                         </div>
                         <div>
                             <h1 className='font-bold'>Descrição:</h1>
-                            <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.</p>
+                            <p>{compliance.description}</p>
                         </div>
                         <div>
                             <h1 className='font-bold'>Relação com a ong:</h1>
-                            <p>antiga voluntária</p>
+                            <p>{compliance.relation}</p>
                         </div>
                         <div>
                             <h1 className='font-bold'>Motivação:</h1>
-                            <p>Não conseguia ter autonomia e negavam todas as minhas propósta de eventos</p>
+                            <p>{compliance.motivation}</p>
                         </div>
                     </AccordionContent>
                 </AccordionItem>

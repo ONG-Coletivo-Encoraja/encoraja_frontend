@@ -72,7 +72,7 @@ export function UsersList() {
       </div>
       <div className="grid grid-cols-2 gap-4 mt-6">
         {users.map((user) => (
-            <UserCard user={user} />
+            <UserCard key={user.id} user={user} />
         ))}
       </div>
       <PaginationComponent

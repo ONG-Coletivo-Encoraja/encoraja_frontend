@@ -342,7 +342,7 @@ export default function RegisterEvent() {
                       </SelectTrigger>
                       <SelectContent>
                         {Array.isArray(users) && users.map(user => ( 
-                          <SelectItem value={user.id.toString()}> 
+                          <SelectItem key={user.id} value={user.id.toString()}> 
                             {user.name} 
                           </SelectItem>
                         ))}
