@@ -57,7 +57,6 @@ export default function EventsDetails() {
 
   return (
     <div>
-      <Button onClick={() => router.back()} className="mb-5">Voltar</Button>
       {loading ? (
         <div className="flex justify-center items-center h-screen">
           <CircularProgress />
@@ -66,6 +65,9 @@ export default function EventsDetails() {
         <Card className="w-[1000px] h-[600px] flex flex-wrap">
           <div className='m-5'>
             <CardHeader>
+              <div className="flex justify-start mb-5">
+                <Button onClick={() => router.back()}>Voltar</Button>
+              </div>
               <CardDescription className="text-[#F69053]">Próximos eventos</CardDescription>
               <CardTitle>{event?.name}</CardTitle>
               <ul className="flex space-x-4">
