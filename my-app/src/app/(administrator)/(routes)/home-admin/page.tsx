@@ -1,8 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { InscriptionsCard } from '@/components/administrator/home/inscriptionsCard.tsx';
-import { NextEventsCard } from '@/components/administrator/home/nexteventscard';
+import { NextEventsCard } from '@/components/administrator/home/nextEventsCard';
 import { Separator } from '@/components/ui/separator';
+import { RequestsCard } from '@/components/administrator/home/requestsCard';
 
 export default function Home() {
 
@@ -12,16 +13,13 @@ export default function Home() {
         <img src='/img/girlshome.png' />
       </div>
       <Separator />
-      <div className="grid grid-cols-2 gap-1 justify-center mt-5">
-        <Link href='/accept-volunteers'>
+      <div className="flex flex-wrap justify-center mt-5 gap-10">
           <InscriptionsCard />
-        </Link>
-        <Link href='/all-events'>
+
           <NextEventsCard />
-        </Link>
-        <Link href='/all-inscriptions'>
-          {/* <DefaultCard /> */}
-        </Link>
+
+          <RequestsCard />
+
       </div>
     </div>
   );

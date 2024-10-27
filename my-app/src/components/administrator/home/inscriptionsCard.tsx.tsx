@@ -13,6 +13,7 @@ import API from "@/services/api";
 import { CircularProgress } from "@mui/material";
 import { HandHeart } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 
@@ -47,8 +48,6 @@ export function InscriptionsCard() {
         fetchData();
     }, [session]);
 
-    console.log(inscriptions)
-
     return (
         <Card className="w-[400px]">
             <CardHeader>
@@ -71,7 +70,7 @@ export function InscriptionsCard() {
                             {inscriptions.map((inscription) => (
                                 <div key={inscription.id}>
                                     <li><Label className=" text-[20px] text-[#5E5E5E]">{inscription.user.name}</Label></li>
-                                    <li><Label className=" text-[15px] text-[#F69053]">Ver candidatura</Label></li>
+                                    <li><Label className="text-[#F69053] underline"><Link href={`/all-inscriptions`}>Ver inscrições</Link></Label></li>
                                 </div>
                             ))}
                         </ul>
