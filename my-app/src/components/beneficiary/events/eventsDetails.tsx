@@ -82,6 +82,7 @@ export default function EventsDetails() {
             <CardContent className='flex flex-col gap-5'>
               <Separator />
               <br />
+              <Label className="text-[#727272]">Carga horária: {event?.workload}h</Label>
               <Label className="text-[#727272]">{event?.description}</Label>
               <div className='mt-5 flex flex-col items-start space-y-3'>
                 <Label>Materiais necessários: {event?.material}</Label>
