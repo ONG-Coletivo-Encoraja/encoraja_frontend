@@ -62,7 +62,7 @@ export function NextEventsCard() {
           {events.map((event) => (
             <div key={event.id}>
               <CardContent>
-                <Link href={`/event-details/${event.id}`}>
+                <Link href={`/detalhe-do-evento/${event.id}`}>
                   <CardTitle>{event.name}</CardTitle>
                 </Link>
                 <ul className="flex space-x-4">
