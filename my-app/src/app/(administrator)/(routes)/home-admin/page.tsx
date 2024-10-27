@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { InscriptionsCard } from '@/components/administrator/home/inscriptionsCard.tsx';
-import { NextEventsCard } from '@/components/administrator/home/nextEventsCard';
+import { NextEventsCard } from '@/components/administrator/home/nexteventscard';
 import { Separator } from '@/components/ui/separator';
 import { RequestsCard } from '@/components/administrator/home/requestsCard';
 

@@ -33,7 +33,7 @@ export function NextEventsCard() {
               'Content-Type': 'application/json',
             },
             params: {
-              status: 'active',
+              status: 'pending',
             },
           });
           setEvents(result.data.events.data);
@@ -51,7 +51,7 @@ export function NextEventsCard() {
   return (
     <Card className="w-[500px]">
       <CardHeader>
-      <CardDescription className=" text-[#F69053]">Próximos eventos</CardDescription>
+      <CardDescription className=" text-[#F69053]">Eventos pendentes</CardDescription>
       </CardHeader>
       {loading ? (
         <div className="flex justify-center items-center">
