@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { DefaultCard } from '@/components/administrator/home/defaultcard';
+import { InscriptionsCard } from '@/components/administrator/home/inscriptionsCard.tsx';
 import { NextEventsCard } from '@/components/administrator/home/nexteventscard';
 import { Separator } from '@/components/ui/separator';
 
@@ -14,13 +14,13 @@ export default function Home() {
       <Separator />
       <div className="grid grid-cols-2 gap-1 justify-center mt-5">
         <Link href='/accept-volunteers'>
-          <DefaultCard />
+          <InscriptionsCard />
         </Link>
         <Link href='/all-events'>
           <NextEventsCard />
         </Link>
         <Link href='/all-inscriptions'>
-          <DefaultCard />
+          {/* <DefaultCard /> */}
         </Link>
       </div>
     </div>

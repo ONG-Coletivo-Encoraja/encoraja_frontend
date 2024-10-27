@@ -5,13 +5,11 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { useToast } from "@/hooks/use-toast";
 import { Event } from "@/interfaces/IEventData";
 import API from "@/services/api";
 import { CircularProgress } from "@mui/material";
@@ -19,7 +17,6 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export function NextEventsCard() {
-  const { toast } = useToast();
   const { data: session } = useSession();
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
