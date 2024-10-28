@@ -33,6 +33,8 @@ export default function DialogInscriptions({ open, onClose, eventId, eventStatus
     }
   }, [open, eventId]);
 
+  console.log(inscriptions);
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[700px]">
