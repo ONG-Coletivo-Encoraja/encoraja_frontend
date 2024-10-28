@@ -13,13 +13,13 @@ export const useDialogInscriptionsFunctions = (eventId: string, setInscriptions:
           'Content-Type': 'application/json',
         },
       });
-
+  
       const approvedInscriptions = response.data.inscriptions.data.filter(inscription => inscription.status === 'approved');
       setInscriptions(approvedInscriptions);
-
+  
       const initialStates: Record<number, boolean> = {};
       approvedInscriptions.forEach(inscription => {
-        initialStates[inscription.id] = inscription.present === 0;
+        initialStates[inscription.id] = inscription.present === 1;
       });
       setCheckboxStates(initialStates);
     } catch (error) {

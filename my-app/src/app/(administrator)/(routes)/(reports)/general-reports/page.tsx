@@ -39,8 +39,8 @@ export default function GraphicsPage() {
               <LineChart title="Total Participação em eventos" />
             </div>
           </div>
-          <div className='w-full  p-5 bg-white flex justify-center items-center h-96'>
-            <div style={{ width: '80%', height: '100%' }}>
+          <div className='w-full  p-5 bg-white flex justify-around items-center h-96 mb-4'>
+            <div style={{ width: '45%', height: '100%' }}>
               <PieChart2 title="Distribuição Faixa Etária" />
             </div>
             <div style={{ width: '45%', height: '100%' }}>
