@@ -71,10 +71,10 @@ export default function EventsDetails() {
               <CardDescription className="text-[#F69053]">Próximos eventos</CardDescription>
               <CardTitle>{event?.name}</CardTitle>
               <ul className="flex space-x-4">
-                <li><Badge variant={'secondary'}>{event?.time}</Badge></li>
+                <li><Badge>{event?.time}</Badge></li>
                 <li><Badge>{event?.modality}</Badge></li>
                 <li><Badge>{event?.type}</Badge></li>
-                <li><Badge variant={'red'}>{event?.status}</Badge></li>
+                <li><Badge>{event?.status}</Badge></li>
                 <li><Badge className="h-[50px] rounded-3xl" variant={'quaternary'}>{event?.date}</Badge></li>
               </ul>
               <Label className="text-[#727272]">Responsável: {event?.user_owner.name}</Label>

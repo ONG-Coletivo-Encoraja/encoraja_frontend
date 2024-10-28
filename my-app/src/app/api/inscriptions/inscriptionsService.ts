@@ -19,7 +19,7 @@ export const useDialogInscriptionsFunctions = (eventId: string, setInscriptions:
 
       const initialStates: Record<number, boolean> = {};
       approvedInscriptions.forEach(inscription => {
-        initialStates[inscription.id] = inscription.present === 0;
+        initialStates[inscription.id] = inscription.present === 1;
       });
       setCheckboxStates(initialStates);
     } catch (error) {

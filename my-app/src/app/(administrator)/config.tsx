@@ -16,7 +16,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     subMenuItems: [
       { title: 'Cadastrar evento', path: '/register-event' },
       { title: 'Todos os eventos', path: '/all-events' },
-      { title: 'Todas as incrições', path: '/all-inscriptions' },
+      { title: 'Todas as inscrições', path: '/all-inscriptions' },
     ],
   },
   {
