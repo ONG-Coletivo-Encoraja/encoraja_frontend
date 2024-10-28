@@ -1,6 +1,6 @@
 import API from '@/services/api';
 import axios from 'axios';
-import { UserData } from '../../interfaces/IUserData';
+import { UserData, UserDataSend } from '../../interfaces/IUserData';
 import { EventData } from '../../interfaces/IEventData';
 import { getSession } from 'next-auth/react';
 
@@ -27,7 +27,7 @@ export async function getUserData(): Promise<UserData> {
   }
 }
 
-export async function updateUserData(data: UserData): Promise<UserData> {
+export async function updateUserData(data: UserDataSend): Promise<UserData> {
   try {
     const session = await getSession();
     const token = session?.token as string;
