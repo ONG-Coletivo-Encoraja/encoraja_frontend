@@ -19,7 +19,7 @@ export const fetchEvents = async (
   if (statusFilter) params.status = statusFilter;
   if (nameFilter) params.name = nameFilter;
 
-  const response = await API.get<ApiResponse>('/beneficiary/events', {
+  const response = await API.get<ApiResponse>('/users/events', {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',

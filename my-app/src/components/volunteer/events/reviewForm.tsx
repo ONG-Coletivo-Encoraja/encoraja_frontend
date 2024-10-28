@@ -1,7 +1,5 @@
-'use client'
-
 import { useEffect, useState } from "react";
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import StarRating from "@/components/ui/rating";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
@@ -24,13 +23,12 @@ import { Review } from "@/interfaces/IReview";
 import { Textarea } from "@/components/ui/textarea";
 import { useEventsDetailsFunctions } from '@/app/api/events/eventService';
 import { Event } from '@/interfaces/IEventData';
-import { Rating } from "@mui/material";
+
 
 export default function ReviewForm() {
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
   const { toast } = useToast();
-  const [ratings, setRatings] = useState<number>(5);
 
   const { eventId } = useParams<{ eventId: string }>();
   const [event, setEvent] = useState<Event | null>(null);
@@ -40,18 +38,20 @@ export default function ReviewForm() {
 
   useEffect(() => {
     fetchData();
-  }, [eventId, session, ratings]);
+  }, [eventId]);
 
   const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<Review>({
     defaultValues: {
       user: session?.user?.id,
-      rating: ratings,
+      rating: 5,
       observation: "",
       feel_welcomed: true,
       recommendation: true,
       event_id: Number(eventId),
     }
   });
+
+  const rating = watch("rating");
 
   const onSubmit = async (values: Review) => {
     if (!session?.token) {
@@ -70,7 +70,7 @@ export default function ReviewForm() {
         description: response.message,
         variant: "default",
       });
-      setOpen(false);
+      setOpen(false); // Fecha o diálogo após o sucesso
     } catch (error) {
       const errorMessage = (error instanceof AxiosError && error.response?.data?.errors)
         ? error.response.data.errors[Object.keys(error.response.data.errors)[0]][0]
@@ -98,14 +98,7 @@ export default function ReviewForm() {
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center space-y-4 mt-5">
           <Label className="text-center">De forma geral, como avalia as atividades ofertadas?</Label>
-          <Rating
-            name="simple-controlled"
-            value={ratings}
-            onChange={(event, newValue) => {
-              setRatings(newValue || 5);
-              setValue("rating", newValue || 5);
-            }}
-          />
+          <StarRating rating={rating} onChange={(value) => setValue("rating", value)} />
 
           <Label className="text-center">Você se sentiu acolhida em nosso espaço?</Label>
           <RadioGroup value={watch("feel_welcomed") ? "sim" : "nao"} onValueChange={(value) => setValue("feel_welcomed", value === "sim")}>
@@ -149,3 +142,4 @@ export default function ReviewForm() {
     </Dialog>
   );
 }
+ 

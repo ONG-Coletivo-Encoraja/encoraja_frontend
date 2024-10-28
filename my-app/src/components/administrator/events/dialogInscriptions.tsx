@@ -60,11 +60,10 @@ export default function DialogInscriptions({ open, onClose, eventId, eventStatus
             </div>
           ))}
         </div>
-        <DialogFooter className="sm:justify-between ml-7 mr-7">
-          <Button>Adicionar participante</Button>
+        <DialogFooter className="sm:justify-end ml-7 mr-7">
           <DialogClose asChild>
             <Button type="button" onClick={onClose}>
-              Fechar
+              Salvar
             </Button>
           </DialogClose>
         </DialogFooter>

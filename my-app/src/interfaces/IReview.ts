@@ -12,6 +12,7 @@ export interface User {
     observation: string;
     feel_welcomed: boolean;
     recommendation: boolean;
+    event_id: number;
   }
   
   export interface ReviewsResponse {

@@ -18,6 +18,7 @@ import ReviewUser from './reviewUser';
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { createInscription } from '@/app/api/inscriptions/inscription';
+import ReviewForm from './reviewForm';
 
 import Link from 'next/link';
 
@@ -167,7 +168,13 @@ export default function EventsDetails() {
                   onClose={() => setDialogOpen(false)}
                 />
               </div>
-
+{/*
+            <CardFooter className='mt-4 flex justify-center'>
+            {event?.status === 'finished' && (
+              <ReviewForm />
+            )}
+            </CardFooter>
+*/}
             </CardContent>
             <Separator />
           </div>
