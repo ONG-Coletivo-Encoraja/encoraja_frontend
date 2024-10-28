@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Inscriptions from "@/components/administrator/inscriptions/inscriptionsPage";
 import BackgroundImage from '@/components/ui/background-image';
 

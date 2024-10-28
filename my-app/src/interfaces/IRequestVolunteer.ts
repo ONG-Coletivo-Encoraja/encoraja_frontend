@@ -15,4 +15,8 @@ interface IUser {
   permission: string;
   phone: string;
   date_birthday: string;
+  availability?: string;
+  course_experience?: string;
+  how_know?: string;
+  expectations?: string;
 }

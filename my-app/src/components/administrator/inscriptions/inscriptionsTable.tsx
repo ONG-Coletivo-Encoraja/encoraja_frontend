@@ -41,6 +41,7 @@ export default function MyInscriptions({ filterStatus }: MyInscriptionsProps) {
                         },
                         params: {
                             status: filterStatus,
+                            page: currentPage
                         },
                     });
 
@@ -71,7 +72,7 @@ export default function MyInscriptions({ filterStatus }: MyInscriptionsProps) {
                     headers: {
                         'Authorization': `Bearer ${session?.token}`,
                         'Content-Type': 'application/json',
-                    }
+                    },
                 });
 
                 setData(prevData =>
@@ -112,9 +113,9 @@ export default function MyInscriptions({ filterStatus }: MyInscriptionsProps) {
     };
 
     const handlePageChange = (newPage: number) => {
-        if (newPage > 0 && newPage <= totalPages) {
-            setCurrentPage(newPage);
-        }
+
+        setCurrentPage(newPage);
+        
     };
 
     return (

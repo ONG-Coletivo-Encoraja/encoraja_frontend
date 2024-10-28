@@ -28,7 +28,6 @@ export function UserCard({ user }: UserCardProps) {
           <Label className=" text-[#727272]"><b>Data de Nascimento:</b> {user.date_birthday} </Label>
           <Label className=" text-[#727272]"><b>Email:</b> {user.email} </Label>
           <Label className=" text-[#727272]"><b>Telefone:</b> {user.phone}</Label>
-          <Label className=" text-[#727272]"><b>Inscrições:</b> null </Label>
         </div>
       </CardContent>
       <CardFooter>
