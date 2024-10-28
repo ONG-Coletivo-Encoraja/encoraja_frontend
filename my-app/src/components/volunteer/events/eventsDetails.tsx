@@ -38,7 +38,7 @@ export default function EventsDetails() {
 
   useEffect(() => {
     fetchData();
-  }, [eventId]);
+  }, [eventId, session]);
 
   const handleCreateInscription = async () => {
     if (session?.token) {
@@ -120,7 +120,7 @@ export default function EventsDetails() {
               )}
               </div>
             </CardContent>
-            <CardFooter className='mt-16 flex items-end justify-center'>
+            <CardFooter className='flex items-end justify-center'>
               {event?.status !== 'finished' && event?.user_owner.id !== session?.user.id && (
                   <AlertDialog>
                   <AlertDialogTrigger asChild>
@@ -170,15 +170,15 @@ export default function EventsDetails() {
                   onClose={() => setDialogOpen(false)}
                 />
               </div>
-{/*
+            </CardContent>
+            <Separator />
+
             <CardFooter className='mt-4 flex justify-center'>
             {event?.status === 'finished' && (
               <ReviewForm />
             )}
             </CardFooter>
-*/}
-            </CardContent>
-            <Separator />
+
           </div>
         </Card>
       )}

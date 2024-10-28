@@ -37,7 +37,7 @@ export default function RegisterEvent() {
       interest_area: "",
       price: 10.00,
       workload: 1,
-      owner: 2,
+      owner: Number(session?.user?.id),
     }
   });
 
