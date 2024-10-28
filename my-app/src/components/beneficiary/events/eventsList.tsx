@@ -70,11 +70,7 @@ export function EventsList() {
           <CircularProgress color="secondary" />
         ) : (
           <div className="grid grid-cols-2 gap-4 mt-6">
-          
-            {events
-            .filter(event => event.status === 'active' || event.status === 'finished')
-            .map(event => (
-              
+            {events.map(event => (
               <Link key={event.id} href={`/detalhes-do-evento/${event.id}`}>
                 <EventCard event={event} />
               </Link>
