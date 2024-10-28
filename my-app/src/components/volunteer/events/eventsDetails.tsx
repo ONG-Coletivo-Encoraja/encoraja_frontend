@@ -106,7 +106,9 @@ export default function EventsDetails() {
                 )}
                 {event?.status !== 'finished' && event?.user_owner.id === session?.user.id && (
                   <div>
+                    <Link href={`/eventos/editar-evento/${eventId}`}>
                     <Button>Editar evento</Button>
+                    </Link>
                   </div>
                 )}
                 {event?.user_owner.id === session?.user.id && event?.status === 'finished' && (
