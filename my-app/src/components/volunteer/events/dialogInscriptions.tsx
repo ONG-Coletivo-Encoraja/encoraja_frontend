@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from 'react';
-import { useDialogInscriptionsFunctions } from '@/app/api/inscriptions/inscriptionsService';
+import { useDialogInscriptionsFunctions } from '@/app/api/inscriptions/inscriptionsVolunteerService';
 import { Inscription } from "@/interfaces/IInscription";
 
 interface DialogInscriptionsProps {
