@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import StarRating from "@/components/ui/rating";
+import { Rating } from "@mui/material";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
@@ -29,6 +29,7 @@ export default function ReviewForm() {
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
   const { toast } = useToast();
+  const [ratings, setRatings] = useState<number>(5);
 
   const { eventId } = useParams<{ eventId: string }>();
   const [event, setEvent] = useState<Event | null>(null);
@@ -42,7 +43,6 @@ export default function ReviewForm() {
 
   const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<Review>({
     defaultValues: {
-      user: session?.user?.id,
       rating: 5,
       observation: "",
       feel_welcomed: true,
@@ -98,7 +98,14 @@ export default function ReviewForm() {
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center space-y-4 mt-5">
           <Label className="text-center">De forma geral, como avalia as atividades ofertadas?</Label>
-          <StarRating rating={rating} onChange={(value) => setValue("rating", value)} />
+          <Rating
+            name="simple-controlled"
+            value={ratings}
+            onChange={(event, newValue) => {
+              setRatings(newValue || 5);
+              setValue("rating", newValue || 5);
+            }}
+          />
 
           <Label className="text-center">Você se sentiu acolhida em nosso espaço?</Label>
           <RadioGroup value={watch("feel_welcomed") ? "sim" : "nao"} onValueChange={(value) => setValue("feel_welcomed", value === "sim")}>

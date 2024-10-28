@@ -37,7 +37,7 @@ export default function RegisterEvent() {
       interest_area: "",
       price: 10.00,
       workload: 1,
-      owner: 7
+      owner: Number(session?.user?.id),
     }
   });
 
@@ -315,7 +315,7 @@ export default function RegisterEvent() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input type="hidden" value={ session?.user?.id || "" } />
+                    <Input type="hidden" value={session?.user?.id} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
