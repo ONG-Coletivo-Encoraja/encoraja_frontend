@@ -6,7 +6,7 @@ import FilterComponent from "@/components/shared/filter";
 import SearchComponent from "@/components/shared/search";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { fetchEvents } from "@/app/api/events/eventService";
+import { fetchEventsBeneficiary } from "@/app/api/events/eventService";
 import { Event, ApiResponse } from "@/interfaces/IEventData";
 import CircularProgress from '@mui/material/CircularProgress';
 import PaginationComponent from "@/components/shared/paginator";
@@ -25,7 +25,7 @@ export function EventsList() {
     const fetchData = async () => {
       if (session?.token) {
         try {
-          const response: ApiResponse = await fetchEvents(
+          const response: ApiResponse = await fetchEventsBeneficiary (
             statusFilter,
             nameFilter,
             session.token,
