@@ -19,6 +19,7 @@ const FilterInscriptions: React.FC<FilterInscriptionsProps> = ({ onFilterChange 
                         <SelectValue placeholder="Filtrar" className="truncate" />
                     </SelectTrigger>
                     <SelectContent>
+                        <SelectItem value=" ">Todos</SelectItem>
                         <SelectItem value="approved">Aprovados</SelectItem>
                         <SelectItem value="pending">Pendentes</SelectItem>
                         <SelectItem value="rejected">Rejeitados</SelectItem>

@@ -45,7 +45,6 @@ export default function SideNav() {
         )}
       >
         <aside className="flex h-full flex-col w-full break-words px-4 overflow-x-hidden columns-1">
-          {/* Top */}
           <div className="mt-4 relative pb-2">
             <div className="flex flex-col space-y-1">
               {navItems.map((item, idx) => {
@@ -67,7 +66,6 @@ export default function SideNav() {
               })}
             </div>
           </div>
-          {/* Bottom */}
           <div className="sticky bottom-0 mt-auto whitespace-nowrap mb-4 transition duration-200 block">
             {navItems.map((item, idx) => {
               if (item.position === 'bottom') {

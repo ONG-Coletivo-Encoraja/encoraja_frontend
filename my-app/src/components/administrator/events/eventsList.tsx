@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { EventCard } from "@/components/shared/eventCard";
-import FilterComponent from "@/components/shared/filter";
+import FilterComponent from "@/components/shared/filterEvent";
 import SearchComponent from "@/components/shared/search";
 import Link from "next/link";
 import { useSession } from "next-auth/react";

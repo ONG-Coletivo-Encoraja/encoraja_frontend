@@ -12,6 +12,8 @@ import { getMyInscriptions, deleteInscription } from '@/app/api/inscriptions/ins
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
+import API from '@/services/api';
+import PaginationComponent from './paginator';
 
 
 export default function MyInscriptions() {
@@ -19,7 +21,7 @@ export default function MyInscriptions() {
     const [statusFilter, setStatusFilter] = useState<string | undefined>(undefined);
     const [nameFilter, setNameFilter] = useState<string>("");
     const { data: session } = useSession();
-    const [data, setData] = useState<Inscription[]>([]);
+    const [inscriptions, setInscriptions] = useState<Inscription[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
@@ -27,30 +29,43 @@ export default function MyInscriptions() {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (session?.token) {
-                setLoading(true);
-                try {
-                    const result = await getMyInscriptions(session?.token);
-                    console.log('API Response:', result); 
-                    setData(result.inscriptions.data);
-                    setTotalPages(result.inscriptions.last_page);
-                    console.log(result.inscriptions.data);
-                } catch (error) {
-                    console.error('Error fetching inscriptions:', error);
-                } finally {
-                    setLoading(false);
-                }
+          if (session?.token) {
+            setLoading(true);
+            try {
+              const result = await API.get(`/myInscriptions`, {
+                headers: {
+                  'Authorization': `Bearer ${session?.token}`,
+                  'Content-Type': 'application/json',
+                },
+                params: {
+                  page: currentPage,
+                  status: statusFilter,
+                  eventName: nameFilter,
+                },
+              });
+              setInscriptions(result.data.inscriptions.data);
+              setTotalPages(result.data.inscriptions.last_page);
+            } catch (error) {
+              console.error(error);
+              toast({
+                title: "Erro ao carregar solicitações de voluntariado",
+                description: "Houve um problema ao tentar carregar suas solicitações. Tente novamente mais tarde.",
+                variant: "destructive",
+              });
+            } finally {
+              setLoading(false);
             }
+          }
         };
     
         fetchData();
-    }, [currentPage, session]);
+      }, [currentPage, session, statusFilter, nameFilter]);
 
     const handleDeleteInscription = async (id: number) => {
         if (session?.token) {
             try {
                 await deleteInscription(session.token, String(id));
-                setData(prevData => prevData.filter(item => item.id !== id));
+                setInscriptions(prevData => prevData.filter(item => item.id !== id));
                 toast ({
                     description: "Inscrição cancelada com sucesso!",
                 });
@@ -64,7 +79,6 @@ export default function MyInscriptions() {
             }
         }
     };
-    console.log(data);
 
     const handlePageChange = (newPage: number) => {
         if (newPage > 0 && newPage <= totalPages) {
@@ -79,7 +93,7 @@ export default function MyInscriptions() {
             <div className="p-4">
                 <div className="flex justify-between mb-4">
                     <div>
-                        <FilterInscriptions />
+                        <FilterInscriptions  onFilterChange={setStatusFilter} />
                     </div>
                     <div>
                         <SearchComponent onSearch={setNameFilter} />
@@ -101,7 +115,7 @@ export default function MyInscriptions() {
                                     </TableRow>
                                 </TableHeader> 
                                 <TableBody>
-                                    {data.map((item: Inscription) => (
+                                    {inscriptions.map((item: Inscription) => (
                                         <TableRow key={item.id}>
                                             <TableCell className="font-medium">{item.event?.name || 'N/A'}</TableCell>
                                             <TableCell className="font-medium">{item.user?.name || 'N/A'}</TableCell>
@@ -137,6 +151,11 @@ export default function MyInscriptions() {
                     </Card>
                 </div>
             </div>
+            <PaginationComponent
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
         </div>
     );
 }

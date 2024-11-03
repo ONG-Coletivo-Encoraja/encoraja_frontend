@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from "react";
+import React from "react";
 import { VolunteerForm } from "@/components/shared/volunteerForm";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Form, FormField, FormMessage, FormItem, FormControl, FormLabel } from "@/components/ui/form";
@@ -11,8 +11,6 @@ import { useSession } from "next-auth/react";
 import { getUserData } from "@/app/api/auth";
 import { UserData } from "@/interfaces/IUserData";
 import { Textarea } from "@/components/ui/textarea";
-import { IRelatesEvent } from "@/interfaces/IReportAdmin";
-import { IRequestVolunteer } from "@/interfaces/IRequestVolunteer";
 import { requestVolunteer } from "@/app/api/volunteers/beAVolunteer";
 import { AxiosError } from "axios";
 import { useParams, useRouter } from 'next/navigation';
@@ -68,7 +66,7 @@ export function BeAVolunteer() {
     }
 
     try {
-      const response = await requestVolunteer(data, session.token); 
+      const response = await requestVolunteer(data, session.token);
       console.log(response);
       toast({
         title: "Solicitação enviada",
@@ -98,127 +96,129 @@ export function BeAVolunteer() {
   };
 
   return (
-    <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
-    <CardHeader>
-      <CardTitle className="text-2xl font-bold">Seja voluntário</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="col-span-3">
-          <Label>Nome</Label>
-          <Input readOnly value={profileData?.name} />
-        </div>
-        <div>
-        <Label>CPF</Label>
-        <Input readOnly value={profileData?.cpf} />
-        </div>
-        <div className="col-span-2">
-        <Label>Email</Label>
-        <Input readOnly value={profileData?.email} />
-        </div>
-        <div>
-        <Label>Data de nascimento</Label>
-        <Input readOnly value={profileData?.date_birthday} />
-        </div>
-        <div>
-        <Label>Telefone</Label>
-        <Input readOnly value={profileData?.phone} />
-        </div>
-        <div className="col-span-2">
-        <Label>Raça</Label>
-        <Input readOnly value={profileData?.ethnicity} />
-        </div>
-        <div className="col-span-2">
-        <Label>Genero</Label>
-        <Input readOnly value={profileData?.gender} />
-        </div>
-        <div>
-        <Label>CEP</Label>
-        <Input readOnly value={profileData?.address.zip_code} />
-        </div>
-        <div className="col-span-2">
-        <Label>Rua</Label>
-        <Input readOnly value={profileData?.address.street} />
-        </div>
-        <div>
-        <Label>Número</Label>
-        <Input readOnly value={profileData?.address.number} />
-        </div>
-        <div className="col-span-2">
-        <Label>Bairro</Label>
-        <Input readOnly value={profileData?.address.neighbourhood} />
-        </div>
-        <div className="col-span-2">
-        <Label>Cidade</Label>
-        <Input readOnly value={profileData?.address.city} />
-        </div>
-    </div>
-    <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
-          
-          <FormField
-            control={form.control}
-            name="availability"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Disponilibilidade</FormLabel>
-                <FormControl>
-                  <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="course_experience"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Experiência</FormLabel>
-                <FormControl>
-                  <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        <FormField
-            control={form.control}
-            name="how_know"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Como soube?</FormLabel>
-                <FormControl>
-                  <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        <FormField
-            control={form.control}
-            name="expectations"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Expectativas</FormLabel>
-                <FormControl>
-                  <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </form>
-    </Form>
-    </CardContent>
-    <CardFooter className="flex justify-end gap-4">
-        <Button onClick={() => router.back()} variant="outline">
-          Cancelar
-        </Button>
-        <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
-          Salvar
-        </Button>
-      </CardFooter>
-    </Card>
+    <>
+      <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Seja voluntário</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="col-span-3">
+              <Label>Nome</Label>
+              <Input readOnly value={profileData?.name} />
+            </div>
+            <div>
+              <Label>CPF</Label>
+              <Input readOnly value={profileData?.cpf} />
+            </div>
+            <div className="col-span-2">
+              <Label>Email</Label>
+              <Input readOnly value={profileData?.email} />
+            </div>
+            <div>
+              <Label>Data de nascimento</Label>
+              <Input readOnly value={profileData?.date_birthday} />
+            </div>
+            <div>
+              <Label>Telefone</Label>
+              <Input readOnly value={profileData?.phone} />
+            </div>
+            <div className="col-span-2">
+              <Label>Raça</Label>
+              <Input readOnly value={profileData?.ethnicity} />
+            </div>
+            <div className="col-span-2">
+              <Label>Genero</Label>
+              <Input readOnly value={profileData?.gender} />
+            </div>
+            <div>
+              <Label>CEP</Label>
+              <Input readOnly value={profileData?.address.zip_code} />
+            </div>
+            <div className="col-span-2">
+              <Label>Rua</Label>
+              <Input readOnly value={profileData?.address.street} />
+            </div>
+            <div>
+              <Label>Número</Label>
+              <Input readOnly value={profileData?.address.number} />
+            </div>
+            <div className="col-span-2">
+              <Label>Bairro</Label>
+              <Input readOnly value={profileData?.address.neighbourhood} />
+            </div>
+            <div className="col-span-2">
+              <Label>Cidade</Label>
+              <Input readOnly value={profileData?.address.city} />
+            </div>
+          </div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
+
+              <FormField
+                control={form.control}
+                name="availability"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Disponilibilidade</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="course_experience"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Experiência</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="how_know"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Como soube?</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="expectations"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Expectativas</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className="flex justify-end gap-4">
+          <Button onClick={() => router.back()} variant="outline">
+            Cancelar
+          </Button>
+          <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
+            Salvar
+          </Button>
+        </CardFooter>
+      </Card>
+    </>
   );
 }

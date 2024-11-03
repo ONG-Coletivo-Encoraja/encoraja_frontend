@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { EventCard } from "@/components/shared/eventCard";
-import FilterComponent from "@/components/shared/filter";
+import FilterComponent from "@/components/shared/filterEventBeneficiary";
 import SearchComponent from "@/components/shared/search";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
@@ -52,7 +52,7 @@ export function EventsList() {
   };
 
   return (
-    <div className="w-full min-h-[100vh] p-5">
+    <div className="min-w-[80vw] min-h-[100vh] p-5">
       <div className="flex justify-between flex-wrap gap-3">
         <div>
           <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[30px]">Eventos cadastrados</h1>

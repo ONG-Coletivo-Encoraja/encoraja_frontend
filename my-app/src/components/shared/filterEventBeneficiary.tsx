@@ -25,8 +25,6 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange }) => 
                     <SelectContent>
                         <SelectItem value="all">Todos</SelectItem>
                         <SelectItem value="active">Ativos</SelectItem>
-                        {/* <SelectItem value="inactive">Inativos</SelectItem> */}
-                        {/* <SelectItem value="pending">Pendentes</SelectItem> */}
                         <SelectItem value="finished">Finalizados</SelectItem>
                     </SelectContent>
                 </Select>
