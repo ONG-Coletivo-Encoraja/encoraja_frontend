@@ -25,12 +25,19 @@ interface ComplianceAccordionProps {
     compliance: ICompliance
 }
 
+const truncateText = (text: string, maxLength: number): string => {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength) + '...';
+    }
+    return text;
+  };
+
 export function AccordionComplaince({compliance}: ComplianceAccordionProps ) {
     return (
         <>
             <Accordion type="single" collapsible className='flex justify-center bg-white p-5 rounded-lg w-[50vw]'>
                 <AccordionItem value="item-1" >
-                    <AccordionTrigger className='font-bold w-[48vw] text-base'>Não gostei do atendimento!</AccordionTrigger>
+                    <AccordionTrigger className='font-bold w-[48vw] text-base'>{truncateText(compliance.description, 50)}</AccordionTrigger>
                     <AccordionContent className='sm:max-w-[900px] flex flex-col gap-5'>
                         <div className='flex justify-between w-10/12'>
                             <div>

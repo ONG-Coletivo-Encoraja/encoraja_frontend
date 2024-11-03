@@ -1,6 +1,6 @@
 import { Select, SelectContent, SelectTrigger, SelectItem, SelectValue } from "../ui/select";
 import { Button } from "../ui/button";
-import { Filter } from 'lucide-react';
+import { CalendarPlus, CalendarPlus2, Filter } from 'lucide-react';
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
@@ -11,7 +11,7 @@ interface FilterComponentProps {
 const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange }) => {
     const { data: session } = useSession();
     const handleFilterChange = (value: string) => {
-        onFilterChange(value === "all" ? undefined : value); 
+        onFilterChange(value === "all" ? undefined : value);
     };
 
     return (
@@ -31,19 +31,21 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange }) => 
                     </SelectContent>
                 </Select>
             </div>
-            {session?.user.permission === 'volunteer'  && (
-            <Link href="/eventos/cadastrar-evento">
-                <Button className="ml-2">
-                    Criar
-                </Button>
-            </Link>
+            {session?.user.permission === 'volunteer' && (
+                <Link href="/eventos/cadastrar-evento">
+                    <Button className="ml-2 flex justify-around">
+                        Criar
+                        <CalendarPlus size={20} color="#ffffff" />
+                    </Button>
+                </Link>
             )}
-            {session?.user.permission === 'administrator'  && (
-            <Link href="/register-event">
-                <Button className="ml-2">
-                    Criar
-                </Button>
-            </Link>
+            {session?.user.permission === 'administrator' && (
+                <Link href="/register-event">
+                    <Button className="ml-2 flex justify-around w-32">
+                        Criar
+                        <CalendarPlus size={20} color="#ffffff" />
+                    </Button>
+                </Link>
             )}
         </div>
     );

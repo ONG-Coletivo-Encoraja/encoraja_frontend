@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -28,7 +28,7 @@ export default function Header({}: HeaderProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [logoutDialogOpen, setLogoutDialogOpen] = React.useState(false);
 
-  const { data: session, status } = useSession(); // Obtém a sessão atual
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
