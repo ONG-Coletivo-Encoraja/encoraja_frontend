@@ -31,8 +31,15 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange }) => 
                     </SelectContent>
                 </Select>
             </div>
-            {session?.user.permission === 'volunteer' && (
+            {session?.user.permission === 'volunteer'  && (
             <Link href="/eventos/cadastrar-evento">
+                <Button className="ml-2">
+                    Criar
+                </Button>
+            </Link>
+            )}
+            {session?.user.permission === 'administrator'  && (
+            <Link href="/register-event">
                 <Button className="ml-2">
                     Criar
                 </Button>

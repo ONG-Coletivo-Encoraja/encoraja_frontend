@@ -21,32 +21,34 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
   if (!session) {
     redirect("/login");
     return null;
-  } 
+  }
 
   console.log("Sessão:", session);
 
-  if (session.user.permission == "volunteer") { 
-    
-  return (
-    <html lang="pt-br">
-      <body className={inter.className}>
-      <Header className="fixed top-0 w-full z-10" />
-        <div className="flex pt-[60px]">
-          <Sidebar />
-          <div className="flex-1 overflow-hidden">
-            {children}
-            <Toaster />
-          </div>
-        </div>
-      </body>
-    </html>
-  );
-} 
+  if (session.user.permission == "volunteer") {
 
-if (session.user.permission == "administrator"){
-  redirect("/home-admin");
-} else {
-  redirect("/home");
-}
+    return (
+      <html lang="pt-br">
+        <body className={inter.className}>
+          <Header className="fixed top-0 w-full z-10" />
+          <div className="flex pt-[60px] h-full w-full">
+            <div className="fixed w-16">
+              <Sidebar />
+            </div>
+            <div className="flex-1 ml-16 bg-[#ededed]">
+              {children}
+              <Toaster />
+            </div>
+          </div>
+        </body>
+      </html>
+    );
+  }
+
+  if (session.user.permission == "administrator") {
+    redirect("/home-admin");
+  } else {
+    redirect("/home");
+  }
 
 }

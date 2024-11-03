@@ -25,16 +25,20 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
 
   if (session.user.permission == "administrator") {
     return (
-      <>
-        <Header className="fixed top-0 w-full z-10" />
-        <div className="flex">
-          <Sidebar />
-        </div>
-        <div className="flex-1 pt-[70px] ml-60 overflow-hidden bg-[#ededed]">
-          {children}
-          <Toaster />
-        </div>
-      </>
+      <html lang="pt-br">
+        <body className={inter.className}>
+          <Header className="fixed top-0 w-full z-10" />
+          <div className="flex pt-[60px] h-full w-full">
+            <div className="fixed w-16">
+              <Sidebar />
+            </div>
+            <div className="flex-1 ml-16 bg-[#ededed]">
+              {children}
+              <Toaster />
+            </div>
+          </div>
+        </body>
+      </html >
     );
   }
 

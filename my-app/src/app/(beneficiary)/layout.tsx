@@ -37,7 +37,7 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
             <div className="fixed w-16"> 
               <Sidebar />
             </div>
-            <div className="flex-1 ml-16 overflow bg-[#ededed]"> 
+            <div className="flex-1 ml-16 bg-[#ededed]"> 
               {children}
               <Toaster />
             </div>

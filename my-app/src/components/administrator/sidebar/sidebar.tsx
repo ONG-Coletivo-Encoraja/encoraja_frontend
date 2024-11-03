@@ -1,95 +1,151 @@
 'use client';
 
-import React, { useState } from 'react';
-
+import { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { NavItems } from '@/app/(administrator)/config';
+import { cn } from '@/lib/utils';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { SIDENAV_ITEMS } from '@/app/(administrator)/config';
-import { SideNavItem } from '@/app/(administrator)/types';
-import { ChevronDown } from 'lucide-react';
+export default function SideNav() {
+  const navItems = NavItems();
+  
+  const [isClient, setIsClient] = useState(false);
+  
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
 
-const SideNav = () => {
+  useEffect(() => {
+    setIsClient(true);
+    const saved = window.localStorage.getItem('sidebarExpanded');
+    if (saved !== null) {
+      setIsSidebarExpanded(JSON.parse(saved));
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (isClient) {
+      window.localStorage.setItem('sidebarExpanded', JSON.stringify(isSidebarExpanded));
+    }
+  }, [isSidebarExpanded, isClient]);
+
+  const toggleSidebar = () => {
+    setIsSidebarExpanded(!isSidebarExpanded);
+  };
+
+  if (!isClient) {
+    return null;
+  }
+
   return (
-    <div className="md:w-60 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
-      <div className="flex flex-col space-y-6 w-full">
-        <Link
-          href="/"
-          className="flex flex-row space-x-3 items-center justify-center md:justify-start md:px-6 border-b border-zinc-200 h-12 w-full"
-        >
-          <span className="h-7 w-7 bg-zinc-300 rounded-lg" />
-          <span className="font-bold text-xl hidden md:flex">Logo</span>
-        </Link>
-
-        <div className="flex flex-col space-y-2  md:px-6 ">
-          {SIDENAV_ITEMS.map((item, idx) => {
-            return <MenuItem key={idx} item={item} />;
-          })}
+    <div className="flex h-screen">
+      <div
+        className={cn(
+          isSidebarExpanded ? 'w-[250px]' : 'w-[68px]',
+          'border-r transition-all duration-300 ease-in-out transform hidden sm:flex h-full bg-white',
+        )}
+      >
+        <aside className="flex h-full flex-col w-full break-words px-4 overflow-x-hidden columns-1">
+          <div className="mt-4 relative pb-2">
+            <div className="flex flex-col space-y-1 gap-5">
+              {navItems.map((item, idx) => {
+                if (item.position === 'top') {
+                  return (
+                    <Fragment key={idx}>
+                      <div className="space-y-1">
+                        <SideNavItem
+                          label={item.name}
+                          icon={item.icon}
+                          path={item.href}
+                          active={item.active}
+                          isSidebarExpanded={isSidebarExpanded}
+                        />
+                      </div>
+                    </Fragment>
+                  );
+                }
+              })}
+            </div>
+          </div>
+          <div className="sticky bottom-0 mt-auto whitespace-nowrap mb-4 transition duration-200 block">
+            {navItems.map((item, idx) => {
+              if (item.position === 'bottom') {
+                return (
+                  <Fragment key={idx}>
+                    <div className="space-y-1">
+                      <SideNavItem
+                        label={item.name}
+                        icon={item.icon}
+                        path={item.href}
+                        active={item.active}
+                        isSidebarExpanded={isSidebarExpanded}
+                      />
+                    </div>
+                  </Fragment>
+                );
+              }
+            })}
+          </div>
+        </aside>
+        <div className="mt-[calc(calc(90vh)-40px)] relative">
+          <button
+            type="button"
+            className="absolute bottom-32 right-[-12px] flex h-6 w-6 items-center justify-center border border-muted-foreground/20 rounded-full bg-accent shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
+            onClick={toggleSidebar}
+          >
+            {isSidebarExpanded ? (
+              <ChevronLeft size={16} className='stroke-foreground'/>
+            ) : (
+              <ChevronRight size={16} className='stroke-foreground'/>
+            )}
+          </button>
         </div>
       </div>
     </div>
   );
-};
+}
 
-
-export default SideNav;
-
-const MenuItem = ({ item }: { item: SideNavItem }) => {
-  const pathname = usePathname();
-  const [subMenuOpen, setSubMenuOpen] = useState(false);
-  const toggleSubMenu = () => {
-    setSubMenuOpen(!subMenuOpen);
-  };
-
+export const SideNavItem: React.FC<{
+  label: string;
+  icon: any;
+  path: string;
+  active: boolean;
+  isSidebarExpanded: boolean;
+}> = ({ label, icon, path, active, isSidebarExpanded }) => {
   return (
-    <div className="">
-      {item.submenu ? (
-        <>
-          <button
-            onClick={toggleSubMenu}
-            className={`flex flex-row items-center p-2 rounded-lg hover-bg-zinc-100 w-full justify-between hover:bg-zinc-100 ${
-              pathname.includes(item.path) ? 'bg-zinc-100' : ''
-            }`}
-          >
-            <div className="flex flex-row space-x-4 items-center">
-              {item.icon}
-              <span className="text-[20px text-[#5E5E5E] flex">{item.title}</span>
-            </div>
-
-            <div className={`${subMenuOpen ? 'rotate-180' : ''} flex`}>
-              <ChevronDown size={18} color="#5E5E5E" />
-            </div>
-          </button>
-
-          {subMenuOpen && (
-            <div className="my-2 ml-12 flex flex-col space-y-4">
-              {item.subMenuItems?.map((subItem, idx) => {
-                return (
-                  <Link
-                    key={idx}
-                    href={subItem.path}
-                    className={`${
-                      subItem.path === pathname ? ' underline decoration-[#F69053] ' : ''
-                    }`}
-                  >
-                    <span className="text-[14px] text-[#5E5E5E] flex">{subItem.title}</span>
-                  </Link>
-                );
-              })}
-            </div>
-          )}
-        </>
-      ) : (
+    <>
+      {isSidebarExpanded ? (
         <Link
-          href={item.path}
-          className={`flex flex-row space-x-4 items-center p-2 rounded-lg hover:bg-zinc-100 ${
-            item.path === pathname ? 'bg-zinc-100' : ''
+          href={path}
+          className={`h-full relative flex items-center whitespace-nowrap rounded-md ${
+            active
+              ? 'font-base text-sm bg-neutral-200 shadow-sm text-neutral-700 dark:bg-neutral-800 dark:text-white'
+              : 'hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
           }`}
         >
-          {item.icon}
-          <span className="text-l text-[#5E5E5E] flex">{item.title}</span>
+          <div className="relative font-base text-sm py-1.5 px-2 flex flex-row items-center space-x-2 rounded-md duration-100">
+            {icon}
+            <span>{label}</span>
+          </div>
         </Link>
+      ) : (
+        <TooltipProvider delayDuration={70}>
+          <Tooltip>
+            <TooltipTrigger>
+              <Link
+                href={path}
+                className={`h-full relative flex items-center justify-center p-2 rounded-full ${
+                  active
+                    ? 'bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-white'
+                    : 'hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
+                }`}
+              >
+                {icon}
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>{label}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
-    </div>
+    </>
   );
 };
