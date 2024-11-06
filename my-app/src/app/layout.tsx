@@ -6,6 +6,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import NextAuthSessionProvider from "@/providers/sessionProvider";
 import '@/styles/globals.css';
+import Navbar from "@/components/homepage/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,9 @@ export default function RootLayout({ children } : { children: React.ReactNode })
     <html lang="pt-br">
       <body className={inter.className}>
         <NextAuthSessionProvider>
-          {children}
+          <div className="pt-[64px]">
+            {children}
+          </div>
         </NextAuthSessionProvider>
       </body>
     </html>
