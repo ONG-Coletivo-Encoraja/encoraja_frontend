@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,6 +14,7 @@ import LogoutConfirmation from '@/components/pop-ups/LogoutConfirmation';
 import { signOut, useSession } from 'next-auth/react'; 
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import API from '@/services/api';
 
 const MyAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
@@ -28,7 +29,7 @@ export default function Header({}: HeaderProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [logoutDialogOpen, setLogoutDialogOpen] = React.useState(false);
 
-  const { data: session, status } = useSession(); // Obtém a sessão atual
+  const { data: session, status } = useSession(); 
   const router = useRouter();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,8 +42,14 @@ export default function Header({}: HeaderProps) {
 
   const handleLogout = async () => {
     try {
-      await signOut(); // Chama a função de logout do NextAuth
-      router.push('/login'); // Redireciona para a página de login
+      await API.post('/auth/logout',{}, {
+        headers: { 
+          'Authorization': `Bearer ${session?.token}`,
+          'Content-Type': 'application/json',
+        },
+      }); 
+      await signOut();
+      router.push('/login');
     } catch (error) {
       console.error('Logout falhou', error);
     }

@@ -14,6 +14,7 @@ import LogoutConfirmation from '@/components/pop-ups/LogoutConfirmation';
 import { signOut, useSession } from 'next-auth/react'; 
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import API from '@/services/api';
 
 const MyAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
@@ -41,6 +42,12 @@ export default function Header({}: HeaderProps) {
 
   const handleLogout = async () => {
     try {
+      await API.post('/auth/logout',{}, {
+        headers: { 
+          'Authorization': `Bearer ${session?.token}`,
+          'Content-Type': 'application/json',
+        },
+      }); 
       await signOut();
       router.push('/login'); 
     } catch (error) {

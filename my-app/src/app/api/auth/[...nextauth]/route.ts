@@ -13,7 +13,7 @@ const nextAuthOptions: NextAuthOptions = {
 
             async authorize(credentials, req) {
                 try {
-                    console.log("response")
+                    console.log("response");
                     const response = await axios.post('http://localhost:8000/api/auth/login', {
                         email: credentials?.email,
                         password: credentials?.password
@@ -23,10 +23,10 @@ const nextAuthOptions: NextAuthOptions = {
                         }
                     });
 
-                    console.log(response)
-            
+                    console.log(response);
+
                     const user = response.data;
-            
+
                     if (user && response.status === 200) {
                         return user;
                     }
@@ -43,17 +43,24 @@ const nextAuthOptions: NextAuthOptions = {
         signIn: '/login'
     },
     callbacks: {
-		async jwt({ token, user }) {
-			user && (token.user = user)
-			return token
-		},
-		async session({ session, token }){
-			session = token.user as any
-			return session
-		}
-	}
-}
+        async jwt({ token, user }) {
+            if (user) {
+                token.user = user;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            session = token.user as any;
+            return session;
+        }
+    },
+    session: {
+        maxAge: 28800,
+        updateAge: 14400,
+    },
+    secret: process.env.NEXTAUTH_SECRET,
+};
 
-const handler =  NextAuth(nextAuthOptions)
+const handler = NextAuth(nextAuthOptions);
 
-export { handler as GET, handler as POST, nextAuthOptions }
+export { handler as GET, handler as POST, nextAuthOptions };
