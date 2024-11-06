@@ -21,22 +21,22 @@ export default function Navbar() {
         />
         <div className="flex-grow flex justify-center">
           <div className="flex space-x-6">
-            <Link href="#about-us">
+            <Link href="/#about-us">
               <Label className="text-white">Sobre Nós</Label>
             </Link>
-            <Link href="#events">
+            <Link href="/#events">
             <Label className="text-white">Eventos</Label>
             </Link>
-            <Link href="#partners">
+            <Link href="/#partners">
             <Label className="text-white">Apoiadores e Parceiros</Label>
             </Link>
             <Link href="/transparency">
             <Label className="text-white">Transparência</Label>
             </Link>
-            <Link href="#contact">
+            <Link href="/#contact">
             <Label className="text-white">Contato</Label>
             </Link>
-            <Link href="#contact">
+            <Link href="/#contact">
             <Label className="text-white">Doe</Label>
             </Link>
           </div>

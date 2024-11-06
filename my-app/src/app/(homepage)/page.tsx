@@ -1,5 +1,4 @@
-import React from 'react'; // Add this line
-
+import React from 'react';
 import { AboutUsCard } from "@/components/homepage/about-us";
 import Navbar from "../../components/homepage/navbar"
 import { CarouselHomePage } from "@/components/homepage/carousel";
