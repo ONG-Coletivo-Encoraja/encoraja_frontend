@@ -16,7 +16,7 @@ export default function Home() {
         <div>
           <CarouselHomePage />
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div id='about-us' className="grid grid-cols-3 gap-4">
           <AboutUsCard
           title="Quem somos?"
           content="Um Coletivo de mulheres que atuam no combate à violência doméstica e abuso infantil. Oferecendo cursos que capacitam mulheres visando atingir a independência financeira (como por exemplo: oficinas de costura, pintura, entre outros)." 
@@ -49,7 +49,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div>
+          <div id='events'>
             <div className='flex flex-col items-center justify-center'>
               <Label className="text-3xl">Projetos que transformam vidas</Label>
               <Label className="text-xl">Conheça nossos projetos e faça parte dessa transformação</Label>
@@ -78,7 +78,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div>
+          <div id='partners'>
             <div className='flex flex-col items-center justify-center'>
               <Label className="text-3xl">Nossos parceiros e apoiadores</Label>
             </div>
@@ -106,7 +106,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className='w-full h-[400px] bg-[#F5F2D0]'>
+          <div id='contact' className='w-full h-[400px] bg-[#F5F2D0]'>
           <Label className='m-8 text-3xl'>Contatos</Label>
           </div>
       </div>
