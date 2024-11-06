@@ -1,121 +1,79 @@
 'use client';
 
-import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import LogoutConfirmation from '@/components/pop-ups/LogoutConfirmation';
-import { signOut, useSession } from 'next-auth/react'; 
-import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import {
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+  MenubarItem,
+} from '@/components/ui/menubar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Label } from '@/components/ui/label';
 import Link from 'next/link';
-import API from '@/services/api';
+import { signOut, useSession } from 'next-auth/react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { LogoutDialog } from './logoutDialog';
 
-const MyAppBar = styled(AppBar)(({ theme }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  backgroundColor: '#702054',
-}));
+export default function Navbar() {
+  const { data: session, status } = useSession();
+  const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-type HeaderProps = {
-    className?: string;
-};
-
-export default function Header({}: HeaderProps) {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [logoutDialogOpen, setLogoutDialogOpen] = React.useState(false);
-
-  const { data: session, status } = useSession(); // Obtém a sessão atual
-  const router = useRouter();
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleOpenLogoutDialog = () => {
+    setIsLogoutDialogOpen(true);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await API.post('/auth/logout',{}, {
-        headers: { 
-          'Authorization': `Bearer ${session?.token}`,
-          'Content-Type': 'application/json',
-        },
-      }); 
-      await signOut();
-      router.push('/login'); 
-    } catch (error) {
-      console.error('Logout falhou', error);
-    }
+  const handleCloseLogoutDialog = () => {
+    setIsLogoutDialogOpen(false);
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <MyAppBar position="fixed">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            edge="start"
-            sx={{ marginRight: 5 }}
-          >
-            <img
-              src="/img/mini-logo.png"
-              alt="Logo"
-              style={{ height: '50px' }}
-            />
-          </IconButton>
-          <Box sx={{ flexGrow: 1 }} />
-          <Button
-            variant="outlined"
-            onClick={handleClick}
-            sx={{
-              borderColor: 'white',
-              color: 'white',
-              backgroundColor: 'transparent',
-              textTransform: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              '&:hover': {
-                borderColor: 'white',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              },
-            }}
-          >
-            {status === 'loading' ? 'Carregando...' : session?.user?.name || 'Usuário'}
-            <ArrowDropDownIcon sx={{ ml: 1 }} />
-          </Button>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
-            <MenuItem onClick={handleClose}>
-            <Link href="/perfil" style={{ textDecoration: 'none', color: 'inherit' }}>Perfil</Link>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>Minha conta</MenuItem>
-            <MenuItem onClick={() => setLogoutDialogOpen(true)}>Sair</MenuItem>
-          </Menu>
-        </Toolbar>
-      </MyAppBar>
-      <LogoutConfirmation
-        open={logoutDialogOpen}
-        onClose={() => setLogoutDialogOpen(false)}
-        onConfirm={handleLogout}
-      />
-    </Box>
+    <div className="flex flex-col">
+      <Menubar className="bg-[#702054] h-[65px] flex justify-between items-center">
+        <img
+          src="/img/mini-logo.png"
+          alt="Logo"
+          className="h-12 ml-4"
+        />
+        <DropdownMenu onOpenChange={(open) => setIsOpen(open)}>
+          <div className='flex items-center mr-8 border rounded-md'>
+            <DropdownMenuTrigger asChild>
+              <Label className="text-white mx-4 flex items-center justify-between">
+                {status === 'loading' ? 'Carregando...' : session?.user?.name || 'Usuário'} 
+                {isOpen ? (
+                  <ChevronUp color="#ffffff" />
+                ) : (
+                  <ChevronDown color="#ffffff" />
+                )}
+              </Label>
+            </DropdownMenuTrigger>
+          </div>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Link href="/perfil">
+                  <span>Meu Perfil</span>
+                </Link>
+              </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleOpenLogoutDialog}>
+              Sair
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </Menubar>
+      <LogoutDialog isOpen={isLogoutDialogOpen} onClose={handleCloseLogoutDialog} />
+    </div>
   );
 }

@@ -4,7 +4,7 @@ import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import Header from "@/components/volunteer/header/header";
+import Navbar from "@/components/volunteer/header/header";
 import Sidebar from "@/components/volunteer/sidebar/sidebar";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -28,10 +28,12 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
   if (session.user.permission == "volunteer") {
 
     return (
-      <html lang="pt-br">
-        <body className={inter.className}>
-          <Header className="fixed top-0 w-full z-10" />
-          <div className="flex pt-[60px] h-full w-full">
+      <div lang="pt-br">
+        <div className={inter.className}>
+          <div className="fixed top-0 w-full z-10">
+            <Navbar />
+          </div>
+          <div className="flex h-full w-full">
             <div className="fixed w-16">
               <Sidebar />
             </div>
@@ -40,8 +42,8 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
               <Toaster />
             </div>
           </div>
-        </body>
-      </html>
+        </div>
+      </div>
     );
   }
 
