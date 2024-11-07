@@ -8,6 +8,7 @@ import API from "@/services/api";
 import PaginationComponent from "@/components/shared/paginator";
 import FilterComponent from "@/components/shared/filterUsers";
 import SearchComponent from "@/components/shared/search";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export function UsersList() {
   const { toast } = useToast();
@@ -60,6 +61,14 @@ export function UsersList() {
   };
 
   console.log(users)
+
+  if (loading) {
+    return <>
+    <div className="flex items-center justify-center h-screen">
+      <CircularProgress color="secondary" />
+    </div>
+    </>;
+  }
 
   return (
     <div>

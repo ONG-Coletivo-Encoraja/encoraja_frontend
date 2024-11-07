@@ -11,11 +11,15 @@ import { Button } from "@/components/ui/button";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import API from "@/services/api";
+import { useToast } from "@/hooks/use-toast";
+import { AxiosError } from "axios";
+
 
 export function LogoutDialog({ isOpen, onClose }) {
 
     const { data: session, status } = useSession(); 
     const router = useRouter();
+    const { toast } = useToast();
 
     const handleLogout = async () => {
         try {
@@ -26,9 +30,18 @@ export function LogoutDialog({ isOpen, onClose }) {
             },
           }); 
           await signOut();
-          router.push('/login');
+          router.push('/');
+          toast({
+            title: "Log-out realizado com sucesso!",
+            description: "Você foi desconectado e será redirecionado para a tela de início.",
+            });
         } catch (error) {
           console.error('Logout falhou', error);
+            toast({
+                title: "Erro ao fazer logout",
+                description: "Não foi possível fazer logout. Tente novamente.",
+                variant: "destructive",
+            });
         }
       };
 
