@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import API from '@/services/api';
 import PaginationComponent from './paginator';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 export default function MyInscriptions() {
@@ -85,6 +86,14 @@ export default function MyInscriptions() {
             setCurrentPage(newPage);
         }
     };
+
+    if (loading) {
+        return <>
+        <div className="flex items-center justify-center h-screen">
+          <CircularProgress color="secondary" />
+        </div>
+        </>;
+      }
 
     return (
         <div>

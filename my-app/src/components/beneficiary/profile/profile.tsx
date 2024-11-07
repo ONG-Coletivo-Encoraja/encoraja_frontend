@@ -19,24 +19,26 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormLabel, FormMessage, FormControl } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { UserData, UserDataSend } from '@/interfaces/IUserData';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export function Profile() {
   const { data: session } = useSession();
   const router = useRouter();
   const [profileData, setProfileData] = useState<UserData | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const data = await getUserData();
         setProfileData(data);
       } catch (err) {
         setError('Erro ao buscar dados do perfil.');
         console.error("Error fetching user data:", err);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
@@ -104,8 +106,10 @@ export function Profile() {
     }
   };
 
-  if (isLoading) {
-    return <p>Carregando...</p>;
+  if (loading) {
+    return <>
+      <CircularProgress />
+    </>;
   }
 
   return (

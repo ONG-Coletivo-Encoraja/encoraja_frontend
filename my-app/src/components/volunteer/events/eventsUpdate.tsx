@@ -16,9 +16,11 @@ import API from '@/services/api';
 import { UserData } from "@/interfaces/IUserData";
 import { EventData } from "@/interfaces/IEventData";
 import { getUserData } from "@/app/api/volunteers/getVolunteers";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function RegisterEvent() {
   const [users, setUsers] = useState<UserData[]>([]);
+  const [loading, setLoading] = useState(true);
   const { data: session } = useSession(); 
   const router = useRouter();
   const { toast } = useToast();
@@ -74,6 +76,7 @@ export default function RegisterEvent() {
           workload: eventData.workload,
           owner: eventData.user_owner.id,
         });
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching event data:', error);
       }
@@ -148,6 +151,12 @@ export default function RegisterEvent() {
   }, []);
 
   return (
+  <div>
+    {loading ? (
+      <div className="flex justify-center items-center h-screen">
+        <CircularProgress />
+      </div>
+    ) : (
     <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
       <CardHeader>
         <CardTitle>Cadastro de evento</CardTitle>
@@ -367,5 +376,7 @@ export default function RegisterEvent() {
         </Button>
       </CardFooter>
     </Card>
+  )}
+  </div>
   );
 }

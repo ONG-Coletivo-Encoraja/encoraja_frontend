@@ -1,6 +1,7 @@
 'use client';
 
 import React from "react";
+import { useState } from "react";
 import { VolunteerForm } from "@/components/shared/volunteerForm";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Form, FormField, FormMessage, FormItem, FormControl, FormLabel } from "@/components/ui/form";
@@ -16,12 +17,14 @@ import { AxiosError } from "axios";
 import { useParams, useRouter } from 'next/navigation';
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 export function BeAVolunteer() {
   const { data: session } = useSession();
   const [profileData, setProfileData] = React.useState<UserData | null>(null);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const permission = session?.user?.permission;
   const router = useRouter();
@@ -30,7 +33,9 @@ export function BeAVolunteer() {
 
   React.useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
+       // await new Promise(resolve => setTimeout(resolve, 2000)); //simula atraso pra ver o loading
         const data = await getUserData();
         setProfileData(data);
         console.log(data);
@@ -38,7 +43,7 @@ export function BeAVolunteer() {
         setError('Erro ao buscar dados do perfil.');
         console.error("Error fetching user data:", err);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
@@ -97,6 +102,11 @@ export function BeAVolunteer() {
 
   return (
     <>
+      {loading ? (
+        <div className="flex items-center justify-center h-screen">
+          <CircularProgress color="secondary" />
+        </div>
+  ) : (
       <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Seja voluntário</CardTitle>
@@ -219,6 +229,7 @@ export function BeAVolunteer() {
           </Button>
         </CardFooter>
       </Card>
+    )}
     </>
   );
 }

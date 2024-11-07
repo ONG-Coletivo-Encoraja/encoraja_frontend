@@ -26,6 +26,7 @@ import { useEventsDetailsFunctions } from '@/app/api/events/eventService';
 import { Event } from '@/interfaces/IEventData';
 import { Rating } from "@mui/material";
 
+
 export default function ReviewForm() {
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
