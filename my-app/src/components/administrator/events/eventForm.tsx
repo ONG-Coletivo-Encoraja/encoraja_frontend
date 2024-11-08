@@ -16,9 +16,11 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { getUserData } from "@/app/api/volunteers/getVolunteers";
 import { UserData } from "@/interfaces/IUserData";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function RegisterEvent() {
   const [users, setUsers] = useState<UserData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -107,6 +109,7 @@ export default function RegisterEvent() {
       }
     }
   };
+}
 
   return (
     <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
@@ -390,5 +393,6 @@ export default function RegisterEvent() {
         </Button>
       </CardFooter>
     </Card>
-  );
-}
+  )
+};
+
