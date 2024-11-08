@@ -22,7 +22,7 @@ import { UserData, UserDataSend } from '@/interfaces/IUserData';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useToast } from "@/hooks/use-toast";
 
-export function Profile() {
+export function BeneficiaryProfile() {
   const { data: session } = useSession();
   const router = useRouter();
   const [profileData, setProfileData] = useState<UserData | null>(null);
