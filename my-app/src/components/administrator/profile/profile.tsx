@@ -19,13 +19,16 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormLabel, FormMessage, FormControl } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { UserData, UserDataSend } from '@/interfaces/IUserData';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useToast } from "@/hooks/use-toast";
 
 export function Profile() {
   const { data: session } = useSession();
   const router = useRouter();
   const [profileData, setProfileData] = useState<UserData | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +39,7 @@ export function Profile() {
         setError('Erro ao buscar dados do perfil.');
         console.error("Error fetching user data:", err);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
@@ -79,13 +82,20 @@ export function Profile() {
     if (values.address?.zip_code !== address?.zip_code) updatedData.zip_code = values.address?.zip_code;
 
     if (Object.keys(updatedData).length === 0) {
-      alert('Nenhuma alteração foi feita.');
+      toast({
+        title: 'Nada a atualizar!',
+        description: 'Nenhuma alteração foi feita!',
+        variant: 'alert',
+      });
       return;
     }
 
     try {
       const response = await updateUserData(updatedData);
-      console.log(response);
+      toast({
+        title: 'Dados atualizados com sucesso.',
+        description: (response as { message?: string }).message,
+      });
       router.push('/home');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
@@ -93,19 +103,29 @@ export function Profile() {
         if (errors && typeof errors === 'object') {
           const firstKey = Object.keys(errors)[0];
           const firstErrorMessage = errors[firstKey][0];
-          alert(firstErrorMessage);
+          toast({
+            title: "Falha no cadastro!",
+            description: firstErrorMessage,
+            variant: "destructive",
+          });
         } else {
           console.error("Errors object is not defined or not an object");
         }
       } else {
         console.error('Erro inesperado:', error);
-        alert('Ocorreu um erro inesperado.');
+        toast({
+          title: "Falha no cadastro!",
+          description: "Ocorreu um erro inesperado. Tente novamente mais tarde.",
+          variant: "destructive",
+        });
       }
     }
   };
 
-  if (isLoading) {
-    return <p>Carregando...</p>;
+  if (loading) {
+    return <>
+      <CircularProgress />
+    </>;
   }
 
   return (

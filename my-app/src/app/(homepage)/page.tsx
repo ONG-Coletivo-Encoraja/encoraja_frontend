@@ -15,7 +15,7 @@ export default function Home() {
         <div>
           <CarouselHomePage />
         </div>
-        <div id='about-us' className="grid grid-cols-3 gap-4">
+        <div id='about-us' className="grid grid-cols-3 gap-4 h-screen flex items-center">
           <AboutUsCard
           title="Quem somos?"
           content="Um Coletivo de mulheres que atuam no combate à violência doméstica e abuso infantil. Oferecendo cursos que capacitam mulheres visando atingir a independência financeira (como por exemplo: oficinas de costura, pintura, entre outros)." 
@@ -37,7 +37,7 @@ export default function Home() {
           content="Valorizamos o respeito, a diversidade, a ética e a transparência em todas as nossas ações, promovendo um ambiente de de acolhimento e seguro. Acreditamos no poder de cada mulher de construir um futuro com mais oportunidades e igualdade" 
           />
           </div>
-          <div className="grid grid-cols-2 h-[500px] w-full">
+          <div className="grid grid-cols-2 h-screen w-full">
             <div className="bg-[#F5F2D0] w-full h-full">
             </div>
             <div className="bg-[#702055] w-full h-full flex flex-col items-center justify-center p-8">

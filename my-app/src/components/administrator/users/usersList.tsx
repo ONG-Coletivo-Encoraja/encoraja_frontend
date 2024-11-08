@@ -62,14 +62,6 @@ export function UsersList() {
 
   console.log(users)
 
-  if (loading) {
-    return <>
-    <div className="flex items-center justify-center h-screen">
-      <CircularProgress color="secondary" />
-    </div>
-    </>;
-  }
-
   return (
     <div>
       <div className="flex justify-end">
@@ -79,11 +71,17 @@ export function UsersList() {
       <div>
         <FilterComponent onFilterChange={setFilterPermission}/>
       </div>
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <CircularProgress />
+        </div>
+      ) : (
       <div className="grid grid-cols-2 gap-4 mt-6">
         {users.map((user) => (
             <UserCard key={user.id} user={user} />
         ))}
       </div>
+      )}
       <PaginationComponent
         currentPage={currentPage}
         totalPages={totalPages}

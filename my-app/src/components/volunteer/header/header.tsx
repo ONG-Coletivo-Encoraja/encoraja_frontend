@@ -62,7 +62,7 @@ export default function Navbar() {
             <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link href="/perfil">
+                <Link href="/meu-perfil">
                   <span>Meu Perfil</span>
                 </Link>
               </DropdownMenuItem>
