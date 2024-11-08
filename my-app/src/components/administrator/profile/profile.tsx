@@ -104,7 +104,7 @@ export function Profile() {
           const firstKey = Object.keys(errors)[0];
           const firstErrorMessage = errors[firstKey][0];
           toast({
-            title: "Falha no cadastro!",
+            title: "Erro!",
             description: firstErrorMessage,
             variant: "destructive",
           });
@@ -114,7 +114,7 @@ export function Profile() {
       } else {
         console.error('Erro inesperado:', error);
         toast({
-          title: "Falha no cadastro!",
+          title: "Erro!",
           description: "Ocorreu um erro inesperado. Tente novamente mais tarde.",
           variant: "destructive",
         });

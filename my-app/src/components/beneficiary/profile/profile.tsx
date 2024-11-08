@@ -101,25 +101,31 @@ export function Profile() {
       router.push('/home');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        const errors = error.response.data.errors;
-        if (errors && typeof errors === 'object') {
-          const firstKey = Object.keys(errors)[0];
-          const firstErrorMessage = errors[firstKey][0];
-          toast({
-            title: "Falha no cadastro!",
-            description: firstErrorMessage,
-            variant: "destructive",
-          });
-        } else {
-          console.error("Errors object is not defined or not an object");
-        }
-      } else {
-        console.error('Erro inesperado:', error);
-        toast({
-          title: "Falha no cadastro!",
-          description: "Ocorreu um erro inesperado. Tente novamente mais tarde.",
-          variant: "destructive",
-        });
+          const errorMessage = error.response.data?.message || error.response.data?.error;
+          if (errorMessage) {
+              toast({
+                  title: "Falha no cadastro!",
+                  description: errorMessage,
+                  variant: "destructive",
+              });
+          } else {
+              const errors = error.response.data.errors;
+              if (errors && typeof errors === 'object') {
+                  const firstKey = Object.keys(errors)[0];
+                  const firstErrorMessage = errors[firstKey][0];
+                  toast({
+                      title: "Falha no cadastro!",
+                      description: firstErrorMessage,
+                      variant: "destructive",
+                  });
+              } else {
+                  toast({
+                      title: "Falha no cadastro!",
+                      description: "Ocorreu um erro inesperado. Tente novamente mais tarde.",
+                      variant: "destructive",
+                  });
+              }
+          }
       }
     }
   };

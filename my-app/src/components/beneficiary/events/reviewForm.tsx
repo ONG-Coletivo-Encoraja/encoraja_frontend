@@ -73,15 +73,34 @@ export default function ReviewForm() {
       });
       setOpen(false);
     } catch (error) {
-      const errorMessage = (error instanceof AxiosError && error.response?.data?.errors)
-        ? error.response.data.errors[Object.keys(error.response.data.errors)[0]][0]
-        : "Erro desconhecido";
+      if (error instanceof AxiosError && error.response) {
+        const errorMessage = error.response.data?.message;
+        const errors = error.response.data.errors;
 
-      toast({
-        title: "Falha no cadastro!",
-        description: errorMessage,
-        variant: "destructive",
-      });
+        if (errorMessage) {
+          toast({
+            title: "Erro!",
+            description: errorMessage,
+            variant: "destructive",
+          });
+        }
+        else if (errors && typeof errors === 'object') {
+          const firstKey = Object.keys(errors)[0];
+          const firstErrorMessage = errors[firstKey][0];
+  
+          toast({
+            title: "Falha ao enviar avaliação!",
+            description: firstErrorMessage,
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Erro!",
+            description: "Ocorreu um problema ao enviar o relatório.",
+            variant: "destructive",
+          });
+        }
+      }
     }
   };
 

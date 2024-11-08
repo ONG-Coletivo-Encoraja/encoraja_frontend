@@ -17,6 +17,8 @@ import { Review } from '@/interfaces/IReview';
 import { IReportAdmin } from '@/interfaces/IReportAdmin';
 import { registerReportAdmin } from "@/app/api/volunteers/reportAdmin";
 import { AxiosError } from 'axios';
+import { useToast } from "@/hooks/use-toast";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function ReportEvent() {
   const { data: session } = useSession(); 
@@ -28,6 +30,7 @@ export default function ReportEvent() {
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [inscriptionsDialogOpen, setInscriptionsDialogOpen] = useState(false);
+  const { toast } = useToast();
 
   const { fetchData, handleReviewClick } = useEventsDetailsFunctions(eventId, setEvent, setReviews, setLoading);
 
@@ -68,25 +71,52 @@ export default function ReportEvent() {
     try {
       const response = await registerReportAdmin(data, session.token); 
       console.log(response);
+      toast ({
+        title: "Relatório enviado com sucesso!",
+        description: response.message,
+      });
       router.push('/home');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
+        const errorMessage = error.response.data?.message;
         const errors = error.response.data.errors;
 
-        if (errors && typeof errors === 'object') {
+        if (errorMessage) {
+          toast({
+            title: "Erro!",
+            description: errorMessage,
+            variant: "destructive",
+          });
+        }
+        else if (errors && typeof errors === 'object') {
           const firstKey = Object.keys(errors)[0];
           const firstErrorMessage = errors[firstKey][0];
+  
+          toast({
+            title: "Falha ao enviar relatório!",
+            description: firstErrorMessage,
+            variant: "destructive",
+          });
         } else {
-          console.error("Errors object is not defined or not an object");
+          toast({
+            title: "Erro!",
+            description: "Ocorreu um problema ao enviar o relatório.",
+            variant: "destructive",
+          });
         }
-      } else {
-        console.error('Erro inesperado:', error);
-        alert('Ocorreu um erro inesperado.');
       }
     }
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <CircularProgress />
+      </div>
+    );
+  }
   return (
+
     <Card className="w-full max-w-[800px] mx-auto mt-10 shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Relatório do Evento</CardTitle>
@@ -163,7 +193,7 @@ export default function ReportEvent() {
                 <FormItem className="col-span-3">
                   <FormLabel>Descrição da atividade</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Descreva a atividade do evento" {...field} />
+                    <Textarea required placeholder="Descreva a atividade do evento" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

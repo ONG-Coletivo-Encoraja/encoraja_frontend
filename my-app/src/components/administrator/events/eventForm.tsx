@@ -98,11 +98,12 @@ export default function RegisterEvent() {
             variant: "destructive",
           });
         } else {
-          console.error("Errors object is not defined or not an object");
-        }
-      } else {
         console.error('Erro inesperado:', error);
-        alert('Ocorreu um erro inesperado.');
+        toast ({
+          title: "Erro!",
+          description: "Ocorreu um erro inesperado. Tente novamente mais tarde.",
+          variant: "destructive",
+        });
       }
     }
   };

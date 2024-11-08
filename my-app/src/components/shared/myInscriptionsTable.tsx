@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import API from '@/services/api';
 import PaginationComponent from './paginator';
 import CircularProgress from '@mui/material/CircularProgress';
+import { AxiosError } from 'axios';
 
 
 export default function MyInscriptions() {
@@ -62,24 +63,38 @@ export default function MyInscriptions() {
         fetchData();
       }, [currentPage, session, statusFilter, nameFilter]);
 
-    const handleDeleteInscription = async (id: number) => {
+      const handleDeleteInscription = async (id: number) => {
         if (session?.token) {
             try {
                 await deleteInscription(session.token, String(id));
                 setInscriptions(prevData => prevData.filter(item => item.id !== id));
-                toast ({
+                toast({
                     description: "Inscrição cancelada com sucesso!",
                 });
             } catch (error) {
-                console.error('Error deleting inscription:', error);
-                toast({
-                    title: "Erro!",
-                    description: "Não foi possível cancelar a inscrição.",
-                    variant: "destructive",
-                  });
+                if (error instanceof AxiosError && error.response) {
+                    const errors = error.response.data.errors;
+                    if (errors && typeof errors === 'object') {
+                        const firstKey = Object.keys(errors)[0];
+                        const firstErrorMessage = errors[firstKey][0];
+    
+                        toast({
+                            title: "Falha ao cancelar inscrição!",
+                            description: firstErrorMessage,
+                            variant: "destructive",
+                        });
+                    } else {
+                        toast({
+                            title: "Erro!",
+                            description: "Ocorreu um problema ao cancelar a inscrição.",
+                            variant: "destructive",
+                        });
+                    }
+                }
             }
         }
     };
+    
 
     const handlePageChange = (newPage: number) => {
         if (newPage > 0 && newPage <= totalPages) {

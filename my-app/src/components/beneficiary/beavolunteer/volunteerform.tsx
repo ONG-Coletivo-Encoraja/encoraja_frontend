@@ -35,7 +35,6 @@ export function BeAVolunteer() {
     const fetchData = async () => {
       setLoading(true);
       try {
-       // await new Promise(resolve => setTimeout(resolve, 2000)); //simula atraso pra ver o loading
         const data = await getUserData();
         setProfileData(data);
         console.log(data);
@@ -75,27 +74,30 @@ export function BeAVolunteer() {
       console.log(response);
       toast({
         title: "Solicitação enviada",
-        description: "Solicitação de voluntariado enviada com sucesso!",
+        description: (response as { message?: string }).message,
       });
       router.push('/home');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errors = error.response.data.errors;
-        toast({
-          title: "Erro ao enviar solicitação",
-          description: "Solicitação de voluntariado não enviada.",
-          variant: "destructive",
-        });
-
         if (errors && typeof errors === 'object') {
           const firstKey = Object.keys(errors)[0];
           const firstErrorMessage = errors[firstKey][0];
+          toast({
+            title: "Falha no cadastro!",
+            description: firstErrorMessage,
+            variant: "destructive",
+          });
         } else {
           console.error("Errors object is not defined or not an object");
         }
       } else {
         console.error('Erro inesperado:', error);
-        alert('Ocorreu um erro inesperado.');
+        toast({
+          title: "Falha no cadastro!",
+          description: "Ocorreu um erro inesperado. Tente novamente mais tarde.",
+          variant: "destructive",
+        });
       }
     }
   };
@@ -170,9 +172,9 @@ export function BeAVolunteer() {
                 name="availability"
                 render={({ field }) => (
                   <FormItem className="col-span-2">
-                    <FormLabel>Disponilibilidade</FormLabel>
+                    <FormLabel >Disponilibilidade</FormLabel>
                     <FormControl>
-                      <Textarea {...field} value={field.value || ''} onChange={field.onChange} />
+                      <Textarea required {...field} value={field.value || ''} onChange={field.onChange} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

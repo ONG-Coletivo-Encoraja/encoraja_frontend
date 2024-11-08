@@ -67,7 +67,11 @@ export default function RegisterForm() {
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     if (values.password !== values.confirmPassword) {
-      alert('As senhas não coincidem');
+      toast({
+        title: "Erro!",
+        description: "As senhas não coincidem.",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -136,7 +140,11 @@ export default function RegisterForm() {
               form.setValue("neighbourhood", data.bairro);
               form.setValue("city", data.localidade);
             } else {
-              alert("CEP não encontrado.");
+              toast ({
+                title: "Erro!",
+                description: "CEP não encontrado.",
+                variant: "destructive",
+              });
             }
           })
           .catch(() => alert("Erro ao buscar CEP."));

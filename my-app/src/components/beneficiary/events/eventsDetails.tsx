@@ -18,6 +18,7 @@ import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { createInscription } from '@/app/api/inscriptions/inscription';
 import ReviewForm from './reviewForm';
+import { AxiosError } from "axios";
 
 export default function EventsDetails() {
   const { toast } = useToast();
@@ -38,20 +39,34 @@ export default function EventsDetails() {
 
   const handleCreateInscription = async () => {
     if (session?.token) {
-      try {
-        await createInscription(Number(eventId), session.token); 
-        toast({
-          description: "Inscrição realizada com sucesso!",
-        })
-      } catch (error) {
-        toast({
-          title: "Erro!",
-          description: "Não foi possível realizar a inscrição.",
-          variant: "destructive",
-        })
-      }
+        try {
+            await createInscription(Number(eventId), session.token); 
+            toast({
+                description: "Inscrição realizada com sucesso!",
+            });
+        } catch (error) {
+            if (error instanceof AxiosError && error.response) {
+                const errorMessage = error.response.data?.message;
+                if (errorMessage) {
+                    toast({
+                        title: "Erro!",
+                        description: errorMessage,
+                        variant: "destructive",
+                    });
+                } else {
+                    console.error("Erro inesperado na resposta:", error);
+                    toast({
+                        title: "Erro!",
+                        description: "Ocorreu um erro inesperado. Tente novamente mais tarde.",
+                        variant: "destructive",
+                    });
+                }
+            }
+        }
     }
-  };
+};
+
+
 
 
 
