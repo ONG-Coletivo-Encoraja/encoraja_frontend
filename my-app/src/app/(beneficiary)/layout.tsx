@@ -8,7 +8,6 @@ import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/beneficiary/header/header";
 import Sidebar from "@/components/beneficiary/sidebar/sidebar";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 interface LayoutProps {
@@ -23,7 +22,7 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
     return null;
   }
 
-  const isSidebarExpanded = true;
+  const isSidebarExpanded = true; // QUANDO ISSO AQUI TA TRUE O CHILDREN É ARRASTADO PRO LADO, SE MUDAR MANUALMENTE ELE VOLTA PRA POSIÇÃO QUE TAVA
 
   console.log("Sessão:", session);
 
@@ -35,10 +34,14 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
             <Navbar />
           </div>
           <div className="relative flex h-screen overflow-hidden">
-            <div className="fixed w-16">
+            <div className={isSidebarExpanded ? "w-[100px]" : "w-16"}> 
               <Sidebar />
             </div>
-            <div className="flex-1 ml-16 overflow-y-auto">
+            <div
+              className={`flex-1 ${
+                isSidebarExpanded ? "ml-[100px]" : "ml-16"
+              } overflow-y-auto transition-all duration-300 ease-in-out`} 
+            >
               {children}
               <Toaster />
             </div>
@@ -53,5 +56,4 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
   } else {
     redirect("/home-voluntario");
   }
-
 }
