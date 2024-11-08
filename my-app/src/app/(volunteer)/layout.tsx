@@ -26,18 +26,17 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
   console.log("Sessão:", session);
 
   if (session.user.permission == "volunteer") {
-
     return (
-      <div lang="pt-br">
+      <div lang="pt-br" className="bg-[#ededed] fixed inset-0">
         <div className={inter.className}>
           <div className="fixed top-0 w-full z-10">
             <Navbar />
           </div>
-          <div className="flex h-full w-full">
+          <div className="relative flex h-screen overflow-hidden">
             <div className="fixed w-16">
               <Sidebar />
             </div>
-            <div className="flex-1 ml-16 bg-[#ededed]">
+            <div className="flex-1 ml-16 overflow-y-auto">
               {children}
               <Toaster />
             </div>

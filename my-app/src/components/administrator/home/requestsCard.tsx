@@ -49,7 +49,7 @@ export function RequestsCard() {
 
     console.log(requests)
     return (
-        <Card className="w-[400px]">
+        <Card className="w-[400px] mb-6">
             <CardHeader>
                 <CardDescription className=" text-[#F69053]">Solicitações de voluntariado pendentes</CardDescription>
                 <div className="flex items-center justify-between">

@@ -37,7 +37,7 @@ export default function SideNav() {
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen mt-[65px]">
       <div
         className={cn(
           isSidebarExpanded ? 'w-[250px]' : 'w-[68px]',
