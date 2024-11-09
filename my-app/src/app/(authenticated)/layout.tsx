@@ -9,7 +9,6 @@ import HeaderVolu from "@/components/volunteer/header/header";
 import SidebarAdm from "@/components/administrator/sidebar/sidebar";
 import SidebarBene from "@/components/beneficiary/sidebar/sidebar";
 import SidebarVolu from "@/components/volunteer/sidebar/sidebar";
-import { redirect } from "next/navigation";
 
 interface LayoutProps {
     children: ReactNode;
@@ -18,11 +17,6 @@ interface LayoutProps {
 export default function RootLayout({ children } : LayoutProps)  {
     const { data: session } = useSession();
     const [sidebarExpanded, setSidebarExpanded] = useState(false);
-
-    if (!session) {
-        redirect("/login");
-        return null;
-      }
 
     useEffect(() => {
         const sidebarState = sessionStorage.getItem('sidebarExpanded') === 'true';
@@ -34,6 +28,11 @@ export default function RootLayout({ children } : LayoutProps)  {
         setSidebarExpanded(newSidebarState);
         sessionStorage.setItem('sidebarExpanded', newSidebarState.toString());
       };
+
+      // if (!session) {
+      //   redirect("/login");
+      //   return null;
+      // }
 
       if (session?.user.permission === "administrator") {
         return (

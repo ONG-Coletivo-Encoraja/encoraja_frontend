@@ -63,30 +63,32 @@ export function UsersList() {
   console.log(users)
 
   return (
-    <div>
-      <div className="flex justify-end">
-        <SearchComponent onSearch={setFilterName}/>
-      </div>
-      <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[34px]">Todos os usuários</h1>
+    <div className="h-screen">
       <div>
-        <FilterComponent onFilterChange={setFilterPermission}/>
-      </div>
-      {loading ? (
-        <div className="flex justify-center items-center">
-          <CircularProgress />
+        <div className="flex justify-end">
+          <SearchComponent onSearch={setFilterName} />
         </div>
-      ) : (
-      <div className="grid grid-cols-2 gap-4 mt-6">
-        {users.map((user) => (
-            <UserCard key={user.id} user={user} />
-        ))}
+        <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[34px]">Todos os usuários</h1>
+        <div>
+          <FilterComponent onFilterChange={setFilterPermission} />
+        </div>
+        {loading ? (
+          <div className="flex justify-center items-center">
+            <CircularProgress />
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-4 mt-6">
+            {users.map((user) => (
+              <UserCard key={user.id} user={user} />
+            ))}
+          </div>
+        )}
+        <PaginationComponent
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
-      )}
-      <PaginationComponent
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
     </div>
   );
 }

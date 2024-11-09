@@ -16,15 +16,7 @@ export default async function ProfilePage() {
 
   switch (userRole) {
     case "administrator":
-      return <div className="h-screen" style={{
-        backgroundImage: "url('/img/backgroundgirls.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}>
-        <div className="h-full w-full flex items-center justify-center">
-          <AdminProfile />
-        </div>
-      </div>;
+      return <AdminProfile />
     case "beneficiary":
       return <BeneficiaryProfile />;
     case "volunteer":
@@ -33,8 +25,3 @@ export default async function ProfilePage() {
       return <p>Perfil não reconhecido</p>;
   }
 }
-
-
-
-
-

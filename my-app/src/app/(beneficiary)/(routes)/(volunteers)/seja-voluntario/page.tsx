@@ -1,11 +1,7 @@
-import BackgroundImage from '@/components/ui/background-image';
 import { BeAVolunteer } from '@/components/beneficiary/beavolunteer/volunteerform';
 
-export default function Perfil() {
+export default function Page() {
   return (
-    <div className='h-screen'>
-        <BeAVolunteer />
-    </div>
-
+    <BeAVolunteer />
   );
 };

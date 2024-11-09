@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,32 +14,14 @@ import { EventData } from "@/interfaces/IEventData";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
 import { getUserData } from "@/app/api/volunteers/getVolunteers";
 import { UserData } from "@/interfaces/IUserData";
 
-export default function RegisterEvent() {
+export default function RegisterEvent(): JSX.Element {
   const [users, setUsers] = useState<UserData[]>([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const userData = await getUserData();
-        
-        if (Array.isArray(userData)) {
-          setUsers(userData);
-        } 
-      } catch (error) {
-        console.error('Failed to fetch users:', error);
-      }
-    };
-  
-    fetchUsers();
-  }, []);
-
   const router = useRouter();
   const { toast } = useToast();
-  const { data: session } = useSession(); 
+  const { data: session } = useSession();
 
   const form = useForm<EventData>({
     defaultValues: {
@@ -61,12 +44,23 @@ export default function RegisterEvent() {
     }
   });
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const userData = await getUserData();
+        if (Array.isArray(userData)) {
+          setUsers(userData);
+        }
+      } catch (error) {
+        console.error('Falha ao buscar usuários:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
   const handleSubmit = async (values: EventData) => {
     console.log(values);
-
-    const data: EventData = {
-      ...values,
-    };
 
     if (!session?.token) {
       toast({
@@ -78,7 +72,7 @@ export default function RegisterEvent() {
     }
 
     try {
-      const response = await registerEvent(data, session.token); 
+      const response = await registerEvent(values, session.token);
       toast({
         title: "Sucesso!",
         description: response.message,
@@ -98,12 +92,13 @@ export default function RegisterEvent() {
             variant: "destructive",
           });
         } else {
-        console.error('Erro inesperado:', error);
-        toast ({
-          title: "Erro!",
-          description: "Ocorreu um erro inesperado. Tente novamente mais tarde.",
-          variant: "destructive",
-        });
+          console.error('Erro inesperado:', error);
+          toast({
+            title: "Erro!",
+            description: "Ocorreu um erro inesperado. Tente novamente mais tarde.",
+            variant: "destructive",
+          });
+        }
       }
     }
   };
@@ -116,7 +111,7 @@ export default function RegisterEvent() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <FormField
+            <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
@@ -129,14 +124,13 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="date"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Data</FormLabel>
-                  <FormControl className="flex justify-end">
+                  <FormControl>
                     <Input type="date" {...field} />
                   </FormControl>
                   <FormMessage />
@@ -149,14 +143,13 @@ export default function RegisterEvent() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Horário</FormLabel>
-                  <FormControl className="flex justify-end">
-                    <Input placeholder="00:00" type="time" {...field} />
+                  <FormControl>
+                    <Input type="time" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
             <FormField
               control={form.control}
               name="description"
@@ -164,14 +157,13 @@ export default function RegisterEvent() {
                 <FormItem className="col-span-4">
                   <FormLabel>Descrição</FormLabel>
                   <FormControl>
-                  <Textarea placeholder="Descrição do evento" className="border-[#ededed" {...field} />
+                    <Textarea placeholder="Descrição do evento" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
-          <FormField
+            <FormField
               control={form.control}
               name="modality"
               render={({ field }) => (
@@ -193,8 +185,7 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
-          <FormField
+            <FormField
               control={form.control}
               name="type"
               render={({ field }) => (
@@ -216,8 +207,7 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
-        <FormField
+            <FormField
               control={form.control}
               name="target_audience"
               render={({ field }) => (
@@ -230,8 +220,7 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
-          <FormField
+            <FormField
               control={form.control}
               name="vacancies"
               render={({ field }) => (
@@ -244,8 +233,7 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
-          <FormField
+            <FormField
               control={form.control}
               name="social_vacancies"
               render={({ field }) => (
@@ -258,8 +246,7 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
-          <FormField
+            <FormField
               control={form.control}
               name="regular_vacancies"
               render={({ field }) => (
@@ -272,8 +259,7 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
-        <FormField
+            <FormField
               control={form.control}
               name="material"
               render={({ field }) => (
@@ -286,8 +272,7 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
-        <FormField
+            <FormField
               control={form.control}
               name="interest_area"
               render={({ field }) => (
@@ -300,8 +285,7 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
-      <FormField
+            <FormField
               control={form.control}
               name="price"
               render={({ field }) => (
@@ -314,14 +298,12 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-      
-
-          <FormField
+            <FormField
               control={form.control}
               name="workload"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Carga horária</FormLabel>
+                  <FormLabel>Carga Horária</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -329,22 +311,21 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="owner"
               render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Voluntário responsável</FormLabel>
+                <FormItem>
+                  <FormLabel>Responsável</FormLabel>
                   <FormControl>
-                    <Select onValueChange={field.onChange}>
+                    <Select onValueChange={field.onChange} defaultValue="">
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione um voluntário" />
+                        <SelectValue placeholder="Selecione" />
                       </SelectTrigger>
                       <SelectContent>
-                        {Array.isArray(users) && users.map(user => ( 
-                          <SelectItem key={user.id} value={user.id.toString()}> 
-                            {user.name} 
+                        {users.map((user) => (
+                          <SelectItem key={user.id} value={String(user.id)}>
+                            {user.name}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -354,40 +335,12 @@ export default function RegisterEvent() {
                 </FormItem>
               )}
             />
-
-      <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Status</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} defaultValue="">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="active">Ativo</SelectItem>
-                        <SelectItem value="inactive">Inativo</SelectItem>
-                        <SelectItem value="pending">Pendente</SelectItem>
-                        <SelectItem value="finished">Finalizado</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Button type="submit" className="col-span-4">Cadastrar</Button>
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex justify-end gap-4">
-        <Button variant="outline">
-          Cancelar
-        </Button>
-        <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
-          Salvar
-        </Button>
+      <CardFooter>
+        <Button onClick={() => router.push('/home')} variant="secondary">Voltar</Button>
       </CardFooter>
     </Card>
   );

@@ -4,8 +4,6 @@ import { RequestVolunteerDetailsCard } from "@/components/administrator/users/re
 export default function RequestVolunteer() {
 
   return (
-    <div className="h-screen">
-       <RequestVolunteerDetailsCard />
-    </div>
+    <RequestVolunteerDetailsCard />
   );
 }

@@ -59,29 +59,31 @@ export function RequestVolunteerList() {
   };
 
   return (
-    <div>
-      <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[34px]">
-        Solicitações de voluntariado
-      </h1>
+    <div className="min-h-screen">
       <div>
-        <FilterRequests onFilterChange={setFilterStatus} />
-      </div>
-      {loading ? (
-        <div className="flex justify-center mt-6">
-          <CircularProgress color="secondary" />
+        <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[34px]">
+          Solicitações de voluntariado
+        </h1>
+        <div>
+          <FilterRequests onFilterChange={setFilterStatus} />
         </div>
-      ) : (
-        <div className="flex flex-wrap gap-4 mt-6">
-          {data.map((request) => (
+        {loading ? (
+          <div className="flex justify-center mt-6">
+            <CircularProgress color="secondary" />
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-4 mt-6">
+            {data.map((request) => (
               <RequestVolunteerCard key={request.id} request={request} />
-          ))}
-        </div>
-      )}
-      <PaginationComponent
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+            ))}
+          </div>
+        )}
+        <PaginationComponent
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </div>
   );
 }

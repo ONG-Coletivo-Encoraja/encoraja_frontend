@@ -4,8 +4,6 @@ import { RequestVolunteerList } from "@/components/administrator/users/requestVo
 export default function RequestVolunteer() {
 
   return (
-    <div className="min-h-screen">
         <RequestVolunteerList />
-    </div>
   );
 }

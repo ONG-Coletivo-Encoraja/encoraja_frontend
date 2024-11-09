@@ -25,7 +25,7 @@ export default function RequestVolunteerDetailsCard() {
     const { toast } = useToast();
     const [user, setUser] = useState<IUser>();
     const [selectedPermission, setSelectedPermission] = useState<string>('');
-    
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -92,61 +92,63 @@ export default function RequestVolunteerDetailsCard() {
     };
 
     return (
-        <Card className="w-[1000px] h-[600px]">
-            <CardHeader className="flex items-center">
-                <CircleUserIcon className="w-16 h-16 text-[#5E5E5E]" />
-            </CardHeader>
-            <CardContent>
-                {loading ? (
-                    <div className="flex justify-center mt-6">
-                        <CircularProgress color="secondary" />
-                    </div>
-                ) : (
-                    <div>
-                        <div className="flex flex-col gap-6 ml-6">
-                            <Label className=" text-[#727272]"><b>Nome: {user?.name}</b> </Label>
-                            <Label className=" text-[#727272]"><b>Data de nascimento: {user?.date_birthday}</b> </Label>
-                            <Label className=" text-[#727272]"><b>Email:</b> {user?.email} </Label>
-                            <Label className=" text-[#727272]"><b>Telefone:</b> {user?.phone}</Label>
-                            {user?.availability && (
-                                <Label className="text-[#727272]"><b>Disponibilidade:</b> {user.availability}</Label>
-                            )}
-                            {user?.course_experience && (
-                                <Label className="text-[#727272]"><b>Experiência:</b> {user.course_experience}</Label>
-                            )}
-                            {user?.expectations && (
-                                <Label className="text-[#727272]"><b>Expectativas:</b> {user.expectations}</Label>
-                            )}
-                            {user?.how_know && (
-                                <Label className="text-[#727272]"><b>Como soube:</b> {user.how_know}</Label>
-                            )}
+        <div className="h-screen">
+            <Card className="w-[1000px] h-[600px]">
+                <CardHeader className="flex items-center">
+                    <CircleUserIcon className="w-16 h-16 text-[#5E5E5E]" />
+                </CardHeader>
+                <CardContent>
+                    {loading ? (
+                        <div className="flex justify-center mt-6">
+                            <CircularProgress color="secondary" />
                         </div>
-                        <div className="m-6 flex items-center gap-4">
-                            <Label className=" text-[#727272] text-semibold">Permissão:</Label>
-                            <Select value={selectedPermission} onValueChange={handlePermissionChange}>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Selecione a permissão:" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem value="volunteer">Voluntário</SelectItem>
-                                        <SelectItem value="administrator">Administrador</SelectItem>
-                                        <SelectItem value="beneficiary">Beneficiário</SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
+                    ) : (
+                        <div>
+                            <div className="flex flex-col gap-6 ml-6">
+                                <Label className=" text-[#727272]"><b>Nome: {user?.name}</b> </Label>
+                                <Label className=" text-[#727272]"><b>Data de nascimento: {user?.date_birthday}</b> </Label>
+                                <Label className=" text-[#727272]"><b>Email:</b> {user?.email} </Label>
+                                <Label className=" text-[#727272]"><b>Telefone:</b> {user?.phone}</Label>
+                                {user?.availability && (
+                                    <Label className="text-[#727272]"><b>Disponibilidade:</b> {user.availability}</Label>
+                                )}
+                                {user?.course_experience && (
+                                    <Label className="text-[#727272]"><b>Experiência:</b> {user.course_experience}</Label>
+                                )}
+                                {user?.expectations && (
+                                    <Label className="text-[#727272]"><b>Expectativas:</b> {user.expectations}</Label>
+                                )}
+                                {user?.how_know && (
+                                    <Label className="text-[#727272]"><b>Como soube:</b> {user.how_know}</Label>
+                                )}
+                            </div>
+                            <div className="m-6 flex items-center gap-4">
+                                <Label className=" text-[#727272] text-semibold">Permissão:</Label>
+                                <Select value={selectedPermission} onValueChange={handlePermissionChange}>
+                                    <SelectTrigger className="w-[180px]">
+                                        <SelectValue placeholder="Selecione a permissão:" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectItem value="volunteer">Voluntário</SelectItem>
+                                            <SelectItem value="administrator">Administrador</SelectItem>
+                                            <SelectItem value="beneficiary">Beneficiário</SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
                         </div>
-                    </div>
-                )}
-            </CardContent>
-            <CardFooter className="flex justify-end gap-4">
-                <Button onClick={() => {router.back()}} variant="outline">
-                    Cancelar
-                </Button>
-                <Button onClick={handleSave} type="button">
-                    Salvar
-                </Button>
-            </CardFooter>
-        </Card>
+                    )}
+                </CardContent>
+                <CardFooter className="flex justify-end gap-4">
+                    <Button onClick={() => { router.back() }} variant="outline">
+                        Cancelar
+                    </Button>
+                    <Button onClick={handleSave} type="button">
+                        Salvar
+                    </Button>
+                </CardFooter>
+            </Card>
+        </div>
     )
 }
