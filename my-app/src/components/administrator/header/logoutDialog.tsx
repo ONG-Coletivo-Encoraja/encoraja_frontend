@@ -12,12 +12,15 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import API from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
-import { AxiosError } from "axios";
 
+interface LogoutDialogProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
 
-export function LogoutDialog({ isOpen, onClose }) {
+export function LogoutDialog({ isOpen, onClose }: LogoutDialogProps) {
 
-    const { data: session, status } = useSession(); 
+    const { data: session } = useSession(); 
     const router = useRouter();
     const { toast } = useToast();
 
@@ -30,6 +33,7 @@ export function LogoutDialog({ isOpen, onClose }) {
             },
           }); 
           await signOut();
+          sessionStorage.clear();
           router.push('/');
           toast({
             title: "Log-out realizado com sucesso!",
