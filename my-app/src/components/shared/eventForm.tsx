@@ -94,7 +94,7 @@ export default function RegisterEvent() {
       });
       console.log(response);
       if (response) {
-        router.push('/home');
+        router.push('/pagina-inicial');
       }
     } catch (error) {
       if (error instanceof AxiosError && error.response) {

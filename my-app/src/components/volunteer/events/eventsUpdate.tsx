@@ -110,7 +110,7 @@ export default function RegisterEvent() {
         description: response.data.message,
         variant: "default",
       });
-      router.push('/all-events');
+      router.push('/eventos');
     } catch (error) {
       console.log(error)
       if (error instanceof AxiosError && error.response) {

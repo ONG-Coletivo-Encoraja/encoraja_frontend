@@ -75,7 +75,7 @@ export default function ReportEvent() {
         title: "Relatório enviado com sucesso!",
         description: response.message,
       });
-      router.push('/home');
+      router.back();
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errorMessage = error.response.data?.message;
