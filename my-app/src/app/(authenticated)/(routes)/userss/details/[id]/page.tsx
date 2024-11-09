@@ -14,5 +14,7 @@ export default async function ProfilePage() {
 
   if (userRole === "administrator") {
     return <UserDetailCard />
+  } else {
+    redirect("/home")
   }
 }

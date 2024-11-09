@@ -14,5 +14,7 @@ export default async function UsersPage() {
 
   if (userRole === "administrator") {
     return <GraphicsPage />
-  } 
+  } else {
+    redirect("/home")
+  }
 }

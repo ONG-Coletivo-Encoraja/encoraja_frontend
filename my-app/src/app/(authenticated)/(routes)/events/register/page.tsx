@@ -19,6 +19,6 @@ export default async function RegisterEventPage() {
     case "volunteer":
       return <RegisterEventVolu />;
     default:
-      return <p>Sem autorização</p>;
+      redirect("/home");
   }
 }
