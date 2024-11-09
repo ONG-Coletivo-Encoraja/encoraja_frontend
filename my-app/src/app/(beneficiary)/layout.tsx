@@ -1,12 +1,12 @@
-import { Inter } from "next/font/google";
-import { ReactNode } from "react";
-import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+'use client'
 
+import { Inter } from "next/font/google";
+import { ReactNode, useEffect, useState } from "react";
+import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/toaster";
-import Navbar from "@/components/beneficiary/header/header";
 import Sidebar from "@/components/beneficiary/sidebar/sidebar";
+import { useSession } from "next-auth/react";
+import Header from "@/components/beneficiary/header/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,33 +14,45 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-export default async function ProtectedLayout({ children }: LayoutProps) {
-  const session = await getServerSession(nextAuthOptions);
+export default function ProtectedLayout({ children }: LayoutProps) {
+  const { data: session } = useSession();
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
   if (!session) {
     redirect("/login");
     return null;
   }
 
-  const isSidebarExpanded = true; // QUANDO ISSO AQUI TA TRUE O CHILDREN É ARRASTADO PRO LADO, SE MUDAR MANUALMENTE ELE VOLTA PRA POSIÇÃO QUE TAVA
+  useEffect(() => {
+    const sidebarState = sessionStorage.getItem('sidebarExpanded') === 'true';
+    setSidebarExpanded(sidebarState);
+  }, []);
 
-  console.log("Sessão:", session);
+  const toggleSidebar = () => {
+    const newSidebarState = !sidebarExpanded;
+    setSidebarExpanded(newSidebarState);
+    sessionStorage.setItem('sidebarExpanded', newSidebarState.toString());
+  };
 
   if (session.user.permission == "beneficiary") {
     return (
       <div lang="pt-br" className="bg-[#ededed] fixed inset-0">
         <div className={inter.className}>
           <div className="fixed top-0 w-full z-10">
-            <Navbar />
+            <Header />
           </div>
           <div className="relative flex h-screen overflow-hidden">
-            <div className={isSidebarExpanded ? "w-[100px]" : "w-16"}> 
-              <Sidebar />
+            <div
+              className={`fixed top-0 left-0 h-full transition-all duration-300 bg-white border-r ${
+                sidebarExpanded ? 'w-[250px]' : 'w-[68px]'
+              }`}
+            >
+              <Sidebar initialExpanded={sidebarExpanded} toggleSidebar={toggleSidebar} />
             </div>
             <div
-              className={`flex-1 ${
-                isSidebarExpanded ? "ml-[100px]" : "ml-16"
-              } overflow-y-auto transition-all duration-300 ease-in-out`} 
+              className={`flex-1 mt-16 transition-all duration-300 overflow-y-auto ${
+                sidebarExpanded ? 'ml-[250px]' : 'ml-[68px]'
+              }`}
             >
               {children}
               <Toaster />
@@ -48,7 +60,7 @@ export default async function ProtectedLayout({ children }: LayoutProps) {
           </div>
         </div>
       </div>
-    );
+    );  
   }
 
   if (session.user.permission == "administrator") {

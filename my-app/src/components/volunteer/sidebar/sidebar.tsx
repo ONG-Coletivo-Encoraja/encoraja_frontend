@@ -1,46 +1,28 @@
 'use client';
 
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { NavItems } from '@/app/(volunteer)/config';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function SideNav() {
+export default function SideNav({ initialExpanded, toggleSidebar }: { initialExpanded: boolean, toggleSidebar: () => void }) {
   const navItems = NavItems();
-  
-  const [isClient, setIsClient] = useState(false);
-  
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(initialExpanded);
 
-  useEffect(() => {
-    setIsClient(true);
-    const saved = window.localStorage.getItem('sidebarExpanded');
-    if (saved !== null) {
-      setIsSidebarExpanded(JSON.parse(saved));
-    }
-  }, []);
-  
-  useEffect(() => {
-    if (isClient) {
-      window.localStorage.setItem('sidebarExpanded', JSON.stringify(isSidebarExpanded));
-    }
-  }, [isSidebarExpanded, isClient]);
-
-  const toggleSidebar = () => {
-    setIsSidebarExpanded(!isSidebarExpanded);
+  const handleToggle = () => {
+    const newSidebarState = !isSidebarExpanded;
+    setIsSidebarExpanded(newSidebarState);
+    sessionStorage.setItem('sidebarExpanded', newSidebarState.toString());
+    toggleSidebar();
   };
-
-  if (!isClient) {
-    return null;
-  }
 
   return (
     <div className="flex h-screen mt-[65px]">
       <div
         className={cn(
-          isSidebarExpanded ? 'w-[200px]' : 'w-[68px]',
+          isSidebarExpanded ? 'w-[250px]' : 'w-[68px]',
           'border-r transition-all duration-300 ease-in-out transform hidden sm:flex h-full bg-white',
         )}
       >
@@ -66,7 +48,6 @@ export default function SideNav() {
               })}
             </div>
           </div>
-          {/* Bottom */}
           <div className="sticky bottom-0 mt-auto whitespace-nowrap mb-4 transition duration-200 block">
             {navItems.map((item, idx) => {
               if (item.position === 'bottom') {
@@ -91,7 +72,7 @@ export default function SideNav() {
           <button
             type="button"
             className="absolute bottom-32 right-[-12px] flex h-6 w-6 items-center justify-center border border-muted-foreground/20 rounded-full bg-accent shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
-            onClick={toggleSidebar}
+            onClick={handleToggle}
           >
             {isSidebarExpanded ? (
               <ChevronLeft size={16} className='stroke-foreground'/>
@@ -105,7 +86,7 @@ export default function SideNav() {
   );
 }
 
-export const SideNavItem: React.FC<{
+const SideNavItem: React.FC<{
   label: string;
   icon: any;
   path: string;
@@ -117,10 +98,9 @@ export const SideNavItem: React.FC<{
       {isSidebarExpanded ? (
         <Link
           href={path}
-          className={`h-full relative flex items-center whitespace-nowrap rounded-md ${
-            active
-              ? 'font-base text-sm bg-neutral-200 shadow-sm text-neutral-700 dark:bg-neutral-800 dark:text-white'
-              : 'hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
+          className={`h-full relative flex items-center whitespace-nowrap rounded-md ${active
+            ? 'font-base text-sm bg-neutral-200 shadow-sm text-neutral-700 dark:bg-neutral-800 dark:text-white'
+            : 'hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
           }`}
         >
           <div className="relative font-base text-sm py-1.5 px-2 flex flex-row items-center space-x-2 rounded-md duration-100">
@@ -134,10 +114,9 @@ export const SideNavItem: React.FC<{
             <TooltipTrigger>
               <Link
                 href={path}
-                className={`h-full relative flex items-center justify-center p-2 rounded-full ${
-                  active
-                    ? 'bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-white'
-                    : 'hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
+                className={`h-full relative flex items-center justify-center p-2 rounded-full ${active
+                  ? 'bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-white'
+                  : 'hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
                 }`}
               >
                 {icon}

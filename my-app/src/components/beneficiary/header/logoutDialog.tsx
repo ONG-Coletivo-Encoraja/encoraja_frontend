@@ -13,9 +13,14 @@ import { useRouter } from 'next/navigation';
 import API from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 
-export function LogoutDialog({ isOpen, onClose }) {
+interface LogoutDialogProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
 
-    const { data: session, status } = useSession(); 
+export function LogoutDialog({ isOpen, onClose }: LogoutDialogProps) {
+
+    const { data: session } = useSession(); 
     const router = useRouter();
     const { toast } = useToast();
 
@@ -28,6 +33,7 @@ export function LogoutDialog({ isOpen, onClose }) {
             },
           }); 
           await signOut();
+          sessionStorage.clear();
           router.push('/');
           toast({
             title: "Log-out realizado com sucesso!",
