@@ -3,13 +3,11 @@
 import { Toaster } from "@/components/ui/toaster";
 import { useSession } from "next-auth/react";
 import { ReactNode, useEffect, useState } from "react";
-import HeaderAdm from "@/components/administrator/header/header";
-import HeaderBene from "@/components/beneficiary/header/header";
-import HeaderVolu from "@/components/volunteer/header/header";
 import SidebarAdm from "@/components/administrator/sidebar/sidebar";
 import SidebarBene from "@/components/beneficiary/sidebar/sidebar";
 import SidebarVolu from "@/components/volunteer/sidebar/sidebar";
 import { redirect } from "next/navigation";
+import Navbar from "@/components/shared/header/header";
 
 interface LayoutProps {
   children: ReactNode;
@@ -35,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps) {
       <div lang="pt-br" className="bg-[#ededed] fixed inset-0">
         <div>
           <div className="fixed top-0 w-full z-10">
-            <HeaderAdm />
+            <Navbar />
           </div>
           <div className="relative flex h-screen overflow-hidden">
             <div
@@ -62,7 +60,7 @@ export default function RootLayout({ children }: LayoutProps) {
       <div lang="pt-br" className="bg-[#ededed] fixed inset-0">
         <div>
           <div className="fixed top-0 w-full z-10">
-            <HeaderBene />
+            <Navbar />
           </div>
           <div className="relative flex h-screen overflow-hidden">
             <div
@@ -89,7 +87,7 @@ export default function RootLayout({ children }: LayoutProps) {
       <div lang="pt-br" className="bg-[#ededed] fixed inset-0">
         <div>
           <div className="fixed top-0 w-full z-10">
-            <HeaderVolu />
+            <Navbar />
           </div>
           <div className="relative flex h-screen overflow-hidden">
             <div
