@@ -3,18 +3,12 @@
 import React, { useState } from 'react';
 import {
   Menubar,
-  MenubarMenu,
-  MenubarTrigger,
-  MenubarContent,
-  MenubarItem,
 } from '@/components/ui/menubar';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -62,7 +56,7 @@ export default function Navbar() {
             <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link href="/Perfil">
+                <Link href="/meu-perfil">
                   <span>Meu Perfil</span>
                 </Link>
               </DropdownMenuItem>

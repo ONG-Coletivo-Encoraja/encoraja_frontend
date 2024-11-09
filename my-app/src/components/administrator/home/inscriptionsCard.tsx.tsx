@@ -70,7 +70,7 @@ export function InscriptionsCard() {
                             {inscriptions.map((inscription) => (
                                 <div key={inscription.id}>
                                     <li><Label className=" text-[20px] text-[#5E5E5E]">{inscription.user.name}</Label></li>
-                                    <li><Label className="text-[#F69053] underline"><Link href={`/all-inscriptions`}>Ver inscrições</Link></Label></li>
+                                    <li><Label className="text-[#F69053] underline"><Link href={`/inscricoes`}>Ver inscrições</Link></Label></li>
                                 </div>
                             ))}
                         </ul>

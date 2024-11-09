@@ -96,7 +96,7 @@ export function AdminProfile() {
         title: 'Dados atualizados com sucesso.',
         description: (response as { message?: string }).message,
       });
-      router.push('/home');
+      router.push('/pagina-inicial');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errors = error.response.data.errors;

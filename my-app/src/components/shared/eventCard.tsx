@@ -9,10 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import StarRating from "../ui/rating";
-import { Button } from "../ui/button";
 import { Event } from "@/interfaces/IEventData";
-import { useSession } from "next-auth/react";
 
 interface EventCardProps {
   event: Event;
@@ -35,8 +32,6 @@ export function EventCard({ event }: EventCardProps) {
       statusColor = "bg-gray-200"; 
       break;
   }
-
-  const { data: session } = useSession(); 
 
   return (
     <Card className="w-full rounded-xl min-h-[350px] max-h-[500px]">

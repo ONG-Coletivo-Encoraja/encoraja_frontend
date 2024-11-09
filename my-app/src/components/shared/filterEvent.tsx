@@ -32,7 +32,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange }) => 
                 </Select>
             </div>
             {session?.user.permission === 'volunteer' && (
-                <Link href="/eventos/cadastrar-evento">
+                <Link href="/eventos/cadastro">
                     <Button className="ml-2 flex justify-around">
                         Criar
                         <CalendarPlus size={20} color="#ffffff" />
@@ -40,7 +40,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange }) => 
                 </Link>
             )}
             {session?.user.permission === 'administrator' && (
-                <Link href="/register-event">
+                <Link href="/eventos/cadastro">
                     <Button className="ml-2 flex justify-around w-32">
                         Criar
                         <CalendarPlus size={20} color="#ffffff" />

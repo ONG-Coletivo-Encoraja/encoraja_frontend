@@ -14,11 +14,11 @@ export default function HomeBene() {
       </div>
       <Separator />
       <div className="flex justify-center mt-5">
-        <Link href='/minhas-inscricoes'>
+        <Link href='/inscricoes'>
           <MyInscriptionsCard />
         </Link>
         <div className='ml-8'></div>
-        <Link href='/todos-os-eventos'>
+        <Link href='/eventos'>
           <NextEventsCard />
         </Link>
         

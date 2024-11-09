@@ -78,7 +78,7 @@ export default function RegisterEvent(): JSX.Element {
         description: response.message,
         variant: "default",
       });
-      router.push('/home');
+      router.push('/eventos');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errors = error.response.data.errors;
@@ -340,7 +340,7 @@ export default function RegisterEvent(): JSX.Element {
         </Form>
       </CardContent>
       <CardFooter>
-        <Button onClick={() => router.push('/home')} variant="secondary">Voltar</Button>
+        <Button onClick={() => router.push('/eventos')} variant="secondary">Voltar</Button>
       </CardFooter>
     </Card>
   );

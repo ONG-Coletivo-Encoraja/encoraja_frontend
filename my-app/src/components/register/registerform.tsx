@@ -187,7 +187,7 @@ export default function RegisterForm() {
                     <FormLabel>CPF</FormLabel>
                     <FormControl>
                         <InputMask mask="999.999.999-99" value={field.value} onChange={field.onChange}>
-                        {(inputProps: InputProps) => (<Input placeholder="000.000.000-00" {...inputProps} />)}
+                        {(inputProps) => (<Input placeholder="000.000.000-00" {...inputProps} />)}
                         </InputMask>
                     </FormControl>
                     <FormMessage />

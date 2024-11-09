@@ -98,7 +98,7 @@ export function BeneficiaryProfile() {
         title: "Sucesso!",
         description: (response as { message?: string }).message,
       });
-      router.push('/home');
+      router.push('/pagina-inicial');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
           const errorMessage = error.response.data?.message || error.response.data?.error;

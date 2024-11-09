@@ -11,10 +11,17 @@ export const NavItems = () => {
 
   return [
     {
-      name: 'Página Inicial',
-      href: '/home-voluntario',
+      name: 'Home',
+      href: '/pagina-inicial',
       icon: <Home size={25} color="#702054" />,
-      active: pathname === '/home-voluntario',
+      active: pathname === '/',
+      position: 'top',
+    },
+    {
+      name: 'Seja Voluntário',
+      href: '/seja-voluntario',
+      icon: <HandHeart size={25} color="#702054" />,
+      active: isNavItemActive(pathname, '/seja-voluntario'),
       position: 'top',
     },
     {

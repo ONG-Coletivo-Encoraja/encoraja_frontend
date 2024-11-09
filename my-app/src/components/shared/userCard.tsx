@@ -31,7 +31,7 @@ export function UserCard({ user }: UserCardProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Label className="text-[#F69053] underline"><Link href={`/users/detail/${user.id}`}>Alterar permissão</Link></Label>
+        <Label className="text-[#F69053] underline"><Link href={`/usuarios/detalhes/${user.id}`}>Alterar permissão</Link></Label>
       </CardFooter>
     </Card>
   )

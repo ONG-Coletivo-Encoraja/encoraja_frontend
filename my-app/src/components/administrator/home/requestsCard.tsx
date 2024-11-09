@@ -70,7 +70,7 @@ export function RequestsCard() {
                             {requests.map((request) => (
                                 <div key={request.id}>
                                     <li><Label className=" text-[20px] text-[#5E5E5E]">{request.user.name}</Label></li>
-                                    <li><Label className="text-[#F69053] underline"><Link href={`/accept-volunteers/details/${request.id}`}>Ver candidatura </Link></Label></li>
+                                    <li><Label className="text-[#F69053] underline"><Link href={`/solicitacoes/detalhes/${request.id}`}>Ver candidatura </Link></Label></li>
                                 </div>
                             ))}
                         </ul>

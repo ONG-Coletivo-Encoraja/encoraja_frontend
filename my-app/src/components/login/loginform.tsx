@@ -51,7 +51,7 @@ export default function LoginForm() {
       description: "Você será redirecionado para a página inicial.",
       variant: "default",
     });
-    router.replace('/home');
+    router.replace('/pagina-inicial');
   };
 
   return (

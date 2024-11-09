@@ -72,7 +72,7 @@ export default function RequestVolunteerDetailsCard() {
                         }
                     }
                 );
-                router.push('/users');
+                router.push('/usuarios');
                 toast({
                     title: "Sucesso!",
                     description: "Permissão atualizada com sucesso.",

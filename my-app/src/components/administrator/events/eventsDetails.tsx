@@ -82,7 +82,7 @@ export default function EventsDetails() {
                   )}
                   {event?.status !== 'finished' && (
                     <div>
-                      <Link key={eventId} href={`/update-event/${eventId}`}><Button>Editar evento</Button></Link>
+                      <Link key={eventId} href={`/eventos/atualizar/${eventId}`}><Button>Editar evento</Button></Link>
                     </div>
                   )}
                 </div>
