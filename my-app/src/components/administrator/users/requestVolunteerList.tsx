@@ -72,7 +72,7 @@ export function RequestVolunteerList() {
             <CircularProgress color="secondary" />
           </div>
         ) : (
-          <div className="flex flex-wrap gap-4 mt-6">
+          <div className="flex flex-wrap justify-center gap-4 mt-6">
             {data.map((request) => (
               <RequestVolunteerCard key={request.id} request={request} />
             ))}

@@ -19,12 +19,6 @@ export function UsersList() {
   const [users, setUsers] = useState<IUser[]>([]);
   const [filterPermission, setFilterPermission] = useState<string>("");
   const [filterName, setFilterName] = useState<string>("");
-  const [sidebarExpanded, setSidebarExpanded] = useState(false);
-
-  useEffect(() => {
-    const sidebarState = sessionStorage.getItem('sidebarExpanded') === 'true';
-    setSidebarExpanded(sidebarState);
-  }, []);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -83,14 +77,11 @@ export function UsersList() {
             <CircularProgress />
           </div>
         ) : (
-          //<div className={`grid ${sidebarExpanded ? 'grid-cols-2' : 'grid-cols-3'} gap-4 mt-6`}>
-          <div className="flex flex-col items-center justify-center">
-            <div className="flex flex-wrap gap-4 mt-6">
+            <div className="flex flex-wrap justify-center gap-4 mt-6">
               {users.map((user) => (
                 <UserCard key={user.id} user={user} />
-              ))}
+              ))} 
             </div>
-          </div>
         )}
         <PaginationComponent
           currentPage={currentPage}

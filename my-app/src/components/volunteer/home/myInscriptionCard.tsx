@@ -46,7 +46,7 @@ export function MyInscriptionsCard() {
     }, [session]);
 
     return (
-        <Card className="w-[400px]">
+        <Card className="w-[400px] mb-6">
             <CardHeader>
                 <CardDescription className=" text-[#F69053]">Inscrições pendentes</CardDescription>
                 <div className="flex items-center justify-between">

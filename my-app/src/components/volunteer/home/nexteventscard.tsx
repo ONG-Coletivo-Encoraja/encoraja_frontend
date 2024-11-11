@@ -49,7 +49,7 @@ export function NextEventsCard() {
   }, [session]);
 
   return (
-    <Card className="w-[500px]">
+    <Card className="w-[500px] mb-6">
       <CardHeader>
       <CardDescription className=" text-[#F69053]">Eventos próximos</CardDescription>
       </CardHeader>
