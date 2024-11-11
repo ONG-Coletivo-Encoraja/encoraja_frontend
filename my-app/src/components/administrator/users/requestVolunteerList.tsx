@@ -59,7 +59,7 @@ export function RequestVolunteerList() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen p-6">
       <div>
         <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[34px]">
           Solicitações de voluntariado

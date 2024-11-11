@@ -68,7 +68,7 @@ export default function Complainces() {
 
   return (
     <>
-    <div className='flex flex-col items-center w-full bg-[#EDEDED] h-[88vh] gap-5'>
+    <div className='flex flex-col items-center mt-6 w-full bg-[#EDEDED] h-[88vh] gap-5'>
       <a className='text-lg font-bold p-3'>Denúncias</a>
       {loading ? (
         <CircularProgress />
@@ -77,12 +77,12 @@ export default function Complainces() {
           <AccordionComplaince key={index} compliance={compliance} />
         ))
       )}
-    </div>
-    <PaginationComponent
+          <PaginationComponent
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
         />
+    </div>
     </>
   );
 }

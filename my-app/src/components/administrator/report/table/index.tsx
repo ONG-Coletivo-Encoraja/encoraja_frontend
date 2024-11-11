@@ -51,7 +51,7 @@ const ReportAdmin = () => {
 
     return (
         <>
-            <div className='flex flex-col items-center w-full bg-[#EDEDED] h-[88vh]'>
+            <div className='flex flex-col items-center mt-6 w-full bg-[#EDEDED] h-[88vh]'>
                 <div className="flex flex-col items-center w-11/12 h-full justify-between">
                     <div className="flex flex-col items-center w-11/12 h-full">
                         <div className="flex content-center items-center h-10 font-bold text-xl text-[#702054]">
@@ -87,12 +87,12 @@ const ReportAdmin = () => {
                                 </Table>
                             )}
                         </div>
-                    </div>
-                    <PaginationComponent
+                        <PaginationComponent
                         currentPage={currentPage}
                         totalPages={totalPages}
                         onPageChange={handlePageChange}
                     />
+                    </div>
                 </div>
                 <EventDetailModal
                     isOpen={isModalOpen}
