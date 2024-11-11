@@ -1,21 +1,21 @@
 import * as React from "react";
-import { Card, CardContent, CardTitle, CardHeader } from "@/components/ui/card";
+import { CardContent, CardTitle, CardHeader } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
 export function EventsCard({ img, content, title }: { img: React.ReactNode; content: React.ReactNode; title: string }) {
   return (
-    <Card className="w-[400px] p-4">
-      <div>
+    <div className="w-[400px] m-0 p-0 bg-transparent"> 
+      <div className="bg-transparent">
         <CardHeader className="ml-5">
             {img}
         </CardHeader>
         <CardContent className="mt-4">
           <div>
-          <Label className="text-bold text-xl text-[#702055]">{title}</Label>
+            <Label className="text-bold text-xl text-[#F2F2F2]">{title}</Label>
           </div>
           {content}
         </CardContent>
       </div>
-    </Card>
+    </div>
   );
 }
