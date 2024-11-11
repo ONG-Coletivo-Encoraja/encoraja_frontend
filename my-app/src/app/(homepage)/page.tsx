@@ -25,7 +25,6 @@ export default function Home() {
             a romperem ciclos de violência e criar oportunidades de geração de renda e inclusão econômica!
           </Label>
         </div>
-
         </div>
 
         <div 
