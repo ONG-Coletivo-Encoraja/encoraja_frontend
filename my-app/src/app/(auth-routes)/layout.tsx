@@ -12,7 +12,7 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
     const session = await getServerSession(nextAuthOptions)
 
     if (session) {
-        redirect('/pagina-incial')
+        redirect('/pagina-inicial')
     }
 
     return <>

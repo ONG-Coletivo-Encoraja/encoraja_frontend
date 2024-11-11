@@ -23,7 +23,7 @@ export default function SideNav({ initialExpanded, toggleSidebar }: { initialExp
       <div
         className={cn(
           isSidebarExpanded ? 'w-[250px]' : 'w-[68px]',
-          'border-r transition-all duration-300 ease-in-out transform hidden sm:flex h-full bg-white',
+          'border-r transition-all duration-300 ease-in-out transform flex h-full bg-white'
         )}
       >
         <aside className="flex h-full flex-col w-full break-words px-4 overflow-x-hidden columns-1">
@@ -103,8 +103,8 @@ const SideNavItem: React.FC<{
             : 'hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
           }`}
         >
-          <div className="relative font-base text-sm py-1.5 px-2 flex flex-row items-center space-x-2 rounded-md duration-100">
-            {icon}
+          <div className="relative font-base text-sm py-1.5 px-2 flex flex-row items-center space-x-2 rounded-md duration-100 gap-3">
+            <span className="w-5 h-5">{icon}</span> 
             <span>{label}</span>
           </div>
         </Link>
@@ -119,7 +119,7 @@ const SideNavItem: React.FC<{
                   : 'hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
                 }`}
               >
-                {icon}
+                <span className="w-5 h-5">{icon}</span>
               </Link>
             </TooltipTrigger>
             <TooltipContent>{label}</TooltipContent>

@@ -13,8 +13,6 @@ export default async function EventsPage() {
 
   const userRole = session?.user?.permission;
 
-  console.log(userRole)
-
   switch (userRole) {
     case "administrator":
       return <Inscriptions />

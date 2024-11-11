@@ -14,7 +14,7 @@ export const NavItems = () => {
       name: 'Home',
       href: '/pagina-inicial',
       icon: <Home size={25} color="#702054" />,
-      active: pathname === '/',
+      active: pathname === '/pagina-inicial',
       position: 'top',
     },
     {

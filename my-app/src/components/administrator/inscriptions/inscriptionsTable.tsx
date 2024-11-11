@@ -11,10 +11,9 @@ import { useToast } from "@/hooks/use-toast";
 import API from '@/services/api';
 import CircularProgress from '@mui/material/CircularProgress';
 import PaginationComponent from '@/components/shared/paginator';
-import FilterInscriptions from "@/components/shared/filterInscriptions";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AxiosError } from 'axios';
-
+import { translateStatusInscription } from "@/services/translate";
 
 interface MyInscriptionsProps {
     filterStatus: string;
@@ -146,7 +145,7 @@ export default function MyInscriptions({ filterStatus }: MyInscriptionsProps) {
                                             <TableCell className="font-medium">{item.user?.name || 'N/A'}</TableCell>
                                             <TableCell className="font-medium">{item.event?.date || 'N/A'}</TableCell>
                                             <TableCell className="font-medium">{item.event?.time || 'N/A'}</TableCell>
-                                            <TableCell className="font-medium">{item.status || 'N/A'}</TableCell>
+                                            <TableCell className="font-medium">{translateStatusInscription(item.status) || 'N/A'}</TableCell>
                                             <TableCell className="font-medium">
                                                 <AlertDialog>
                                                     <AlertDialogTrigger asChild>

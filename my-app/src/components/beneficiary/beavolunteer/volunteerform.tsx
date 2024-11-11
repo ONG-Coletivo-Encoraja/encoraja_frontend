@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useState } from "react";
-import { VolunteerForm } from "@/components/shared/volunteerForm";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Form, FormField, FormMessage, FormItem, FormControl, FormLabel } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
@@ -14,11 +13,11 @@ import { UserData } from "@/interfaces/IUserData";
 import { Textarea } from "@/components/ui/textarea";
 import { requestVolunteer } from "@/app/api/volunteers/beAVolunteer";
 import { AxiosError } from "axios";
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { translateUserEthnicity, translateUserGender } from "@/services/translate";
 
 
 export function BeAVolunteer() {
@@ -26,7 +25,6 @@ export function BeAVolunteer() {
   const [profileData, setProfileData] = React.useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = React.useState<string | null>(null);
-  const permission = session?.user?.permission;
   const router = useRouter();
   const { toast } = useToast();
 
@@ -138,11 +136,11 @@ export function BeAVolunteer() {
                 </div>
                 <div className="col-span-2">
                   <Label>Raça</Label>
-                  <Input readOnly value={profileData?.ethnicity} />
+                  <Input readOnly value={translateUserEthnicity(profileData?.ethnicity)} />
                 </div>
                 <div className="col-span-2">
-                  <Label>Genero</Label>
-                  <Input readOnly value={profileData?.gender} />
+                  <Label>Gênero</Label>
+                  <Input readOnly value={translateUserGender(profileData?.gender)} />
                 </div>
                 <div>
                   <Label>CEP</Label>

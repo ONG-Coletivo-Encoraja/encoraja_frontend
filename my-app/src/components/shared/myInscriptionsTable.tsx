@@ -16,7 +16,7 @@ import API from '@/services/api';
 import PaginationComponent from './paginator';
 import CircularProgress from '@mui/material/CircularProgress';
 import { AxiosError } from 'axios';
-
+import { translateStatusInscription } from "@/services/translate";
 
 export default function MyInscriptions() {
     const { toast } = useToast();
@@ -145,7 +145,7 @@ export default function MyInscriptions() {
                                             <TableCell className="font-medium">{item.user?.name || 'N/A'}</TableCell>
                                             <TableCell className="font-medium">{item.event?.date || 'N/A'}</TableCell>
                                             <TableCell className="font-medium">{item.event?.time || 'N/A'}</TableCell>
-                                            <TableCell className="font-medium">{item.status || 'N/A'}</TableCell>
+                                            <TableCell className="font-medium">{translateStatusInscription(item.status) || 'N/A'}</TableCell>
                                             <TableCell className="font-medium">
                                                 <AlertDialog>
                                                     <AlertDialogTrigger asChild>

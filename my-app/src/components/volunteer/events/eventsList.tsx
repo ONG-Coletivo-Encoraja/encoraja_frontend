@@ -68,7 +68,7 @@ export function EventsList() {
         ) : (
           <div className="grid grid-cols-2 gap-4 mt-6">
             {events.map(event => (
-              <Link key={event.id} href={`/detalhe-do-evento/${event.id}`}>
+              <Link key={event.id} href={`/eventos/detalhes/${event.id}`}>
                 <EventCard event={event} />
               </Link>
             ))}

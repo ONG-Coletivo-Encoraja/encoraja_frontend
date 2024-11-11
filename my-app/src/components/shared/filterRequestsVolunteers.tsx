@@ -19,6 +19,7 @@ const FilterRequests: React.FC<FilterRequestsProps> = ({ onFilterChange }) => {
             <SelectValue placeholder="Filtrar" className="truncate" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value=" ">Todos</SelectItem>
             <SelectItem value="accepted">Aceitos</SelectItem>
             <SelectItem value="pending">Pendentes</SelectItem>
             <SelectItem value="rejected">Rejeitados</SelectItem>

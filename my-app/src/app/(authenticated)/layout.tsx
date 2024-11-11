@@ -6,8 +6,9 @@ import { ReactNode, useEffect, useState } from "react";
 import SidebarAdm from "@/components/administrator/sidebar/sidebar";
 import SidebarBene from "@/components/beneficiary/sidebar/sidebar";
 import SidebarVolu from "@/components/volunteer/sidebar/sidebar";
-import { redirect } from "next/navigation";
 import Navbar from "@/components/shared/header/header";
+import { redirect } from "next/navigation";
+
 
 interface LayoutProps {
   children: ReactNode;
@@ -108,4 +109,7 @@ export default function RootLayout({ children }: LayoutProps) {
       </div>
     );
   }
+  // if (!session) {
+  //   redirect('/login');
+  // }
 }

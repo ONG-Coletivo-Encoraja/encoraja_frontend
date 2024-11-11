@@ -10,6 +10,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Event } from "@/interfaces/IEventData";
+import { translateStatusEvent, translateModalityEvent, translateTypeEvent } from "@/services/translate";
 
 interface EventCardProps {
   event: Event;
@@ -40,9 +41,9 @@ export function EventCard({ event }: EventCardProps) {
         <CardTitle>{event.name}</CardTitle>
         <ul className="flex flex-wrap space-x-4 gap-3">
           <li><Badge variant={'secondary'}>{event.time}</Badge></li>
-          <li><Badge>{event.modality}</Badge></li>
-          <li><Badge>{event.type}</Badge></li>
-          <li><Badge  className={statusColor} >{event.status}</Badge></li>
+          <li><Badge>{translateModalityEvent(event.modality)}</Badge></li>
+          <li><Badge>{translateTypeEvent(event.type)}</Badge></li>
+          <li><Badge  className={statusColor} >{translateStatusEvent(event.status)}</Badge></li>
           <li><Badge className="h-[50px]" variant={'quaternary'}>{new Date(event.date).toLocaleDateString()}</Badge></li>
         </ul>
         <Label className="text-[#727272]">Responsável: {event.user_owner?.name}</Label>

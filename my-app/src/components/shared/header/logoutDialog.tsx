@@ -1,6 +1,5 @@
 import {
     Dialog,
-    DialogTrigger,
     DialogContent,
     DialogHeader,
     DialogTitle,
@@ -9,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useSession, signOut } from "next-auth/react";
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import API from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 
@@ -20,7 +19,7 @@ interface LogoutDialogProps {
 
 export function LogoutDialog({ isOpen, onClose }: LogoutDialogProps) {
 
-    const { data: session, status } = useSession(); 
+    const { data: session } = useSession(); 
     const router = useRouter();
     const { toast } = useToast();
 
@@ -32,12 +31,13 @@ export function LogoutDialog({ isOpen, onClose }: LogoutDialogProps) {
               'Content-Type': 'application/json',
             },
           }); 
-          await signOut();
-          router.push('/');
+          sessionStorage.clear();
+          await signOut({ redirect: false });
           toast({
             title: "Log-out realizado com sucesso!",
             description: "Você foi desconectado e será redirecionado para a tela de início.",
             });
+            window.location.href = '/';
         } catch (error) {
           console.error('Logout falhou', error);
             toast({

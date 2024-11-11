@@ -19,6 +19,7 @@ import { registerReportAdmin } from "@/app/api/volunteers/reportAdmin";
 import { AxiosError } from 'axios';
 import { useToast } from "@/hooks/use-toast";
 import CircularProgress from '@mui/material/CircularProgress';
+import { translateModalityEvent, translateTypeEvent, translateStatusEvent } from "@/services/translate";
 
 export default function ReportEvent() {
   const { data: session } = useSession(); 
@@ -129,7 +130,7 @@ export default function ReportEvent() {
           </div>
           <div>
           <Label>Status do evento</Label>
-          <Input readOnly value={event?.status} />
+          <Input readOnly value={translateStatusEvent(event?.status)} />
           </div>
           <div>
             <Label>Data do evento</Label>
@@ -141,11 +142,11 @@ export default function ReportEvent() {
           </div>
           <div>
             <Label>Modalidade do evento</Label>
-            <Input readOnly value={event?.modality} />
+            <Input readOnly value={translateModalityEvent(event?.modality)} />
           </div>
           <div>
             <Label>Tipo do evento</Label>
-            <Input readOnly value={event?.type} />
+            <Input readOnly value={translateTypeEvent(event?.type)} />
           </div>
           <div>
             <Label>Carga horária</Label>

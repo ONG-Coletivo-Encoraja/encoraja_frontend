@@ -16,6 +16,7 @@ import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { translateModalityEvent, translateTypeEvent } from "@/services/translate";
 
 export function NextEventsCard() {
   const { data: session } = useSession();
@@ -67,8 +68,8 @@ export function NextEventsCard() {
                 </Link>
                 <ul className="flex space-x-4">
                   <li><Badge variant={'secondary'}>{event.time}</Badge></li>
-                  <li><Badge>{event.modality}</Badge></li>
-                  <li><Badge>{event.type}</Badge></li>
+                  <li><Badge>{translateModalityEvent(event.modality)}</Badge></li>
+                  <li><Badge>{translateTypeEvent(event.type)}</Badge></li>
                   <li><Badge variant={'tertiary'}>{event.workload}h</Badge></li>
                   <li><Badge className=" h-[50px] rounded-[25%] " variant={'quaternary'}>{event.date}</Badge></li>
                 </ul>

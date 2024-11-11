@@ -16,6 +16,7 @@ import { useEventsDetailsFunctions } from '@/app/api/events/eventService';
 import ReviewUser from './reviewUser';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { translateStatusEvent, translateModalityEvent, translateTypeEvent } from "@/services/translate";
 
 export default function EventsDetails() {
   const router = useRouter();
@@ -52,9 +53,9 @@ export default function EventsDetails() {
                 <CardTitle>{event?.name}</CardTitle>
                 <ul className="flex space-x-4">
                   <li><Badge>{event?.time}</Badge></li>
-                  <li><Badge>{event?.modality}</Badge></li>
-                  <li><Badge>{event?.type}</Badge></li>
-                  <li><Badge>{event?.status}</Badge></li>
+                  <li><Badge>{translateModalityEvent(event?.modality)}</Badge></li>
+                  <li><Badge>{translateTypeEvent(event?.type)}</Badge></li>
+                  <li><Badge>{translateStatusEvent(event?.status)}</Badge></li>
                   <li><Badge className="h-[50px] rounded-3xl" variant={'quaternary'}>{event?.date}</Badge></li>
                 </ul>
                 <Label className="text-[#727272]">Responsável: {event?.user_owner.name}</Label>

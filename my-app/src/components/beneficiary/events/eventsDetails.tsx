@@ -19,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { createInscription } from '@/app/api/inscriptions/inscription';
 import ReviewForm from './reviewForm';
 import { AxiosError } from "axios";
+import { translateModalityEvent, translateTypeEvent, translateStatusEvent } from "@/services/translate";
 
 export default function EventsDetails() {
   const { toast } = useToast();
@@ -87,9 +88,9 @@ export default function EventsDetails() {
               <CardTitle>{event?.name}</CardTitle>
               <ul className="flex space-x-4">
                 <li><Badge>{event?.time}</Badge></li>
-                <li><Badge>{event?.modality}</Badge></li>
-                <li><Badge>{event?.type}</Badge></li>
-                <li><Badge>{event?.status}</Badge></li>
+                <li><Badge>{translateModalityEvent(event?.modality)}</Badge></li>
+                <li><Badge>{translateTypeEvent(event?.type)}</Badge></li>
+                <li><Badge>{translateStatusEvent(event?.status)}</Badge></li>
                 <li><Badge className="h-[50px] rounded-3xl" variant={'quaternary'}>{event?.date}</Badge></li>
               </ul>
               <Label className="text-[#727272]">Responsável: {event?.user_owner.name}</Label>
