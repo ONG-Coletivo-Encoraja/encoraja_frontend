@@ -7,8 +7,7 @@ import SidebarAdm from "@/components/administrator/sidebar/sidebar";
 import SidebarBene from "@/components/beneficiary/sidebar/sidebar";
 import SidebarVolu from "@/components/volunteer/sidebar/sidebar";
 import Navbar from "@/components/shared/header/header";
-import { redirect } from "next/navigation";
-
+import { useRouter } from 'next/navigation';
 
 interface LayoutProps {
   children: ReactNode;
@@ -17,6 +16,7 @@ interface LayoutProps {
 export default function RootLayout({ children }: LayoutProps) {
   const { data: session } = useSession();
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const sidebarState = sessionStorage.getItem('sidebarExpanded') === 'true';
@@ -29,6 +29,10 @@ export default function RootLayout({ children }: LayoutProps) {
     sessionStorage.setItem('sidebarExpanded', newSidebarState.toString());
   };
 
+  if (!session) {
+    router.push('/login');
+  }
+  
   if (session?.user.permission === "administrator") {
     return (
       <div lang="pt-br" className="bg-[#ededed] fixed inset-0">
@@ -109,7 +113,5 @@ export default function RootLayout({ children }: LayoutProps) {
       </div>
     );
   }
-  // if (!session) {
-  //   redirect('/login');
-  // }
+
 }

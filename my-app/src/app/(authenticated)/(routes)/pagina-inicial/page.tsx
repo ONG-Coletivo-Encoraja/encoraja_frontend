@@ -9,9 +9,11 @@ export default async function ProfilePage() {
   const session = await getServerSession(nextAuthOptions);
 
   if (!session) {
+    console.log("cr4edo")
     redirect("/login");
+    return null
   }
-
+  
   const userRole = session?.user?.permission;
 
   switch (userRole) {
