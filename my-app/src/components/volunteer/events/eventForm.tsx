@@ -64,7 +64,7 @@ export default function RegisterEvent() {
         description: response.message,
         variant: "default",
       });
-      router.push('/eventos');
+      router.push('/pagina-inicial');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errors = error.response.data.errors;
