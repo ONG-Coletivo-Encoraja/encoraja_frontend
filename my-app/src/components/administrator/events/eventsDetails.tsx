@@ -36,15 +36,15 @@ export default function EventsDetails() {
   }, [eventId, session]);
 
   return (
-    <div className="h-screen mt-8 flex justify-center">
+    <div className="h-screen flex mt-8 justify-center">
       <div>
         {loading ? (
           <div className="flex justify-center items-center h-screen">
             <CircularProgress />
           </div>
         ) : (
-          <Card className="w-[1000px] h-[600px] flex flex-wrap">
-            <div className='m-5'>
+          <Card className="w-[1000px] h-[600px] flex">
+            <div className='m-5 flex flex-wrap'>
               <CardHeader>
                 <div className="flex justify-start mb-5">
                   <Button onClick={() => router.back()}>Voltar</Button>
