@@ -14,18 +14,23 @@ export default function Home() {
       
       <div className="flex flex-col items-center justify-center min-h-screen space-y-0">
         <div 
-          className="grid grid-cols-3 gap-4 h-screen items-center bg-no-repeat bg-cover bg-center m-0 p-0"
+          className="w-full min-h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center p-8"
           style={{ backgroundImage: "url('/img/homepage1bg.png')" }}
         >
          
-         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center' }}>
-          <Label style={{ color: 'white', fontSize: '2rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>Nós ajudamos</Label>
-          <Label style={{ color: 'white', fontSize: '8rem', fontFamily: 'Peace Sans', fontWeight: 'bold', maxWidth: '80%' }}>MULHERES</Label>
-          <Label style={{ color: 'white', fontSize: '2rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>
+         <div className="flex flex-col items-start justify-center text-left h-screen">
+          <Label className="text-[#F2F2F2] text-2xl sm:text-3xl md:text-3xl lg:text-1xl xl:text-4xl mb-4 max-w-[60%] font-rosario">
+            Nós ajudamos
+          </Label>
+          <Label className="text-[#F2F2F2] text-6xl sm:text-7xl md:text-7xl lg:text-5xl xl:text-7xl font-peaceSans font-bold max-w-[60%]">
+            MULHERES
+          </Label>
+          <Label className="text-[#F2F2F2] text-2xl sm:text-3xl md:text-3xl lg:text-1xl xl:text-4xl mb-4 max-w-[60%] font-rosario text-justify">
             a romperem ciclos de violência e criar oportunidades de geração de renda e inclusão econômica!
           </Label>
         </div>
-        </div>
+
+      </div>
 
         <div 
           id="about-us" 
@@ -64,54 +69,54 @@ export default function Home() {
 
           <div 
             id='fundation'
-            className="grid grid-cols-3 gap-4 h-screen items-center bg-no-repeat bg-cover bg-center m-0 p-0"
+            className="grid md:grid-cols-3 md:gap-4 h-screen items-center bg-no-repeat bg-cover bg-center md:m-0 md:p-0"
             style={{ backgroundImage: "url('/img/homepage3bg.png')" }}
           >
             <div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-0.5 gap-x-0.5 h-auto py-10" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center' }}>
-              <Label className="text-[#73225D] md:text-3xl" style={{ fontSize: '3rem', fontFamily: 'Peace Sans', fontWeight: 'bold', maxWidth: '80%' }}>Sobre as fundadoras</Label>
-              <Label className="text-[#73225D] md:text-3xl" style={{ fontSize: '2rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-0.5 gap-x-0.5 h-auto py-10 text-left" style={{ display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'center', height: '100vh', textAlign: 'left' }}>
+              <Label className="text-[#73225D] md:text-3xl text-left" style={{ fontSize: '3rem', fontFamily: 'Peace Sans', fontWeight: 'bold', maxWidth: '80%' }}>Sobre as fundadoras</Label>
+              <Label className="text-[#73225D] md:text-3xl text-left" style={{ fontSize: '2rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur ipsam officia accusamus earum ducimus est cupiditate aperiam itaque molestias tempora animi optio laborum nisi recusandae, cumque ut vitae ratione at.
               </Label>
             </div>
           </div>
 
-          <div 
+        <div 
             id="events"
             className="w-full min-h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center p-8"
             style={{ backgroundImage: "url('/img/homepage4bg.png')" }}
             >
-            <div className="text-center md:mb-8 flex flex-col items-center">
+          <div className="text-center md:mb-8 flex flex-col items-center">
               <Label className="text-[#F2F2F2] text-3xl font-bold" style={{ fontSize: '3rem', fontFamily: 'Peace Sans' }}>
                 Projetos que transformam vidas
               </Label>
               <Label className="text-[#F2F2F2] text-xl mt-2 italic" style={{ fontSize: '2rem', fontFamily: 'Peace Sans' }}>
                 Conheça nossos projetos e faça parte dessa transformação
               </Label>
-            </div>
+          </div>
 
-            <div className="grid gap-6 mt-6 w-full max-w-5xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
               <EventsCard 
                 img={<img src="img/events/instituto-ama.jpeg" alt="instituto-ama" />}
                 title="Instituto Ama"
-                content="22 crianças impactadas!! Esse foi o resultado do projeto realizado junto ao Instituto Ama, onde foram realizadas oficinas de pintura e desenho com as crianças da comunidade."
+                content={<span  className="text-[#F2F2F2]" style={{ fontSize: '1rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>"22 crianças impactadas!! Esse foi o resultado do projeto realizado junto ao Instituto Ama, onde foram realizadas oficinas de pintura e desenho com as crianças da comunidade."</span>}
               />
               <EventsCard 
                 img={<img src="img/events/curso-canva.jpeg" alt="canva-para-mulheres-empreendedoras" />}
                 title="Canva para Mulheres empreendedoras"
-                content="Projeto realizado em parceria com o Cebrac, com o objetivo de capacitar mulheres empreendedoras a criar suas próprias artes para divulgação de seus produtos e serviços. Foram 15 mulheres impactadas!!"
+                content={<span  className="text-[#F2F2F2]" style={{ fontSize: '1rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>"Projeto realizado em parceria com o Cebrac, com o objetivo de capacitar mulheres empreendedoras a criar suas próprias artes para divulgação de seus produtos e serviços. Foram 15 mulheres impactadas!!"</span>}
               />
               <EventsCard 
                 img={<img src="img/events/teatro.jpeg" alt="na-cidade-das-hortensias" />}
                 title="Na cidade das Hortênsias"
-                content="Espetáculo realizado pelo Coletivo Encoraja, com o objetivo de conscientizar a população sobre a violência doméstica e abuso infantil. Foram 5 apresentações realizadas em diferentes teatros em Curitiba, impactando mais de 500 pessoas."
+                content={<span  className="text-[#F2F2F2] style={{ fontSize: '1rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}">"Espetáculo realizado pelo Coletivo Encoraja, com o objetivo de conscientizar a população sobre a violência doméstica e abuso infantil. Foram 5 apresentações realizadas em diferentes teatros em Curitiba, impactando mais de 500 pessoas."</span>}
               />
               <EventsCard 
                 img={<img src="img/events/oficina-colagem.jpeg" alt="oficina-de-colagem" />}
                 title="Oficina de Colagem"
-                content="22 crianças impactadas!! Esse foi o resultado do projeto realizado junto ao Instituto Ama, onde foram realizadas oficinas de pintura e desenho com as crianças da comunidade."
+                content={<span  className="text-[#F2F2F2]" style={{ fontSize: '1rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>"22 crianças impactadas!! Esse foi o resultado do projeto realizado junto ao Instituto Ama, onde foram realizadas oficinas de pintura e desenho com as crianças da comunidade."</span>}
               />
             </div>
           </div>
@@ -149,9 +154,11 @@ export default function Home() {
               </div>
             </div>
 
-            <Label className="text-[#73225D] sm:mt-60 text-3xl" style={{ fontSize: '2rem', fontFamily: 'Peace Sans', fontWeight: 'bold', marginBottom: '1rem', maxWidth: '80%' }}>
-              Contatos
-            </Label>
+            <div id="contact" className="text-[#73225D] sm:mt-60 text-3xl">
+              <Label className="text-[#73225D] sm:mt-60 text-3xl" style={{ fontSize: '2rem', fontFamily: 'Peace Sans', fontWeight: 'bold', marginBottom: '1rem', maxWidth: '80%' }}>
+                Contatos
+              </Label>
+            </div>      
           </div>
 
         </div>
