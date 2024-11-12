@@ -14,17 +14,21 @@ export default function Home() {
       
       <div className="flex flex-col items-center justify-center min-h-screen space-y-0">
         <div 
-          className="grid md:grid-cols-3 md:gap-4 h-screen items-center bg-no-repeat bg-cover bg-center md:m-0 md:p-0"
+          className="w-full min-h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center p-8"
           style={{ backgroundImage: "url('/img/homepage1bg.png')" }}
         >
          
-         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center' }}>
-          <Label style={{ color: 'white', fontSize: '2rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>Nós ajudamos</Label>
-          <Label style={{ color: 'white', fontSize: '8rem', fontFamily: 'Peace Sans', fontWeight: 'bold', maxWidth: '80%' }}>MULHERES</Label>
-          <Label style={{ color: 'white', fontSize: '2rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>
-            a romperem ciclos de violência e criar oportunidades de geração de renda e inclusão econômica!
-          </Label>
-        </div>
+         <div className="flex flex-col items-center justify-center text-center h-screen">
+            <Label className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 max-w-[80%] font-rosario">
+              Nós ajudamos
+            </Label>
+            <Label className="text-white text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-10xl font-peaceSans font-bold max-w-[80%]">
+              MULHERES
+            </Label>
+            <Label className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 max-w-[80%] font-rosario">
+              a romperem ciclos de violência e criar oportunidades de geração de renda e inclusão econômica!
+            </Label>
+          </div>
         </div>
 
         <div 
