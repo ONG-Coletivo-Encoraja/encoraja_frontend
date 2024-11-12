@@ -14,7 +14,7 @@ interface LayoutProps {
 }
 
 export default function RootLayout({ children }: LayoutProps) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const router = useRouter();
 
@@ -29,10 +29,15 @@ export default function RootLayout({ children }: LayoutProps) {
     sessionStorage.setItem('sidebarExpanded', newSidebarState.toString());
   };
 
+  if (status === "loading") {
+    return null;
+  }
+
   if (!session) {
     router.push('/login');
+    return null; 
   }
-  
+
   if (session?.user.permission === "administrator") {
     return (
       <div lang="pt-br" className="bg-[#ededed] fixed inset-0">
@@ -114,4 +119,5 @@ export default function RootLayout({ children }: LayoutProps) {
     );
   }
 
+  return null;
 }
