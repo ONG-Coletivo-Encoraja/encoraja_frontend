@@ -158,8 +158,7 @@ export default function Home() {
               <Label className="text-[#73225D] sm:mt-60 text-3xl" style={{ fontSize: '2rem', fontFamily: 'Peace Sans', fontWeight: 'bold', marginBottom: '1rem', maxWidth: '80%' }}>
                 Contatos
               </Label>
-            </div>
-           
+            </div>      
           </div>
 
         </div>
