@@ -155,10 +155,34 @@ export default function Home() {
             </div>
 
             <div id="contact" className="text-[#73225D] sm:mt-60 text-3xl">
-              <Label className="text-[#73225D] sm:mt-60 text-3xl" style={{ fontSize: '2rem', fontFamily: 'Peace Sans', fontWeight: 'bold', marginBottom: '1rem', maxWidth: '80%' }}>
+              <Label
+                className="text-[#73225D] sm:mt-60 text-3xl"
+                style={{
+                  fontSize: '2rem',
+                  fontFamily: 'Peace Sans',
+                  fontWeight: 'bold',
+                  marginBottom: '1rem',
+                  maxWidth: '80%',
+                }}
+              >
                 Contatos
               </Label>
-            </div>      
+
+              <div className="mt-4 flex justify-center">
+                <a
+                  href="https://www.instagram.com/coletivo_encoraja/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
+                    alt="Instagram"
+                    className="w-12 h-12"
+                  />
+                </a>
+              </div>
+            </div>
+    
           </div>
 
         </div>
