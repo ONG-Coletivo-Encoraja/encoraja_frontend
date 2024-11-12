@@ -50,7 +50,7 @@ export function NextEventsCard() {
   }, [session]);
 
   return (
-    <Card className="min-w-[300px] w-[400px]">
+    <Card className="w-[500px] mb-6">
       <CardHeader>
       <CardDescription className=" text-[#F69053]">Eventos pendentes</CardDescription>
       </CardHeader>

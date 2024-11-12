@@ -19,7 +19,7 @@ export function UsersList() {
   const [users, setUsers] = useState<IUser[]>([]);
   const [filterPermission, setFilterPermission] = useState<string>("");
   const [filterName, setFilterName] = useState<string>("");
-
+  
   useEffect(() => {
     const fetchData = async () => {
       if (session?.token) {
@@ -63,7 +63,7 @@ export function UsersList() {
   console.log(users)
 
   return (
-    <div className="h-screen">
+    <div className="h-screen p-8">
       <div>
         <div className="flex justify-end">
           <SearchComponent onSearch={setFilterName} />
@@ -77,11 +77,11 @@ export function UsersList() {
             <CircularProgress />
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-4 mt-6">
-            {users.map((user) => (
-              <UserCard key={user.id} user={user} />
-            ))}
-          </div>
+            <div className="flex flex-wrap justify-center gap-4 mt-6">
+              {users.map((user) => (
+                <UserCard key={user.id} user={user} />
+              ))} 
+            </div>
         )}
         <PaginationComponent
           currentPage={currentPage}

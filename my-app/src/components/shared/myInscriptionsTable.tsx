@@ -112,9 +112,8 @@ export default function MyInscriptions() {
 
     return (
         <div>
-            <h2 className="font-bold leading-none tracking-tight text-[#702054] text-[24px]">Minhas Inscrições</h2>
-
             <div className="p-4">
+                <h2 className="font-bold leading-none tracking-tight text-[#702054] text-[24px]">Minhas incrições</h2>
                 <div className="flex justify-between mb-4">
                     <div>
                         <FilterInscriptions  onFilterChange={setStatusFilter} />

@@ -59,7 +59,7 @@ export function RequestVolunteerList() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen p-6">
       <div>
         <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[34px]">
           Solicitações de voluntariado
@@ -72,7 +72,7 @@ export function RequestVolunteerList() {
             <CircularProgress color="secondary" />
           </div>
         ) : (
-          <div className="flex flex-wrap gap-4 mt-6">
+          <div className="flex flex-wrap justify-center gap-4 mt-6">
             {data.map((request) => (
               <RequestVolunteerCard key={request.id} request={request} />
             ))}
