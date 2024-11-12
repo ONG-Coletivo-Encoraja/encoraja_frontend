@@ -18,18 +18,19 @@ export default function Home() {
           style={{ backgroundImage: "url('/img/homepage1bg.png')" }}
         >
          
-         <div className="flex flex-col items-center justify-center text-center h-screen">
-            <Label className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 max-w-[80%] font-rosario">
-              Nós ajudamos
-            </Label>
-            <Label className="text-white text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-10xl font-peaceSans font-bold max-w-[80%]">
-              MULHERES
-            </Label>
-            <Label className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 max-w-[80%] font-rosario">
-              a romperem ciclos de violência e criar oportunidades de geração de renda e inclusão econômica!
-            </Label>
-          </div>
+         <div className="flex flex-col items-start justify-center text-left h-screen">
+          <Label className="text-[#F2F2F2] text-2xl sm:text-3xl md:text-3xl lg:text-1xl xl:text-4xl mb-4 max-w-[60%] font-rosario">
+            Nós ajudamos
+          </Label>
+          <Label className="text-[#F2F2F2] text-6xl sm:text-7xl md:text-7xl lg:text-5xl xl:text-7xl font-peaceSans font-bold max-w-[60%]">
+            MULHERES
+          </Label>
+          <Label className="text-[#F2F2F2] text-2xl sm:text-3xl md:text-3xl lg:text-1xl xl:text-4xl mb-4 max-w-[60%] font-rosario text-justify">
+            a romperem ciclos de violência e criar oportunidades de geração de renda e inclusão econômica!
+          </Label>
         </div>
+
+      </div>
 
         <div 
           id="about-us" 
@@ -74,9 +75,9 @@ export default function Home() {
             <div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-0.5 gap-x-0.5 h-auto py-10" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center' }}>
-              <Label className="text-[#73225D] md:text-3xl" style={{ fontSize: '3rem', fontFamily: 'Peace Sans', fontWeight: 'bold', maxWidth: '80%' }}>Sobre as fundadoras</Label>
-              <Label className="text-[#73225D] md:text-3xl" style={{ fontSize: '2rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-0.5 gap-x-0.5 h-auto py-10 text-left" style={{ display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'center', height: '100vh', textAlign: 'left' }}>
+              <Label className="text-[#73225D] md:text-3xl text-left" style={{ fontSize: '3rem', fontFamily: 'Peace Sans', fontWeight: 'bold', maxWidth: '80%' }}>Sobre as fundadoras</Label>
+              <Label className="text-[#73225D] md:text-3xl text-left" style={{ fontSize: '2rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur ipsam officia accusamus earum ducimus est cupiditate aperiam itaque molestias tempora animi optio laborum nisi recusandae, cumque ut vitae ratione at.
               </Label>
             </div>
