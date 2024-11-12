@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-  <div className="fixed top-0 left-0 w-full z-10">
+    <div className="fixed top-0 left-0 w-full z-10">
         <Navbar />
       </div>
       
@@ -155,12 +155,53 @@ export default function Home() {
             </div>
 
             <div id="contact" className="text-[#73225D] sm:mt-60 text-3xl">
-              <Label className="text-[#73225D] sm:mt-60 text-3xl" style={{ fontSize: '2rem', fontFamily: 'Peace Sans', fontWeight: 'bold', marginBottom: '1rem', maxWidth: '80%' }}>
+              <Label
+                className="text-[#73225D] sm:mt-60 text-3xl"
+                style={{
+                  fontSize: '2rem',
+                  fontFamily: 'Peace Sans',
+                  fontWeight: 'bold',
+                  marginBottom: '1rem',
+                  maxWidth: '80%',
+                }}
+              >
                 Contatos
               </Label>
-            </div>      
-          </div>
 
+              <div className="sm:mt-4 flex justify-center items-center sm:space-x-6">
+                <a
+                  href="https://www.instagram.com/coletivo_encoraja/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
+                    alt="Instagram"
+                    className="w-12 h-12"
+                  />
+                </a>
+                <a
+                  href="mailto:contato@institutoencoraja.org"
+                  className="text-[#73225D] text-xl font-rosario"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 h-6 text-[#73225D]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M3 8l7.5 5L18 8M21 12v9a2 2 0 01-2 2H5a2 2 0 01-2-2v-9m4 4h12"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
   </>
   );
