@@ -68,21 +68,27 @@ export default function Complainces() {
 
   return (
     <>
-    <div className='flex flex-col items-center mt-6 w-full bg-[#EDEDED] h-[88vh] gap-5'>
-      <a className='text-lg font-bold p-3'>Denúncias</a>
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        compliances.map((compliance, index) => (
-          <AccordionComplaince key={index} compliance={compliance} />
-        ))
-      )}
-          <PaginationComponent
+      <div className='flex flex-col items-center justify-between  w-full bg-[#EDEDED] h-full gap-5'>
+        <div className=' w-full p-5'>
+          <h2 className="font-bold leading-none tracking-tight text-[#702054] text-[24px]">Denúncias</h2>
+        </div>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          compliances.length > 0 ? (
+            compliances.map((compliance, index) => (
+              <AccordionComplaince key={index} compliance={compliance} />
+            ))
+          ) : (
+            <p className="text-center text-[#5E5E5E]">Nenhuma denúncia encontrada</p>
+          )
+        )}
+        <PaginationComponent
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
         />
-    </div>
+      </div>
     </>
   );
 }

@@ -36,7 +36,7 @@ export default function EventsDetails() {
   }, [eventId, session]);
 
   return (
-    <div className="h-screen flex mt-8 justify-center">
+    <div className="h-full flex justify-center items-center">
       <div>
         {loading ? (
           <div className="flex justify-center items-center h-screen">

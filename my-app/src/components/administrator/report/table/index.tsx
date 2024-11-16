@@ -51,11 +51,11 @@ const ReportAdmin = () => {
 
     return (
         <>
-            <div className='flex flex-col items-center mt-6 w-full bg-[#EDEDED] h-[88vh]'>
-                <div className="flex flex-col items-center w-11/12 h-full justify-between">
+            <div className='flex flex-col items-center justify-between w-full bg-[#EDEDED] h-full p-5'>
+                <div className="flex flex-col items-center w-full h-full justify-between">
                     <div className="flex flex-col items-center w-11/12 h-full">
-                        <div className="flex content-center items-center h-10 font-bold text-xl text-[#702054]">
-                            <h1>Relatório de Evento</h1>
+                        <div className="w-full">
+                            <h2 className="font-bold leading-none tracking-tight text-[#702054] text-[24px] p-5">Relatórios de eventos</h2>
                         </div>
                         <div className="flex items-center justify-center w-[90%] bg-white rounded-lg p-3">
                             {loading ? (
@@ -72,28 +72,36 @@ const ReportAdmin = () => {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {data.map(item => (
-                                            <TableRow key={item.id}>
-                                                <TableCell className="p-2 text-left text-[#5E5E5E]">{item.relates_event.user.name}</TableCell>
-                                                <TableCell className="p-2 text-left text-[#5E5E5E]">{item.relates_event.event.date}</TableCell>
-                                                <TableCell className="p-2 text-left text-[#5E5E5E]">{item.relates_event.event.time}</TableCell>
-                                                <TableCell className="p-2 text-left text-[#5E5E5E]">{item.relates_event.event.name}</TableCell>
-                                                <TableCell className="p-2 text-left text-[#5E5E5E]">
-                                                    <Eye onClick={() => openModal(item)} className="cursor-pointer" />
-                                                </TableCell>
+                                        {data.length > 0 ? (
+                                            data.map(item => (
+                                                <TableRow key={item.id}>
+                                                    <TableCell className="p-2 text-left text-[#5E5E5E]">{item.relates_event.user.name}</TableCell>
+                                                    <TableCell className="p-2 text-left text-[#5E5E5E]">{item.relates_event.event.date}</TableCell>
+                                                    <TableCell className="p-2 text-left text-[#5E5E5E]">{item.relates_event.event.time}</TableCell>
+                                                    <TableCell className="p-2 text-left text-[#5E5E5E]">{item.relates_event.event.name}</TableCell>
+                                                    <TableCell className="p-2 text-left text-[#5E5E5E]">
+                                                        <button aria-label="Visualizar detalhes do evento" onClick={() => openModal(item)}>
+                                                            <Eye className="cursor-pointer" />
+                                                        </button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        ) : (
+                                            <TableRow>
+                                                <TableCell colSpan={5} className="text-center p-4 text-[#5E5E5E]">Nenhum relatório disponível</TableCell>
                                             </TableRow>
-                                        ))}
+                                        )}
                                     </TableBody>
                                 </Table>
                             )}
                         </div>
-                        <PaginationComponent
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={handlePageChange}
-                    />
                     </div>
                 </div>
+                <PaginationComponent
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
                 <EventDetailModal
                     isOpen={isModalOpen}
                     onClose={() => setModalOpen(false)}

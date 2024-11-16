@@ -92,8 +92,8 @@ export default function RequestVolunteerDetailsCard() {
     };
 
     return (
-        <div className="h-screen">
-            <Card className="w-[1000px] h-[600px]">
+        <div className="flex justify-center items-center h-full">
+            <Card className="w-[600px] h-[600px] flex flex-col justify-center">
                 <CardHeader className="flex items-center">
                     <CircleUserIcon className="w-16 h-16 text-[#5E5E5E]" />
                 </CardHeader>

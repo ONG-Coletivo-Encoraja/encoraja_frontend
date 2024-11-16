@@ -53,11 +53,6 @@ export function EventCard({ event }: EventCardProps) {
         <br />
         <Label className="text-[#727272]">{event.description}</Label>
       </CardContent>
-      {/*
-     <CardFooter className="flex justify-end">
-        {event.status != 'finished' && event.user_owner.id === session?.user.id && (<Button>Editar</Button>)}
-      </CardFooter>
-          */}
     </Card>
   );
 }

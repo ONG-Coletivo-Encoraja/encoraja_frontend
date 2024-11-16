@@ -12,9 +12,9 @@ export default function GraphicsPage() {
     <>
       <div className='w-full bg-[#EDEDED] m-0'>
         <div>
-          <div className='w-full flex items-center text-2xl font-bold text-[#666666] justify-between p-3'>
+          <div className='w-full flex items-center text-2xl font-bold justify-between p-3'>
             <div>
-              <h1>Relatórios Gerais</h1>
+              <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[24px]">Relatórios Gerais</h1>
             </div>
             <div>
               <ExportButton/>

@@ -14,9 +14,6 @@ export default function Inscriptions() {
                 <div> 
                     <FilterInscriptions onFilterChange={setFilterStatus} />
                 </div>
-                <div> 
-                    {/* <SearchComponent /> */}
-                </div>
             </div>
 
             <div className="mt-4"> 

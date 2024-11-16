@@ -123,14 +123,16 @@ export function AdminProfile() {
   };
 
   if (loading) {
-    return <>
-      <CircularProgress />
-    </>;
+    return (
+      <div className='h-full w-full flex items-center justify-center'>
+        <CircularProgress />
+      </div>
+    )
   }
 
   return (
-    <div className="h-full w-full flex items-center justify-center">
-      <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
+    <div className="h-full w-full flex items-center justify-center p-5">
+      <Card className="w-full max-w-[1000px] mx-auto shadow-lg">
         <CardHeader>
           <CardTitle>Meu perfil</CardTitle>
           <div className="flex items-center justify-center h-full">
