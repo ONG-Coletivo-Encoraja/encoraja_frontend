@@ -111,14 +111,13 @@ export default function ReportEvent() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-full w-full">
         <CircularProgress />
       </div>
     );
   }
   return (
-
-    <Card className="w-full max-w-[800px] mx-auto mt-10 shadow-lg">
+    <Card className="w-full max-w-[1000px] mx-auto mt-3 mb-3 shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Relatório do Evento</CardTitle>
       </CardHeader>

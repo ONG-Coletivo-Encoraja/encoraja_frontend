@@ -40,7 +40,7 @@ export default function Navbar() {
           className="h-12 ml-4"
         />
         <DropdownMenu onOpenChange={(open) => setIsOpen(open)}>
-          <div className='flex items-center mr-8 border rounded-md'>
+          <div className='flex items-center mr-8 border rounded-md p-1'>
             <DropdownMenuTrigger asChild>
               <Label className="text-white mx-4 flex items-center justify-between">
                 {status === 'loading' ? 'Carregando...' : session?.user?.name || 'Usuário'} 

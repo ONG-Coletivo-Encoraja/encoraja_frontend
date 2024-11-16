@@ -55,10 +55,11 @@ export function NextEventsCard() {
       <CardDescription className=" text-[#F69053]">Eventos próximos</CardDescription>
       </CardHeader>
       {loading ? (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center p-5">
           <CircularProgress />
         </div>
       ) : (
+        events.length > 0 ? (
         <div>
           {events.map((event) => (
             <div key={event.id}>
@@ -79,6 +80,9 @@ export function NextEventsCard() {
             </div>
           ))}
         </div>
+        ) : (
+          <p className="text-center text-[#acacac]">Sem eventos próximos</p>
+        )
       )}
     </Card>
   )

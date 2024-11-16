@@ -48,7 +48,7 @@ export function MyInscriptionsCard() {
     return (
         <Card className="w-[400px] mb-6">
             <CardHeader>
-                <CardDescription className=" text-[#F69053]">Inscrições pendentes</CardDescription>
+                <CardDescription className=" text-[#F69053]">Minhas inscrições</CardDescription>
                 <div className="flex items-center justify-between">
                     <CardTitle>Inscrições</CardTitle>
                     <div className="bg-[#A732A9] rounded-full w-12 h-12 flex items-center justify-center">
@@ -59,18 +59,22 @@ export function MyInscriptionsCard() {
             <CardContent>
                 <div>
                     {loading ? (
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-center items-center p-5">
                             <CircularProgress />
                         </div>
                     ) : (
-                        <ul>
-                            {inscriptions.map((inscription) => (
-                                <div key={inscription.id}>
-                                    <li><Label className=" text-[20px] text-[#5E5E5E]">{inscription.user.name}</Label></li>
-                                    <li><Label className="text-[#F69053] underline"><Link href={`/inscricoes`}>Ver inscrições</Link></Label></li>
-                                </div>
-                            ))}
-                        </ul>
+                        inscriptions.length > 0 ? (
+                            <ul>
+                                {inscriptions.map((inscription) => (
+                                    <div key={inscription.id}>
+                                        <li><Label className=" text-[20px] text-[#5E5E5E]">{inscription.user.name}</Label></li>
+                                        <li><Label className="text-[#F69053] underline"><Link href={`/inscricoes`}>Ver inscrições</Link></Label></li>
+                                    </div>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="text-center text-[#acacac]">Sem inscrições</p>
+                        )
                     )}
                 </div>
             </CardContent>
