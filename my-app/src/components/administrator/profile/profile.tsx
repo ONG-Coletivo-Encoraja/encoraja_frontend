@@ -131,7 +131,7 @@ export function AdminProfile() {
   }
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-5">
+    <div className="h-full w-full flex items-center justify-center mb-10 mt-10">
       <Card className="w-full max-w-[1000px] mx-auto shadow-lg">
         <CardHeader>
           <CardTitle>Meu perfil</CardTitle>

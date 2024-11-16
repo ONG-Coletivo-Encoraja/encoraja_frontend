@@ -67,12 +67,8 @@ export default function EventsDetails() {
     }
 };
 
-
-
-
-
   return (
-    <div className='flex justify-center mt-8'>
+    <div className='flex justify-center mt-3'>
       {loading ? (
         <div className="flex justify-center items-center h-screen">
           <CircularProgress />

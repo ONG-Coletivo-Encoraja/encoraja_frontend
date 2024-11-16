@@ -25,7 +25,7 @@ export function EventsList() {
     const fetchData = async () => {
       if (session?.token) {
         try {
-          const response: ApiResponse = await fetchEventsBeneficiary (
+          const response: ApiResponse = await fetchEventsBeneficiary(
             statusFilter,
             nameFilter,
             session.token,
@@ -52,37 +52,41 @@ export function EventsList() {
   };
 
   return (
-    <div className="min-w-[80vw] min-h-[100vh] p-5">
-      <div className="flex justify-between flex-wrap gap-3">
-        <div>
-          <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[30px]">Eventos cadastrados</h1>
+    <div className="w-full h-full p-5 flex flex-col justify-between">
+      <div>
+        <div className="flex justify-between flex-wrap gap-3">
           <div>
-            <FilterComponent onFilterChange={setStatusFilter} />
+            <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[24px]">Eventos cadastrados</h1>
+            <div>
+              <FilterComponent onFilterChange={setStatusFilter} />
+            </div>
+          </div>
+          <div className="flex items-center">
+            <SearchComponent onSearch={setNameFilter} />
           </div>
         </div>
-        <div className="flex items-center">
-          <SearchComponent onSearch={setNameFilter} />
-        </div>
-      </div>
 
-      <div className="flex justify-center items-center">
-        {loading ? (
-          <CircularProgress color="secondary" />
-        ) : (
-          <div className="grid grid-cols-2 gap-4 mt-6">
-            {events.map(event => (
-              <Link key={event.id} href={`/eventos/detalhes/${event.id}`}>
-                <EventCard event={event} />
-              </Link>
-            ))}
-          </div>
-        )}
+        <div className="flex justify-center items-center">
+          {loading ? (
+            <CircularProgress color="secondary" />
+          ) : events.length === 0 ? (
+            <p className="mt-6 text-center text-lg text-gray-600">Sem dados disponíveis</p>
+          ) : (
+            <div className="grid grid-cols-2 gap-4 mt-6">
+              {events.map(event => (
+                <Link key={event.id} href={`/eventos/detalhes/${event.id}`}>
+                  <EventCard event={event} />
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-        <PaginationComponent
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+      <PaginationComponent
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }

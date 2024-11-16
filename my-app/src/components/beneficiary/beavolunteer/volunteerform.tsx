@@ -102,13 +102,14 @@ export function BeAVolunteer() {
 
   return (
     <>
-      <div className='h-screen'>
+      <div className='h-full flex justify-center items-center mt-24'>
         {loading ? (
           <div className="flex items-center justify-center h-screen">
             <CircularProgress color="secondary" />
           </div>
         ) : (
-          <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
+          <div className="p-3">
+          <Card className="w-full max-w-[1000px] mx-auto shadow-lg">
             <CardHeader>
               <CardTitle className="text-2xl font-bold">Seja voluntário</CardTitle>
             </CardHeader>
@@ -230,6 +231,7 @@ export function BeAVolunteer() {
               </Button>
             </CardFooter>
           </Card>
+          </div>
         )}
       </div>
     </>
