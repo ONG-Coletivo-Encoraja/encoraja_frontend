@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={inter.className}>
         <NextAuthSessionProvider>
-          <div className="pt-[64px]">
+          <div>
             {children}
             <Toaster />
           </div>

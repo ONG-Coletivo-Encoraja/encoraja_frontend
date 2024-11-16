@@ -9,11 +9,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import InputMask from "react-input-mask";
-import { Checkbox } from "@/components/ui/checkbox";  
+import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { register } from '../../app/api/auth';
-import { UserData } from '../../interfaces/IUserData'; 
+import { UserData } from '../../interfaces/IUserData';
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 
@@ -35,14 +35,14 @@ const formSchema = z.object({
   zip_code: z.string().regex(/^\d{5}-\d{3}$/, { message: "Insira um CEP válido no formato 00000-000." }),
   phone: z.string().regex(/^\(\d{2}\) \d{5}-\d{4}$/, { message: "Insira um telefone válido no formato (00) 00000-0000." }),
 }).refine((data) => data.password === data.confirmPassword, {
-    message: "As senhas precisam ser iguais.",
-    path: ["confirmPassword"],
-  });
+  message: "As senhas precisam ser iguais.",
+  path: ["confirmPassword"],
+});
 
 export default function RegisterForm() {
   const router = useRouter();
   const { toast } = useToast();
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -107,13 +107,13 @@ export default function RegisterForm() {
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errors = error.response.data.errors;
-    
+
         const firstKey = Object.keys(errors)[0];
-    
+
         const firstErrorMessage = errors[firstKey][0];
-    
+
         console.log(firstErrorMessage);
-    
+
         toast({
           title: "Falha no cadastro!",
           description: firstErrorMessage,
@@ -123,7 +123,7 @@ export default function RegisterForm() {
         console.error('Erro inesperado:', error);
         alert('Ocorreu um erro inesperado.');
       }
-    }  
+    }
   };
 
   useEffect(() => {
@@ -140,7 +140,7 @@ export default function RegisterForm() {
               form.setValue("neighbourhood", data.bairro);
               form.setValue("city", data.localidade);
             } else {
-              toast ({
+              toast({
                 title: "Erro!",
                 description: "CEP não encontrado.",
                 variant: "destructive",
@@ -153,270 +153,272 @@ export default function RegisterForm() {
   }, [form.watch("zip_code")]);
 
   return (
-    <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold">Cadastro</CardTitle>
-        <div className="flex items-center justify-center">
-            <img src="/img/writted-logo.png" alt="Logo" className="h-[87px] w-[250px]" />
-        </div>
+    <div className="flex justify-center items-center">
+      <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Cadastro</CardTitle>
+          <div className="flex items-center justify-center">
+            <img src="/img/writted-logo.png" alt="Logo" className="w-[250px]" />
+          </div>
 
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem className="col-span-3">
-                  <FormLabel>Nome Completo</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Nome Completo" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
-            <FormField
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="col-span-3">
+                    <FormLabel>Nome Completo</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Nome Completo" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
                 control={form.control}
                 name="cpf"
                 render={({ field }) => (
-                    <FormItem>
+                  <FormItem>
                     <FormLabel>CPF</FormLabel>
                     <FormControl>
-                        <InputMask mask="999.999.999-99" value={field.value} onChange={field.onChange}>
+                      <InputMask mask="999.999.999-99" value={field.value} onChange={field.onChange}>
                         {(inputProps) => (<Input placeholder="000.000.000-00" {...inputProps} />)}
-                        </InputMask>
+                      </InputMask>
                     </FormControl>
                     <FormMessage />
-                    </FormItem>
+                  </FormItem>
                 )}
-                />
+              />
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="date_birthday"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Data de Nascimento</FormLabel>
-                  <FormControl className="flex justify-end">
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="date_birthday"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Data de Nascimento</FormLabel>
+                    <FormControl className="flex justify-end">
+                      <Input type="date" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Telefone</FormLabel>
-                  <FormControl>
-                    <InputMask mask="(99) 99999-9999" value={field.value} onChange={field.onChange}>
-                      {(inputProps) => <Input placeholder="(00) 00000-0000" {...inputProps} />}
-                    </InputMask>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Telefone</FormLabel>
+                    <FormControl>
+                      <InputMask mask="(99) 99999-9999" value={field.value} onChange={field.onChange}>
+                        {(inputProps) => <Input placeholder="(00) 00000-0000" {...inputProps} />}
+                      </InputMask>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="ethnicity"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Etnia</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} defaultValue="">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione uma etnia" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="white">Branca</SelectItem>
-                        <SelectItem value="black">Preta</SelectItem>
-                        <SelectItem value="mixed">Parda</SelectItem>
-                        <SelectItem value="asian">Amarela</SelectItem>
-                        <SelectItem value="other">Outra</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="ethnicity"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Etnia</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} defaultValue="">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione uma etnia" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="white">Branca</SelectItem>
+                          <SelectItem value="black">Preta</SelectItem>
+                          <SelectItem value="mixed">Parda</SelectItem>
+                          <SelectItem value="asian">Amarela</SelectItem>
+                          <SelectItem value="other">Outra</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="gender"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Gênero</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} defaultValue="">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione um gênero" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="male">Masculino</SelectItem>
-                        <SelectItem value="female">Feminino</SelectItem>
-                        <SelectItem value="prefer not say">Prefiro não dizer</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Gênero</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} defaultValue="">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione um gênero" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="male">Masculino</SelectItem>
+                          <SelectItem value="female">Feminino</SelectItem>
+                          <SelectItem value="prefer not say">Prefiro não dizer</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="zip_code"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>CEP</FormLabel>
-                  <FormControl>
-                    <InputMask mask="99999-999" value={field.value} onChange={field.onChange}>
-                      {(inputProps) => <Input placeholder="00000-000" {...inputProps} />}
-                    </InputMask>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="zip_code"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>CEP</FormLabel>
+                    <FormControl>
+                      <InputMask mask="99999-999" value={field.value} onChange={field.onChange}>
+                        {(inputProps) => <Input placeholder="00000-000" {...inputProps} />}
+                      </InputMask>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="street"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Rua</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Rua" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="street"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Rua</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Rua" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="number"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Número</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Número" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="number"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Número</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Número" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="neighbourhood"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Bairro</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Bairro" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="neighbourhood"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Bairro</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Bairro" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Cidade</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Cidade" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Cidade</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Cidade" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Senha</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="Senha" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Senha</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="Senha" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Confirmar Senha</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="Confirmar Senha" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="image_term"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                  <FormLabel className="ml-2">Aceito os termos de uso da imagem.</FormLabel>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="data_term"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                  <FormLabel className="ml-2">Aceito os termos de uso dos dados.</FormLabel>
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-      </CardContent>
-      <CardFooter className="flex justify-end gap-4">
-        <Button variant="outline">
-          Cancelar
-        </Button>
-        <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
-          Salvar
-        </Button>
-      </CardFooter>
-    </Card>
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Confirmar Senha</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="Confirmar Senha" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="image_term"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    <FormLabel className="ml-2">Aceito os termos de uso da imagem.</FormLabel>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="data_term"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    <FormLabel className="ml-2">Aceito os termos de uso dos dados.</FormLabel>
+                  </FormItem>
+                )}
+              />
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className="flex justify-end gap-4">
+          <Button variant="outline">
+            Cancelar
+          </Button>
+          <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
+            Salvar
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }

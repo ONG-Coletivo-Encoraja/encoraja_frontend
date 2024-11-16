@@ -35,7 +35,7 @@ export default function RecoverPassForm() {
         <Card className="w-full max-w-[500px] mx-auto mt-10 shadow-lg">
             <CardHeader>
                 <div className="flex items-center justify-center">
-                    <img src="/img/writted-logo.png" alt="Logo" className="h-[87px] w-[250px]" />
+                    <img src="/img/writted-logo.png" alt="Logo" className="w-[250px]" />
                 </div>
             </CardHeader>
             <CardContent className="flex flex-col gap-5">
