@@ -1,129 +1,107 @@
 'use client';
 
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form"; 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react'; 
+import Link from 'next/link';
+import { useToast } from "@/hooks/use-toast";
 
-
-const defaultTheme = createTheme({
-  components: { MuiButton: { styleOverrides: { root: { backgroundColor: '#702054', '&:hover': { backgroundColor: '#702054' } } } } }
+const loginSchema = z.object({
+  email: z.string().email("Email inválido").nonempty("Email é obrigatório"),
+  password: z.string().nonempty("Senha é obrigatória"),
 });
 
 export default function LoginForm() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
   const router = useRouter();
+  const { toast } = useToast();
 
-  async function handleSubmit(event: React.SyntheticEvent) {
-    event.preventDefault()
+  const form = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
+  const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
     const result = await signIn('credentials', {
-      email,
-      password,
-      redirect: false
-    })
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
 
     if (result?.error) {
-      console.log(result)
-      return 
+      console.error(result.error);
+      toast({
+        title: "Erro ao fazer login",
+        description: "Por favor, insira as credenciais corretas.",
+        variant: "destructive",
+      });
+      return; 
     }
-
-    router.replace('/home')
-  }
+    toast({
+      title: "Login bem-sucedido!",
+      description: "Você será redirecionado para a página inicial.",
+      variant: "default",
+    });
+    router.replace('/pagina-inicial');
+  };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '100vh',
-          backgroundImage: 'url("/img/background-girls.png")', 
-          backgroundSize: 'cover'
-        }}
-      >
-        <Container
-          component="main"
-          maxWidth="xs"
-          sx={{ backgroundColor: 'white', padding: 4, borderRadius: 2, maxWidth: '360px' }}
-        >
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 4,
-              marginBottom: 4, 
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <img src="/img/writted-logo.png" alt="Logo" style={{ height: '60px', marginRight: '16px', marginLeft: '0px' }} />
-
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                type="text"
-                autoComplete="email"
-                autoFocus
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Senha"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Login
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Esqueceu a sua senha?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"Não possui uma conta? Cadastre-se"}
-                  </Link>
-                </Grid>
-              </Grid>
-            </Box>
-          </Box>
-        </Container>
-      </Box>
-    </ThemeProvider>
+    <Card className="w-full max-w-[500px] mx-auto mt-10 shadow-lg">
+      <CardHeader>
+        <div className="flex items-center justify-center">
+          <img src="/img/writted-logo.png" alt="Logo" className=" w-[250px]" />
+        </div>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-6">         
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="w-[450px]">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="w-[450px]">
+                  <FormLabel>Senha</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="mt-4">Entrar</Button>
+          </form>
+        </Form>
+      </CardContent>
+      <CardFooter className="flex flex-col justify-center gap-4">
+        <Link href="/forgot-password">
+          <Label className="underline">Esqueci minha senha</Label>
+        </Link>
+        <Link href="/register">
+          <Label className="underline">Criar conta</Label>
+        </Link>
+      </CardFooter>
+    </Card>
   );
 }

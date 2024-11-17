@@ -1,341 +1,443 @@
 'use client';
 
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-
-import { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import InputMask from "react-input-mask";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { register } from '../../app/api/auth';
-import { UserData } from '../../interfaces/IUserData'; 
+import { UserData } from '../../interfaces/IUserData';
+import { useToast } from "@/hooks/use-toast";
+import { AxiosError } from "axios";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
-const defaultTheme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#702054',
-          '&:hover': {
-            backgroundColor: '#702054',
-          },
-        },
-      },
-    },
-  },
+const formSchema = z.object({
+  name: z.string().min(2, { message: "O nome deve ter pelo menos 2 caracteres." }),
+  email: z.string().email({ message: "Insira um email válido." }),
+  password: z.string().min(6, { message: "A senha deve ter pelo menos 6 caracteres." }),
+  confirmPassword: z.string().min(6, { message: "A confirmação de senha deve ter pelo menos 6 caracteres." }),
+  cpf: z.string().regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, { message: "Insira um CPF válido no formato 000.000.000-00." }),
+  date_birthday: z.string().refine((val) => !isNaN(Date.parse(val)), { message: "Insira uma data de nascimento válida." }),
+  ethnicity: z.string().min(2, { message: "Selecione uma etnia." }),
+  gender: z.string().min(2, { message: "Selecione um gênero." }),
+  image_term: z.boolean().refine(val => val === true, { message: "Você deve aceitar os termos de imagem." }),
+  data_term: z.boolean().refine(val => val === true, { message: "Você deve aceitar os termos de dados." }),
+  street: z.string().min(2, { message: "A rua deve ter pelo menos 2 caracteres." }),
+  number: z.string().min(1, { message: "O número deve ser informado." }),
+  neighbourhood: z.string().min(2, { message: "O bairro deve ter pelo menos 2 caracteres." }),
+  city: z.string().min(2, { message: "A cidade deve ter pelo menos 2 caracteres." }),
+  zip_code: z.string().regex(/^\d{5}-\d{3}$/, { message: "Insira um CEP válido no formato 00000-000." }),
+  phone: z.string().regex(/^\(\d{2}\) \d{5}-\d{4}$/, { message: "Insira um telefone válido no formato (00) 00000-0000." }),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "As senhas precisam ser iguais.",
+  path: ["confirmPassword"],
 });
 
-export default function RegistrationForm() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [date_birthday, setDateBirthday] = useState('');
-  const [race, setRace] = useState('');
-  const [gender, setGender] = useState('');
-  const [image_term, setImageTerm] = useState(false);
-  const [data_term, setDataTerm] = useState(false);
-  const [street, setStreet] = useState('');
-  const [number, setNumber] = useState('');
-  const [neighbourhood, setNeighbourhood] = useState('');
-  const [city, setCity] = useState('');
-  const [zip_code, setZipCode] = useState('');
-  const [phone, setPhone] = useState('');
-
+export default function RegisterForm() {
   const router = useRouter();
+  const { toast } = useToast();
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      cpf: "",
+      date_birthday: "",
+      ethnicity: "",
+      gender: "",
+      image_term: false,
+      data_term: false,
+      street: "",
+      number: "",
+      neighbourhood: "",
+      city: "",
+      zip_code: "",
+      phone: "",
+    },
+  });
 
-    if (password !== confirmPassword) {
-      alert('Passwords do not match');
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (values.password !== values.confirmPassword) {
+      toast({
+        title: "Erro!",
+        description: "As senhas não coincidem.",
+        variant: "destructive",
+      });
       return;
     }
 
     const data: UserData = {
-      name,
-      email,
-      password,
-      cpf,
-      date_birthday,
-      race,
-      gender,
-      image_term,
-      data_term,
-      street,
-      number,
-      neighbourhood,
-      city,
-      zip_code,
-      phone,
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      cpf: values.cpf,
+      date_birthday: values.date_birthday,
+      ethnicity: values.ethnicity,
+      gender: values.gender,
+      image_term: values.image_term,
+      data_term: values.data_term,
+      street: values.street,
+      number: values.number,
+      neighbourhood: values.neighbourhood,
+      city: values.city,
+      zip_code: values.zip_code,
+      phone: values.phone,
     };
 
     try {
       const response = await register(data);
-      
-      console.log(response)
+      toast({
+        title: "Sucesso!",
+        description: response.message,
+        variant: "default",
+      });
+      console.log(response);
       if (response) {
         router.push('/login');
       }
     } catch (error) {
-      alert('Registration failed: ' + error);
+      if (error instanceof AxiosError && error.response) {
+        const errors = error.response.data.errors;
+
+        const firstKey = Object.keys(errors)[0];
+
+        const firstErrorMessage = errors[firstKey][0];
+
+        console.log(firstErrorMessage);
+
+        toast({
+          title: "Falha no cadastro!",
+          description: firstErrorMessage,
+          variant: "destructive",
+        });
+      } else {
+        console.error('Erro inesperado:', error);
+        alert('Ocorreu um erro inesperado.');
+      }
     }
   };
-  
+
+  useEffect(() => {
+    const zipCodeField = form.watch("zip_code");
+
+    if (zipCodeField) {
+      const cep = zipCodeField.replace(/\D/g, '');
+      if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then(response => response.json())
+          .then(data => {
+            if (!data.erro) {
+              form.setValue("street", data.logradouro);
+              form.setValue("neighbourhood", data.bairro);
+              form.setValue("city", data.localidade);
+            } else {
+              toast({
+                title: "Erro!",
+                description: "CEP não encontrado.",
+                variant: "destructive",
+              });
+            }
+          })
+          .catch(() => alert("Erro ao buscar CEP."));
+      }
+    }
+  }, [form.watch("zip_code")]);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundImage: 'url("/img/background-girls.png")', backgroundSize: 'cover' }}>
-        <Container component="main" maxWidth="md" sx={{ backgroundColor: 'white', padding: 4, borderRadius: 2, paddingLeft: 20, paddingRight: 20, paddingTop: 6, paddingBottom: 6 }}>
-          <CssBaseline />
-          <Box sx={{ marginTop: 4, marginBottom: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <img src="/img/writted-logo.png" alt="Logo" style={{ height: '60px', marginRight: '16px', marginLeft: '0px' }} />
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="name"
-                    label="Nome Completo"
-                    name="name"
-                    autoComplete="name"
-                    autoFocus
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="date_birthday"
-                    label="Data de Nascimento"
-                    name="date_birthday"
-                    type="date"
-                    InputLabelProps={{ shrink: true }}
-                    onChange={(e) => setDateBirthday(e.target.value)}
-                  />
-                </Grid>
+    <div className="flex justify-center items-center ">
+      <Card className="w-full max-w-[1000px] mx-auto shadow-lg mt-3 mb-3">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Cadastro</CardTitle>
+          <div className="flex items-center justify-center">
+            <img src="/img/writted-logo.png" alt="Logo" className="w-[250px]" />
+          </div>
 
-                {/* Segunda linha */}
-                <Grid item xs={12} sm={4}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    id="phone"
-                    label="Telefone"
-                    name="phone"
-                    type="tel"
-                    autoComplete="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="cpf"
-                    label="CPF"
-                    name="cpf"
-                    autoComplete="cpf"
-                    value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
-                  />
-                </Grid>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-                {/* Terceira linha */}
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth margin="normal" required>
-                    <InputLabel id="race-label">Raça</InputLabel>
-                    <Select
-                      labelId="race-label"
-                      id="race"
-                      name="race"
-                      value={race}
-                      onChange={(e) => setRace(e.target.value)}
-                    >
-                      <MenuItem value="Branca">Branca</MenuItem>
-                      <MenuItem value="Preta">Preta</MenuItem>
-                      <MenuItem value="Parda">Parda</MenuItem>
-                      <MenuItem value="Amarela">Amarela</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                <FormControl fullWidth margin="normal" required>
-                  <InputLabel id="gender-label">Gênero</InputLabel>
-                  <Select
-                    labelId="gender-label"
-                    id="gender"
-                    name="gender"
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                  >
-                    <MenuItem value="male">Masculino</MenuItem>
-                    <MenuItem value="female">Feminino</MenuItem>
-                    <MenuItem value="prefer not say">Prefiro não dizer</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-                {/* Quarta linha */}
-                <Grid item xs={12} sm={4}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="zip_code"
-                    label="CEP"
-                    name="zip_code"
-                    autoComplete="zip_code"
-                    value={zip_code}
-                    onChange={(e) => setZipCode(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="neighbourhood"
-                    label="Bairro"
-                    name="neighbourhood"
-                    autoComplete="neighbourhood"
-                    value={neighbourhood}
-                    onChange={(e) => setNeighbourhood(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="city"
-                    label="Cidade"
-                    name="city"
-                    autoComplete="city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                  />
-                </Grid>
-
-                {/* Quinta linha */}
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="street"
-                    label="Rua"
-                    name="street"
-                    autoComplete="street"
-                    value={street}
-                    onChange={(e) => setStreet(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="number"
-                    label="Número"
-                    name="number"
-                    autoComplete="number"
-                    value={number}
-                    onChange={(e) => setNumber(e.target.value)}
-                  />
-                </Grid>
-
-                {/* Sexta linha */}
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Senha"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="confirm-password"
-                    label="Confirmar Senha"
-                    type="password"
-                    id="confirm-password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                </Grid>
-              </Grid>
-              <FormControlLabel
-                control={<Checkbox checked={image_term} color="primary" onChange={(e) => setImageTerm(e.target.checked)} />}
-                label="Autorizo o uso de imagem"
-                labelPlacement="start"
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="col-span-3">
+                    <FormLabel>Nome Completo</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Nome Completo" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              <FormControlLabel
-                control={<Checkbox checked={data_term} color="primary" onChange={(e) => setDataTerm(e.target.checked)} />}
-                label="Autorizo o uso de dados"
-                labelPlacement="start"
+
+              <FormField
+                control={form.control}
+                name="cpf"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>CPF</FormLabel>
+                    <FormControl>
+                      <InputMask mask="999.999.999-99" value={field.value} onChange={field.onChange}>
+                        {(inputProps) => (<Input placeholder="000.000.000-00" {...inputProps} />)}
+                      </InputMask>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Cadastrar
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="/login" variant="body2">
-                    Já possui uma conta? Faça login
-                  </Link>
-                </Grid>
-              </Grid>
-            </Box>
-          </Box>
-        </Container>
-      </Box>
-    </ThemeProvider>
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="date_birthday"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Data de Nascimento</FormLabel>
+                    <FormControl className="flex justify-end">
+                      <Input type="date" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Telefone</FormLabel>
+                    <FormControl>
+                      <InputMask mask="(99) 99999-9999" value={field.value} onChange={field.onChange}>
+                        {(inputProps) => <Input placeholder="(00) 00000-0000" {...inputProps} />}
+                      </InputMask>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="ethnicity"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Etnia</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} defaultValue="">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione uma etnia" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="white">Branca</SelectItem>
+                          <SelectItem value="black">Preta</SelectItem>
+                          <SelectItem value="mixed">Parda</SelectItem>
+                          <SelectItem value="asian">Amarela</SelectItem>
+                          <SelectItem value="other">Outra</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Gênero</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} defaultValue="">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione um gênero" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="male">Masculino</SelectItem>
+                          <SelectItem value="female">Feminino</SelectItem>
+                          <SelectItem value="prefer not say">Prefiro não dizer</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="zip_code"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>CEP</FormLabel>
+                    <FormControl>
+                      <InputMask mask="99999-999" value={field.value} onChange={field.onChange}>
+                        {(inputProps) => <Input placeholder="00000-000" {...inputProps} />}
+                      </InputMask>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="street"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Rua</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Rua" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="number"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Número</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Número" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="neighbourhood"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Bairro</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Bairro" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Cidade</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Cidade" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Senha</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="Senha" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Confirmar Senha</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="Confirmar Senha" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="image_term"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    <FormLabel className="ml-2">Aceito os termos de uso da imagem</FormLabel>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="data_term"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    <FormLabel className="ml-2">Aceito os termos de uso dos dados</FormLabel>
+                  </FormItem>
+                )}
+              />
+              <Dialog>
+                <DialogTrigger asChild className="w-24 flex justify-start">
+                    <Button variant="link" className="ml-1 text-[#702054] underline">
+                      Ler termos
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Termos de Uso dos Dados</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-2">
+                    <p>Organização Coletivo Encoraja
+
+                      1. Termos e termos e termos
+                    </p>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className="flex justify-end gap-4">
+          <Button variant="outline">
+            Cancelar
+          </Button>
+          <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
+            Salvar
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }
