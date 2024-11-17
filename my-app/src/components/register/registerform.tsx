@@ -154,8 +154,8 @@ export default function RegisterForm() {
   }, [form.watch("zip_code")]);
 
   return (
-    <div className="flex justify-center items-center">
-      <Card className="w-full max-w-[1000px] mx-auto mt-10 shadow-lg">
+    <div className="flex justify-center items-center ">
+      <Card className="w-full max-w-[1000px] mx-auto shadow-lg mt-3 mb-3">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Cadastro</CardTitle>
           <div className="flex items-center justify-center">
