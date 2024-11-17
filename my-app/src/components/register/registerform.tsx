@@ -16,6 +16,7 @@ import { register } from '../../app/api/auth';
 import { UserData } from '../../interfaces/IUserData';
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "O nome deve ter pelo menos 2 caracteres." }),
@@ -393,7 +394,7 @@ export default function RegisterForm() {
                 render={({ field }) => (
                   <FormItem className="col-span-2">
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                    <FormLabel className="ml-2">Aceito os termos de uso da imagem.</FormLabel>
+                    <FormLabel className="ml-2">Aceito os termos de uso da imagem</FormLabel>
                   </FormItem>
                 )}
               />
@@ -403,10 +404,28 @@ export default function RegisterForm() {
                 render={({ field }) => (
                   <FormItem className="col-span-2">
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                    <FormLabel className="ml-2">Aceito os termos de uso dos dados.</FormLabel>
+                    <FormLabel className="ml-2">Aceito os termos de uso dos dados</FormLabel>
                   </FormItem>
                 )}
               />
+              <Dialog>
+                <DialogTrigger asChild className="w-24 flex justify-start">
+                    <Button variant="link" className="ml-1 text-[#702054] underline">
+                      Ler termos
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Termos de Uso dos Dados</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-2">
+                    <p>Organização Coletivo Encoraja
+
+                      1. Termos e termos e termos
+                    </p>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </form>
           </Form>
         </CardContent>
