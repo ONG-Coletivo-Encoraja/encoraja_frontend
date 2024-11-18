@@ -49,7 +49,7 @@ export function InscriptionsCard() {
     }, [session]);
 
     return (
-        <Card className="w-[400px]">
+        <Card className="w-[400px] mb-6">
             <CardHeader>
                 <CardDescription className=" text-[#F69053]">Inscrições pendentes</CardDescription>
                 <div className="flex items-center justify-between">
@@ -66,14 +66,24 @@ export function InscriptionsCard() {
                             <CircularProgress />
                         </div>
                     ) : (
-                        <ul>
-                            {inscriptions.map((inscription) => (
-                                <div key={inscription.id}>
-                                    <li><Label className=" text-[20px] text-[#5E5E5E]">{inscription.user.name}</Label></li>
-                                    <li><Label className="text-[#F69053] underline"><Link href={`/all-inscriptions`}>Ver inscrições</Link></Label></li>
-                                </div>
-                            ))}
-                        </ul>
+                        inscriptions.length > 0 ? (
+                            <ul>
+                                {inscriptions.map((inscription) => (
+                                    <div key={inscription.id}>
+                                        <li>
+                                            <Label className="text-[20px] text-[#5E5E5E]">{inscription.user.name}</Label>
+                                        </li>
+                                        <li>
+                                            <Label className="text-[#F69053] underline">
+                                                <Link href={`/inscricoes`}>Ver inscrições</Link>
+                                            </Label>
+                                        </li>
+                                    </div>
+                                ))}
+                            </ul>
+                        ) : (
+                                <p className="text-center text-[#acacac]">Sem inscrições pendentes</p>
+                        )
                     )}
                 </div>
             </CardContent>

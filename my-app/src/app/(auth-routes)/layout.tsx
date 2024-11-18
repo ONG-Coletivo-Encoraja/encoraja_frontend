@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
+import { nextAuthOptions } from "@/utils/nextAuthOptions";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/toaster";
@@ -12,7 +12,7 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
     const session = await getServerSession(nextAuthOptions)
 
     if (session) {
-        redirect('/home')
+        redirect('/pagina-inicial')
     }
 
     return <>

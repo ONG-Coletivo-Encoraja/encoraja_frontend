@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from "react";
+import React from "react";
 import { CircleUserRound, CalendarDays } from 'lucide-react';
 import { ptBR } from "date-fns/locale";
 import { format } from "date-fns";
@@ -11,7 +11,6 @@ import {
   CardHeader, 
   CardFooter, 
   CardTitle, 
-  CardDescription, 
   CardContent
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -104,7 +103,7 @@ export function VolunteerForm({ formData, onSubmit }: any) {
         </form>
       </CardContent>
       <CardFooter className="flex justify-end space-x-4">
-        <Link href="/home">
+        <Link href="/pagina-inicial">
             <Button variant="outline">Cancelar</Button>
         </Link>
         <Button type="submit">Salvar</Button>

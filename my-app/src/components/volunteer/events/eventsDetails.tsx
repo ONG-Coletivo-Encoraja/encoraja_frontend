@@ -20,6 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import { createInscription } from '@/app/api/inscriptions/inscription';
 import ReviewForm from './reviewForm';
 import { AxiosError } from "axios";
+import { translateModalityEvent, translateTypeEvent, translateStatusEvent } from "@/services/translate";
 
 import Link from 'next/link';
 
@@ -73,14 +74,14 @@ export default function EventsDetails() {
 
 
   return (
-    <div>
+    <div className='flex justify-center items-center h-full w-full'>
       {loading ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center h-full w-full">
           <CircularProgress />
         </div>
       ) : (
-        <Card className="w-[1000px] h-[600px] flex flex-wrap">
-          <div className='m-5'>
+        <Card className="w-[1000px] h-[600px] flex">
+          <div className='m-5 flex flex-wrap'>
             <CardHeader>
               <div className="flex justify-start mb-5">
                 <Button onClick={() => router.back()}>Voltar</Button>
@@ -89,9 +90,9 @@ export default function EventsDetails() {
               <CardTitle>{event?.name}</CardTitle>
               <ul className="flex space-x-4">
                 <li><Badge>{event?.time}</Badge></li>
-                <li><Badge>{event?.modality}</Badge></li>
-                <li><Badge>{event?.type}</Badge></li>
-                <li><Badge>{event?.status}</Badge></li>
+                <li><Badge>{translateModalityEvent(event?.modality)}</Badge></li>
+                <li><Badge>{translateTypeEvent(event?.type)}</Badge></li>
+                <li><Badge>{translateStatusEvent(event?.status)}</Badge></li>
                 <li><Badge className="h-[50px] rounded-3xl" variant={'quaternary'}>{event?.date}</Badge></li>
               </ul>
               <Label className="text-[#727272]">Responsável: {event?.user_owner.name}</Label>
@@ -119,13 +120,13 @@ export default function EventsDetails() {
                 )}
                 {event?.status !== 'finished' && event?.user_owner.id === session?.user.id && (
                   <div>
-                    <Link href={`/eventos/editar-evento/${eventId}`}>
+                    <Link href={`/eventos/atualizar/${eventId}`}>
                     <Button>Editar evento</Button>
                     </Link>
                   </div>
                 )}
                 {event?.user_owner.id === session?.user.id && event?.status === 'finished' && (
-                <Link href={`/detalhe-do-evento/${eventId}/relatorio-do-evento`}>
+                <Link href={`/relatorios/eventos/${eventId}`}>
                 <Button>
                   Relatório
                 </Button>

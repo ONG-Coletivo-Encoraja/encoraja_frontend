@@ -50,36 +50,45 @@ export function EventsList() {
   };
 
   return (
-    <div className="w-full min-h-[100vh] p-5">
+    <div className="w-full min-h-[700px] p-5 flex flex-col justify-between">
       <div className="flex justify-between flex-wrap gap-3">
-        <div>
-          <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[30px]">Eventos cadastrados</h1>
+        <div className="w-full">
+          <div className="flex justify-between">
+            <h1 className="font-bold leading-none tracking-tight text-[#702054] text-[24px]">Eventos cadastrados</h1>
+            <div className="flex items-center">
+              <SearchComponent onSearch={setNameFilter} />
+            </div>
+          </div>
           <div>
             <FilterComponent onFilterChange={setStatusFilter} />
           </div>
         </div>
-        <div className="flex items-center">
-          <SearchComponent onSearch={setNameFilter} />
-        </div>
+
       </div>
       <div className="flex justify-center items-center">
         {loading ? (
-          <CircularProgress color="secondary" />
-        ) : (
-          <div className="grid grid-cols-2 gap-4 mt-6">
-            {events.map(event => (
-              <Link key={event.id} href={`/event-details/${event.id}`}>
-                <EventCard event={event} />
-              </Link>
-            ))}
+          <div className="flex justify-center items-center h-[500px]">
+            <CircularProgress color="secondary" />
           </div>
+        ) : (
+          events.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4 mt-6">
+              {events.map(event => (
+                <Link key={event.id} href={`/eventos/detalhes/${event.id}`}>
+                  <EventCard event={event} />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-[#acacac]">Sem eventos cadastrados</p>
+          )
         )}
       </div>
-        <PaginationComponent
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-    </div>
+      <PaginationComponent
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+    </div >
   );
 }

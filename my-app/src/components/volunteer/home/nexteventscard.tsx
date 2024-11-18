@@ -16,6 +16,7 @@ import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { translateModalityEvent, translateTypeEvent } from "@/services/translate";
 
 export function NextEventsCard() {
   const { data: session } = useSession();
@@ -49,15 +50,16 @@ export function NextEventsCard() {
   }, [session]);
 
   return (
-    <Card className="w-[500px]">
+    <Card className="w-[500px] mb-6">
       <CardHeader>
       <CardDescription className=" text-[#F69053]">Eventos próximos</CardDescription>
       </CardHeader>
       {loading ? (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center p-5">
           <CircularProgress />
         </div>
       ) : (
+        events.length > 0 ? (
         <div>
           {events.map((event) => (
             <div key={event.id}>
@@ -67,8 +69,8 @@ export function NextEventsCard() {
                 </Link>
                 <ul className="flex space-x-4">
                   <li><Badge variant={'secondary'}>{event.time}</Badge></li>
-                  <li><Badge>{event.modality}</Badge></li>
-                  <li><Badge>{event.type}</Badge></li>
+                  <li><Badge>{translateModalityEvent(event.modality)}</Badge></li>
+                  <li><Badge>{translateTypeEvent(event.type)}</Badge></li>
                   <li><Badge variant={'tertiary'}>{event.workload}h</Badge></li>
                   <li><Badge className=" h-[50px] rounded-[25%] " variant={'quaternary'}>{event.date}</Badge></li>
                 </ul>
@@ -78,6 +80,9 @@ export function NextEventsCard() {
             </div>
           ))}
         </div>
+        ) : (
+          <p className="text-center text-[#acacac]">Sem eventos próximos</p>
+        )
       )}
     </Card>
   )

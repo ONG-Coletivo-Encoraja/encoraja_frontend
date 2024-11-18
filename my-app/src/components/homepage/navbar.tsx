@@ -20,7 +20,7 @@ export default function Navbar() {
           className="h-12 ml-4"
         />
         <div className="flex-grow flex justify-center">
-          <div className="flex space-x-6">
+          <div className="flex space-x-8">
             <Link href="/#about-us">
               <Label className="text-white">Sobre Nós</Label>
             </Link>
@@ -30,7 +30,7 @@ export default function Navbar() {
             <Link href="/#partners">
             <Label className="text-white">Apoiadores e Parceiros</Label>
             </Link>
-            <Link href="/transparency">
+            <Link href="/transparencia">
             <Label className="text-white">Transparência</Label>
             </Link>
             <Link href="/#contact">
@@ -45,7 +45,7 @@ export default function Navbar() {
           <Link href="/login">
             <Label className="text-white mx-4">Login</Label>
           </Link>
-          <Link href="/register">
+          <Link href="/cadastre-se">
             <Label className="text-white mx-4">Cadastre-se</Label>
           </Link>
         </div>

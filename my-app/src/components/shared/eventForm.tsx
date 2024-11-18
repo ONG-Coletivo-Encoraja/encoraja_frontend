@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import NumberFormat from 'react-number-format';
 import { z } from "zod";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,8 +9,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import InputMask from "react-input-mask";
-import { Checkbox } from "@/components/ui/checkbox";  
-import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { registerEvent } from "@/app/api/events/registerEvent";
 import { EventData } from "@/interfaces/IEventData";
@@ -19,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { NumberFormatBase } from "react-number-format";
 import { Textarea } from "@/components/ui/textarea";
+import { useSession } from "next-auth/react";
 
 const formSchema = z.object({
   name: z.string(),
@@ -42,6 +40,7 @@ const formSchema = z.object({
 export default function RegisterEvent() {
   const router = useRouter();
   const { toast } = useToast();
+  const { data: session } = useSession();
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -87,7 +86,7 @@ export default function RegisterEvent() {
     };
 
     try {
-      const response = await registerEvent(data);
+      const response = await registerEvent(data, session.token);
       toast({
         title: "Sucesso!",
         description: response.message,
@@ -95,7 +94,7 @@ export default function RegisterEvent() {
       });
       console.log(response);
       if (response) {
-        router.push('/home');
+        router.push('/pagina-inicial');
       }
     } catch (error) {
       if (error instanceof AxiosError && error.response) {

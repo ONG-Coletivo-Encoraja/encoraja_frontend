@@ -51,14 +51,14 @@ export default function LoginForm() {
       description: "Você será redirecionado para a página inicial.",
       variant: "default",
     });
-    router.replace('/home');
+    router.replace('/pagina-inicial');
   };
 
   return (
     <Card className="w-full max-w-[500px] mx-auto mt-10 shadow-lg">
       <CardHeader>
         <div className="flex items-center justify-center">
-          <img src="/img/writted-logo.png" alt="Logo" className="h-[87px] w-[250px]" />
+          <img src="/img/writted-logo.png" alt="Logo" className=" w-[250px]" />
         </div>
       </CardHeader>
       <CardContent>
@@ -95,10 +95,10 @@ export default function LoginForm() {
         </Form>
       </CardContent>
       <CardFooter className="flex flex-col justify-center gap-4">
-        <Link href="/forgot-password">
+        <Link href="/esqueci-senha">
           <Label className="underline">Esqueci minha senha</Label>
         </Link>
-        <Link href="/register">
+        <Link href="/registre-se">
           <Label className="underline">Criar conta</Label>
         </Link>
       </CardFooter>

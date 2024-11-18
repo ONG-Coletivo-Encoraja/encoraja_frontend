@@ -110,7 +110,7 @@ export default function RegisterEvent() {
         description: response.data.message,
         variant: "default",
       });
-      router.push('/all-events');
+      router.push('/eventos');
     } catch (error) {
       console.log(error)
       if (error instanceof AxiosError && error.response) {
@@ -368,7 +368,7 @@ export default function RegisterEvent() {
         </Form>
       </CardContent>
       <CardFooter className="flex justify-end gap-4">
-        <Button variant="outline" onClick={() => router.push('/home')}>
+        <Button variant="outline" onClick={() => router.push('/eventos')}>
           Cancelar
         </Button>
         <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>

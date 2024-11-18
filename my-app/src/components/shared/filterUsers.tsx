@@ -19,6 +19,7 @@ const FilterUsers: React.FC<FilterUsersProps> = ({ onFilterChange }) => {
             <SelectValue placeholder="Filtrar" className="truncate" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value=" ">Todos</SelectItem>
             <SelectItem value="volunteer">Voluntário</SelectItem>
             <SelectItem value="administrator">Administrador</SelectItem>
             <SelectItem value="beneficiary">Beneficiário</SelectItem>

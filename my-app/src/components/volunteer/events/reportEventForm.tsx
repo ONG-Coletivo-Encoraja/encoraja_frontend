@@ -19,6 +19,7 @@ import { registerReportAdmin } from "@/app/api/volunteers/reportAdmin";
 import { AxiosError } from 'axios';
 import { useToast } from "@/hooks/use-toast";
 import CircularProgress from '@mui/material/CircularProgress';
+import { translateModalityEvent, translateTypeEvent, translateStatusEvent } from "@/services/translate";
 
 export default function ReportEvent() {
   const { data: session } = useSession(); 
@@ -75,7 +76,7 @@ export default function ReportEvent() {
         title: "Relatório enviado com sucesso!",
         description: response.message,
       });
-      router.push('/home');
+      router.back();
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errorMessage = error.response.data?.message;
@@ -110,14 +111,13 @@ export default function ReportEvent() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-full w-full">
         <CircularProgress />
       </div>
     );
   }
   return (
-
-    <Card className="w-full max-w-[800px] mx-auto mt-10 shadow-lg">
+    <Card className="w-full max-w-[1000px] mx-auto mt-3 mb-3 shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Relatório do Evento</CardTitle>
       </CardHeader>
@@ -129,7 +129,7 @@ export default function ReportEvent() {
           </div>
           <div>
           <Label>Status do evento</Label>
-          <Input readOnly value={event?.status} />
+          <Input readOnly value={translateStatusEvent(event?.status)} />
           </div>
           <div>
             <Label>Data do evento</Label>
@@ -141,11 +141,11 @@ export default function ReportEvent() {
           </div>
           <div>
             <Label>Modalidade do evento</Label>
-            <Input readOnly value={event?.modality} />
+            <Input readOnly value={translateModalityEvent(event?.modality)} />
           </div>
           <div>
             <Label>Tipo do evento</Label>
-            <Input readOnly value={event?.type} />
+            <Input readOnly value={translateTypeEvent(event?.type)} />
           </div>
           <div>
             <Label>Carga horária</Label>

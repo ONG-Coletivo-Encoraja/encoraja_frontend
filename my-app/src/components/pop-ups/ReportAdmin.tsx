@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import { IReportAdmin } from "@/interfaces/IReportAdmin";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { translateModalityEvent, translateTypeEvent } from "@/services/translate";
 
 interface EventDetailModalProps {
     isOpen: boolean;
@@ -29,10 +30,10 @@ const EventDetailModal: React.FC<EventDetailModalProps> = ({ isOpen, onClose, se
                                             <strong>Evento:</strong> {selectedEvent.relates_event.event.name}
                                         </div>
                                         <div>
-                                            <strong>Modalidade:</strong> {selectedEvent.relates_event.event.modality}
+                                            <strong>Modalidade:</strong> {translateModalityEvent(selectedEvent.relates_event.event.modality)}
                                         </div>
                                         <div>
-                                            <strong>Tipo:</strong> {selectedEvent.relates_event.event.type}
+                                            <strong>Tipo:</strong> {translateTypeEvent(selectedEvent.relates_event.event.type)}
                                         </div>
                                         <div>
                                             <strong>Público alvo:</strong> {selectedEvent.relates_event.event.target_audience}

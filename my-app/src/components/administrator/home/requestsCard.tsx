@@ -49,7 +49,7 @@ export function RequestsCard() {
 
     console.log(requests)
     return (
-        <Card className="w-[400px]">
+        <Card className="w-[400px] mb-6">
             <CardHeader>
                 <CardDescription className=" text-[#F69053]">Solicitações de voluntariado pendentes</CardDescription>
                 <div className="flex items-center justify-between">
@@ -66,14 +66,24 @@ export function RequestsCard() {
                             <CircularProgress />
                         </div>
                     ) : (
-                        <ul>
-                            {requests.map((request) => (
-                                <div key={request.id}>
-                                    <li><Label className=" text-[20px] text-[#5E5E5E]">{request.user.name}</Label></li>
-                                    <li><Label className="text-[#F69053] underline"><Link href={`/accept-volunteers/details/${request.id}`}>Ver candidatura </Link></Label></li>
-                                </div>
-                            ))}
-                        </ul>
+                        requests.length > 0 ? (
+                            <ul>
+                                {requests.map((request) => (
+                                    <div key={request.id}>
+                                        <li>
+                                            <Label className="text-[20px] text-[#5E5E5E]">{request.user.name}</Label>
+                                        </li>
+                                        <li>
+                                            <Label className="text-[#F69053] underline">
+                                                <Link href={`/solicitacoes/detalhes/${request.id}`}>Ver candidatura</Link>
+                                            </Label>
+                                        </li>
+                                    </div>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="text-center text-[#acacac]">Sem solicitações pendentes</p>
+                        )
                     )}
                 </div>
             </CardContent>

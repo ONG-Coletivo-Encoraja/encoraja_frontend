@@ -19,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { createInscription } from '@/app/api/inscriptions/inscription';
 import ReviewForm from './reviewForm';
 import { AxiosError } from "axios";
+import { translateModalityEvent, translateTypeEvent, translateStatusEvent } from "@/services/translate";
 
 export default function EventsDetails() {
   const { toast } = useToast();
@@ -66,19 +67,15 @@ export default function EventsDetails() {
     }
 };
 
-
-
-
-
   return (
-    <div>
+    <div className='flex justify-center mt-3'>
       {loading ? (
         <div className="flex justify-center items-center h-screen">
           <CircularProgress />
         </div>
       ) : (
-        <Card className="w-[1000px] h-[600px] flex flex-wrap">
-          <div className='m-5'>
+        <Card className="w-[1000px] h-[600px] flex">
+          <div className='m-5 flex flex-wrap'>
             <CardHeader>
               <div className="flex justify-start mb-5">
                 <Button onClick={() => router.back()}>Voltar</Button>
@@ -87,9 +84,9 @@ export default function EventsDetails() {
               <CardTitle>{event?.name}</CardTitle>
               <ul className="flex space-x-4">
                 <li><Badge>{event?.time}</Badge></li>
-                <li><Badge>{event?.modality}</Badge></li>
-                <li><Badge>{event?.type}</Badge></li>
-                <li><Badge>{event?.status}</Badge></li>
+                <li><Badge>{translateModalityEvent(event?.modality)}</Badge></li>
+                <li><Badge>{translateTypeEvent(event?.type)}</Badge></li>
+                <li><Badge>{translateStatusEvent(event?.status)}</Badge></li>
                 <li><Badge className="h-[50px] rounded-3xl" variant={'quaternary'}>{event?.date}</Badge></li>
               </ul>
               <Label className="text-[#727272]">Responsável: {event?.user_owner.name}</Label>

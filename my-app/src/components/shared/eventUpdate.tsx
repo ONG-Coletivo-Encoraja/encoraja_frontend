@@ -228,7 +228,7 @@ export default function Events(): React.JSX.Element {
         </CardContent>
 
         <CardFooter className="flex justify-end space-x-4">
-          <Link href="/home">
+          <Link href="/pagina-inicial">
             <Button variant="outline">Cancelar</Button>
           </Link>
           <Button type="submit">Salvar</Button>

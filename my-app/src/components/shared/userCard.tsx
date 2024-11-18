@@ -10,6 +10,7 @@ import {
 import { Label } from "@/components/ui/label"
 import { CircleUserIcon } from "lucide-react";
 import Link from "next/link";
+import { translatePermission } from "@/services/translate";
 
 interface UserCardProps {
   user: IUser
@@ -20,7 +21,7 @@ export function UserCard({ user }: UserCardProps) {
     <Card className="w-[400px]">
       <CardHeader className="flex items-center">
         <CircleUserIcon className="w-12 h-12 text-[#5E5E5E]" />
-        <Badge variant={'secondary'}>{user.permission}</Badge>
+        <Badge variant={'secondary'}>{translatePermission(user.permission)}</Badge>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-2">
@@ -31,7 +32,7 @@ export function UserCard({ user }: UserCardProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Label className="text-[#F69053] underline"><Link href={`/users/detail/${user.id}`}>Alterar permissão</Link></Label>
+        <Label className="text-[#F69053] underline"><Link href={`/usuarios/detalhes/${user.id}`}>Alterar permissão</Link></Label>
       </CardFooter>
     </Card>
   )

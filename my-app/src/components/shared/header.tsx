@@ -28,7 +28,7 @@ export default function Header({}: HeaderProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [logoutDialogOpen, setLogoutDialogOpen] = React.useState(false);
 
-  const { data: session, status } = useSession(); // Obtém a sessão atual
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,8 +41,8 @@ export default function Header({}: HeaderProps) {
 
   const handleLogout = async () => {
     try {
-      await signOut(); // Chama a função de logout do NextAuth
-      router.push('/login'); // Redireciona para a página de login
+      await signOut();
+      router.push('/login');
     } catch (error) {
       console.error('Logout falhou', error);
     }
@@ -97,7 +97,7 @@ export default function Header({}: HeaderProps) {
             }}
           >
             <MenuItem onClick={handleClose}>
-            <Link href="/Perfil" style={{ textDecoration: 'none', color: 'inherit' }}>Perfil</Link>
+            <Link href="/meu-perfil" style={{ textDecoration: 'none', color: 'inherit' }}>Perfil</Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>Minha conta</MenuItem>
             <MenuItem onClick={() => setLogoutDialogOpen(true)}>Sair</MenuItem>

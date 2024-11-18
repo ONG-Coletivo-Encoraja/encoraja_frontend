@@ -16,6 +16,7 @@ import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { translateModalityEvent, translateTypeEvent } from "@/services/translate";
 
 export function NextEventsCard() {
   const { data: session } = useSession();
@@ -49,7 +50,7 @@ export function NextEventsCard() {
   }, [session]);
 
   return (
-    <Card className="w-[500px]">
+    <Card className="w-[500px] mb-6">
       <CardHeader>
       <CardDescription className=" text-[#F69053]">Eventos pendentes</CardDescription>
       </CardHeader>
@@ -58,26 +59,30 @@ export function NextEventsCard() {
           <CircularProgress />
         </div>
       ) : (
-        <div>
-          {events.map((event) => (
-            <div key={event.id}>
-              <CardContent>
-                <Link href={`/event-details/${event.id}`}>
-                  <CardTitle>{event.name}</CardTitle>
-                </Link>
-                <ul className="flex space-x-4">
-                  <li><Badge variant={'secondary'}>{event.time}</Badge></li>
-                  <li><Badge>{event.modality}</Badge></li>
-                  <li><Badge>{event.type}</Badge></li>
-                  <li><Badge variant={'tertiary'}>{event.workload}h</Badge></li>
-                  <li><Badge className=" h-[50px] rounded-[25%] " variant={'quaternary'}>{event.date}</Badge></li>
-                </ul>
-                <Label className=" text-[#727272]">Responsável: {event.user_owner.name}</Label>
-                <Separator />
-              </CardContent>
-            </div>
-          ))}
-        </div>
+        events.length > 0 ? (
+          <div>
+            {events.map((event) => (
+              <div key={event.id}>
+                <CardContent>
+                  <Link href={`/eventos/detalhes/${event.id}`}>
+                    <CardTitle>{event.name}</CardTitle>
+                  </Link>
+                  <ul className="flex space-x-4">
+                    <li><Badge variant={'secondary'}>{event.time}</Badge></li>
+                    <li><Badge>{translateModalityEvent(event.modality)}</Badge></li>
+                    <li><Badge>{translateTypeEvent(event.type)}</Badge></li>
+                    <li><Badge variant={'tertiary'}>{event.workload}h</Badge></li>
+                    <li><Badge className="h-[50px] rounded-[25%]" variant={'quaternary'}>{event.date}</Badge></li>
+                  </ul>
+                  <Label className="text-[#727272]">Responsável: {event.user_owner.name}</Label>
+                  <Separator />
+                </CardContent>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-[#acacac]">Sem eventos pendentes</p>
+        )
       )}
     </Card>
   )

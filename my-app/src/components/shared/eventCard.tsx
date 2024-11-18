@@ -9,10 +9,8 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import StarRating from "../ui/rating";
-import { Button } from "../ui/button";
 import { Event } from "@/interfaces/IEventData";
-import { useSession } from "next-auth/react";
+import { translateStatusEvent, translateModalityEvent, translateTypeEvent } from "@/services/translate";
 
 interface EventCardProps {
   event: Event;
@@ -36,8 +34,6 @@ export function EventCard({ event }: EventCardProps) {
       break;
   }
 
-  const { data: session } = useSession(); 
-
   return (
     <Card className="w-full rounded-xl min-h-[350px] max-h-[500px]">
       <CardHeader className="">
@@ -45,9 +41,9 @@ export function EventCard({ event }: EventCardProps) {
         <CardTitle>{event.name}</CardTitle>
         <ul className="flex flex-wrap space-x-4 gap-3">
           <li><Badge variant={'secondary'}>{event.time}</Badge></li>
-          <li><Badge>{event.modality}</Badge></li>
-          <li><Badge>{event.type}</Badge></li>
-          <li><Badge  className={statusColor} >{event.status}</Badge></li>
+          <li><Badge>{translateModalityEvent(event.modality)}</Badge></li>
+          <li><Badge>{translateTypeEvent(event.type)}</Badge></li>
+          <li><Badge  className={statusColor} >{translateStatusEvent(event.status)}</Badge></li>
           <li><Badge className="h-[50px]" variant={'quaternary'}>{new Date(event.date).toLocaleDateString()}</Badge></li>
         </ul>
         <Label className="text-[#727272]">Responsável: {event.user_owner?.name}</Label>
@@ -57,11 +53,6 @@ export function EventCard({ event }: EventCardProps) {
         <br />
         <Label className="text-[#727272]">{event.description}</Label>
       </CardContent>
-      {/*
-     <CardFooter className="flex justify-end">
-        {event.status != 'finished' && event.user_owner.id === session?.user.id && (<Button>Editar</Button>)}
-      </CardFooter>
-          */}
     </Card>
   );
 }
