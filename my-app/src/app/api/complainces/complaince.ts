@@ -9,6 +9,7 @@ export async function registerComplaince(data: IComplaince): Promise<any> {
         'Content-Type': 'application/json' 
       },
     });
+    console.log(response)
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
