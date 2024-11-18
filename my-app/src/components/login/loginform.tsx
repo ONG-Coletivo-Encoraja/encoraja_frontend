@@ -95,7 +95,7 @@ export default function LoginForm() {
         </Form>
       </CardContent>
       <CardFooter className="flex flex-col justify-center gap-4">
-        <Link href="/forgot-password">
+        <Link href="/esqueci-senha">
           <Label className="underline">Esqueci minha senha</Label>
         </Link>
         <Link href="/register">
