@@ -98,7 +98,7 @@ export default function LoginForm() {
         <Link href="/esqueci-senha">
           <Label className="underline">Esqueci minha senha</Label>
         </Link>
-        <Link href="/register">
+        <Link href="/registre-se">
           <Label className="underline">Criar conta</Label>
         </Link>
       </CardFooter>
