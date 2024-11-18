@@ -30,13 +30,13 @@ export default function Navbar() {
             <Link href="/#partners">
             <Label className="text-white">Apoiadores e Parceiros</Label>
             </Link>
-            {/* <Link href="/transparency">
+            <Link href="/transparency">
             <Label className="text-white">Transparência</Label>
-            </Link> */}
+            </Link>
             <Link href="/#contact">
             <Label className="text-white">Contato</Label>
             </Link>
-            <Link href="/#contact">
+            <Link href="/#donate">
             <Label className="text-white">Doe</Label>
             </Link>
           </div>

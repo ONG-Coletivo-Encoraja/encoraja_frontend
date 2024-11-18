@@ -4,9 +4,9 @@ import React from 'react';
 
 import { AboutUsCard } from "@/components/homepage/about-us";
 import Navbar from "@/components/homepage/navbar";
-import { CarouselHomePage } from "@/components/homepage/carousel";
+// import { CarouselHomePage } from "@/components/homepage/carousel";
 import { Label } from "@/components/ui/label";
-import { EventsCard } from '@/components/homepage/events';
+// import { EventsCard } from '@/components/homepage/eventsCard';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -70,21 +70,21 @@ const handleSubmit = async (values: IComplaince) => {
 
   return (
     <>
-        <div className="fixed top-0 left-0 w-full z-10">
+        <div className="fixed top-0 left-0 w-full z-10 h-16">
         <Navbar />
         </div>
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-8">
-        <div id='about-us' className="grid grid-cols-1 gap-4 text-center w-full max-w-[800px]">
-            <Label className='text-3xl font-semibold'>Ética e Transparência</Label>
-            <Label className="text-justify">
+    <div className="flex flex-col items-center justify-center min-h-screen space-y-8 pt-28">
+        <div id='about-us' className="grid md:grid-cols-1 md:gap-4 text-center w-full max-w-[800px] px-4 md:px-8">
+            <Label className='text-[#73225D] text-3xl font-semibold'>Ética e Transparência</Label>
+            <Label className="md:text-1xl text-justify">
                 No Coletivo, a ética e a transparência são os pilares que sustentam todas as nossas ações. Acreditamos que um ambiente justo e seguro é fundamental para o bem-estar das mulheres que atendemos. Por isso, buscamos ser transparentes em todas as nossas atividades, respeitando os direitos e a dignidade de cada pessoa.
             </Label>
-            <Label className="text-justify">
+            <Label className="md:text-1xl text-justify">
                 Estamos comprometidos em manter um espaço livre de discriminação, assédio e qualquer tipo de violência. Valorizamos a integridade e a confiança de todos que fazem parte da nossa comunidade e incentivamos a denúncia de qualquer atitude que contrarie esses princípios. Se você se sentir desconfortável ou presenciar alguma situação inadequada, sua voz será ouvida, e suas preocupações serão tratadas com seriedade e respeito.
             </Label>
         </div>
-        <Card className='w-full max-w-[700px]'>
-            <CardTitle className='flex items-center justify-center mt-4'>Formulário de Denúncia</CardTitle>
+        <Card className='w-full md:max-w-[700px]'>
+            <CardTitle className='flex items-center justify-center md:mt-4'>Formulário de Denúncia</CardTitle>
             <CardContent>
                 <Label className='text-justify'>Se você presenciou ou foi vítima de qualquer tipo de discriminação, assédio ou violência em nossas atividades, por favor, preencha o formulário abaixo. Sua denúncia será tratada com seriedade e confidencialidade.</Label>
                 <Label>Insira os seus dados caso queira se identificar:</Label>
@@ -177,9 +177,53 @@ const handleSubmit = async (values: IComplaince) => {
             </CardFooter>
         </Card>
 
-          <div id='contact' className='w-full h-[300px] bg-[#F5F2D0]'>
-          <Label className='m-8 text-3xl'>Contatos</Label>
-          </div>
+        <div id="contact" className="text-[#73225D] sm:mt-60 text-3xl">
+            <Label
+            className="text-[#73225D] sm:mt-60 text-3xl"
+            style={{
+                fontSize: '2rem',
+                fontFamily: 'Peace Sans',
+                fontWeight: 'bold',
+                marginBottom: '1rem',
+                maxWidth: '80%',
+            }}
+            >
+            Contatos
+            </Label>
+
+            <div className="sm:mt-4 flex justify-center items-center sm:space-x-6">
+            <a
+                href="https://www.instagram.com/coletivo_encoraja/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <img
+                src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
+                alt="Instagram"
+                className="w-12 h-12"
+                />
+            </a>
+            <a
+                href="mailto:contato@institutoencoraja.org"
+                className="text-[#73225D] text-xl font-rosario"
+            >
+                <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6 text-[#73225D]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 8l7.5 5L18 8M21 12v9a2 2 0 01-2 2H5a2 2 0 01-2-2v-9m4 4h12"
+                />
+                </svg>
+            </a>
+            </div>
+        </div>
       </div>
   </>
   );
