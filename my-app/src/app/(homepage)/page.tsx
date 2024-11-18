@@ -2,7 +2,7 @@ import React from 'react';
 import { AboutUsCard } from "@/components/homepage/about-us";
 import Navbar from "../../components/homepage/navbar"
 import { Label } from "@/components/ui/label";
-// import EventsSection from '@/components/homepage/events';
+import { EventsCard } from '@/components/homepage/events';
 
 export default function Home() {
   return (
@@ -126,7 +126,37 @@ export default function Home() {
             className="w-full min-h-screen flex flex-col items-center justify-start bg-no-repeat bg-cover bg-center md:p-8"
             style={{ backgroundImage: "url('/img/homepage4bg.png')" }}
           >
-            {/* <EventsSection /> */}
+            <div className="text-center md:mb-8 flex flex-col items-center">
+              <Label className="text-[#F2F2F2] text-3xl font-bold" style={{ fontSize: '3rem', fontFamily: 'Peace Sans' }}>
+                Projetos que transformam vidas
+              </Label>
+              <Label className="text-[#F2F2F2] text-xl mt-2 italic" style={{ fontSize: '2rem', fontFamily: 'Peace Sans' }}>
+                Conheça nossos projetos e faça parte dessa transformação
+              </Label>
+          </div>
+
+          <div className="grid sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
+              <EventsCard 
+                img={<img src="img/events/instituto-ama.jpeg" alt="instituto-ama" />}
+                title="Instituto Ama"
+                content={<span  className="text-[#F2F2F2]" style={{ fontSize: '1rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>"22 crianças impactadas!! Esse foi o resultado do projeto realizado junto ao Instituto Ama, onde foram realizadas oficinas de pintura e desenho com as crianças da comunidade."</span>}
+              />
+              <EventsCard 
+                img={<img src="img/events/curso-canva.jpeg" alt="canva-para-mulheres-empreendedoras" />}
+                title="Canva para Mulheres empreendedoras"
+                content={<span  className="text-[#F2F2F2]" style={{ fontSize: '1rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>"Projeto realizado em parceria com o Cebrac, com o objetivo de capacitar mulheres empreendedoras a criar suas próprias artes para divulgação de seus produtos e serviços. Foram 15 mulheres impactadas!!"</span>}
+              />
+              <EventsCard 
+                img={<img src="img/events/teatro.jpeg" alt="na-cidade-das-hortensias" />}
+                title="Na cidade das Hortênsias"
+                content={<span  className="text-[#F2F2F2] style={{ fontSize: '1rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}">"Espetáculo realizado pelo Coletivo Encoraja, com o objetivo de conscientizar a população sobre a violência doméstica e abuso infantil. Foram 5 apresentações realizadas em diferentes teatros em Curitiba, impactando mais de 500 pessoas."</span>}
+              />
+              <EventsCard 
+                img={<img src="img/events/oficina-colagem.jpeg" alt="oficina-de-colagem" />}
+                title="Oficina de Colagem"
+                content={<span  className="text-[#F2F2F2]" style={{ fontSize: '1rem', fontFamily: 'Rosario', marginBottom: '1rem', maxWidth: '80%' }}>"22 crianças impactadas!! Esse foi o resultado do projeto realizado junto ao Instituto Ama, onde foram realizadas oficinas de pintura e desenho com as crianças da comunidade."</span>}
+              />
+            </div>
 
           </div>
             
