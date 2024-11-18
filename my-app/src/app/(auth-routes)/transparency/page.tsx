@@ -2,11 +2,8 @@
 
 import React from 'react';
 
-import { AboutUsCard } from "@/components/homepage/about-us";
 import Navbar from "@/components/homepage/navbar";
-// import { CarouselHomePage } from "@/components/homepage/carousel";
 import { Label } from "@/components/ui/label";
-// import { EventsCard } from '@/components/homepage/eventsCard';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
