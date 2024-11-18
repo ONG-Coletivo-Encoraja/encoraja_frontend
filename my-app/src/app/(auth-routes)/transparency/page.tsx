@@ -177,53 +177,44 @@ const handleSubmit = async (values: IComplaince) => {
             </CardFooter>
         </Card>
 
-        <div id="contact" className="text-[#73225D] sm:mt-60 text-3xl">
-            <Label
-            className="text-[#73225D] sm:mt-60 text-3xl"
-            style={{
-                fontSize: '2rem',
-                fontFamily: 'Peace Sans',
-                fontWeight: 'bold',
-                marginBottom: '1rem',
-                maxWidth: '80%',
-            }}
-            >
-            Contatos
-            </Label>
+        <div id="contact" className="text-[#73225D] sm:mt-60 text-3xl items-center justify-center">
+              <Label
+                className="text-[#BF6550] sm:mt-60 text-3xl items-center"
+                style={{
+                  fontSize: '2rem',
+                  fontFamily: 'Peace Sans',
+                  fontWeight: 'bold',
+                  marginBottom: '1rem',
+                  maxWidth: '100%',
+                }}
+              >
+                Contatos
+              </Label>
 
-            <div className="sm:mt-4 flex justify-center items-center sm:space-x-6">
-            <a
-                href="https://www.instagram.com/coletivo_encoraja/"
+              <div className="sm:mt-4 flex justify-center items-center sm:space-x-6">
+                <a
+                  href="https://www.instagram.com/coletivo_encoraja/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img loading="lazy" src="https://img.shields.io/badge/Instagram-E1306C?style=for-the-badge&logo=instagram&logoColor=white"></img>
+                </a>
+                <a
+                  href="mailto:contato@institutoencoraja.org"
+                  className="text-[#73225D] text-xl font-rosario"
+                >
+                  <img loading="lazy" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"></img>
+                </a>
+                <a
+                href="https://www.google.com/maps?q=Rua+Tibagi,+99+-+Centro,+Curitiba+-+PR,+Brasil"
                 target="_blank"
                 rel="noopener noreferrer"
-            >
-                <img
-                src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
-                alt="Instagram"
-                className="w-12 h-12"
-                />
-            </a>
-            <a
-                href="mailto:contato@institutoencoraja.org"
-                className="text-[#73225D] text-xl font-rosario"
-            >
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6 text-[#73225D]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 8l7.5 5L18 8M21 12v9a2 2 0 01-2 2H5a2 2 0 01-2-2v-9m4 4h12"
-                />
-                </svg>
-            </a>
+                className="text-[#73225D] text-xl font-rosario underline"
+              >
+                <img loading="lazy" src="https://img.shields.io/badge/Google%20Maps-E1306C?style=for-the-badge&logo=googlemaps&logoColor=white"></img>
+              </a>
+              </div>
             </div>
-        </div>
       </div>
   </>
   );
