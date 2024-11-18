@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-
 import Navbar from "@/components/homepage/navbar";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';

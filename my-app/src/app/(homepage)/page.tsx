@@ -3,6 +3,7 @@ import { AboutUsCard } from "@/components/homepage/about-us";
 import Navbar from "../../components/homepage/navbar"
 import { Label } from "@/components/ui/label";
 import { EventsCard } from '@/components/homepage/events';
+import Head from 'next/head';
 
 export default function Home() {
   return (
@@ -14,6 +15,9 @@ export default function Home() {
       />
     </head>
 
+    <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
     <div className="fixed top-0 left-0 w-full z-10">
         <Navbar />
     </div>
