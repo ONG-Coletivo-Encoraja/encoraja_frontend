@@ -24,10 +24,10 @@ export default function Home() {
         >
          
           <div className="flex flex-col items-start justify-center text-left h-screen">
-            <Label className="text-[#F2F2F2] text-2xl sm:text-3xl md:text-3xl lg:text-1xl xl:text-4xl mb-4 max-w-[60%] font-rosario">
+            <Label className="text-[#F2F2F2] text-1xl sm:text-2xl md:text-2xl lg:text-1xl xl:text-xl mb-4 max-w-[60%] font-rosario">
               Nós ajudamos
             </Label>
-            <Label className="text-[#F2F2F2] text-6xl sm:text-7xl md:text-7xl lg:text-5xl xl:text-7xl font-peaceSans font-bold max-w-[60%]">
+            <Label className="text-[#F2F2F2] text-5xl sm:text-6xl md:text-6xl lg:text-4xl xl:text-6xl font-peaceSans font-bold max-w-[60%]">
               MULHERES
             </Label>
             <Label className="text-[#F2F2F2] text-2xl sm:text-3xl md:text-3xl lg:text-1xl xl:text-4xl mb-4 max-w-[60%] font-rosario text-justify">
@@ -108,7 +108,6 @@ export default function Home() {
               </Label>
             </div>
 
-            {/* Imagem à direita */}
             <div 
               className="h-auto md:py-10 flex flex-col justify-center items-center" 
               style={{ paddingRight: "5%" }}
