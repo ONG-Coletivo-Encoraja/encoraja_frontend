@@ -32,7 +32,7 @@ export default function Home() {
             <Label className="text-[#F2F2F2] text-5xl sm:text-6xl md:text-6xl lg:text-4xl xl:text-6xl font-bold max-w-[60%]">
               MULHERES
             </Label>
-            <Label className="text-[#F2F2F2] text-2xl sm:text-3xl md:text-3xl lg:text-1xl xl:text-4xl mb-4 max-w-[30%] text-justify">
+            <Label className="text-[#F2F2F2] text-2xl sm:text-3xl md:text-3xl lg:text-1xl xl:text-4xl mb-4 max-w-[30%] text-left">
               a romperem ciclos de violência e criar oportunidades de geração de renda e inclusão econômica!
             </Label>
           </div>
