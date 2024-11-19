@@ -31,11 +31,7 @@ const toastVariants = cva(
       variant: {
         default: "border bg-background text-foreground",
         destructive:
-<<<<<<< HEAD
           "destructive group border-destructive bg-[#f6e1e1] text-destructive-foreground",
-=======
-          "destructive group border-destructive bg-[#ffcccc] text-destructive-foreground",
->>>>>>> SCRUM-338-fix-routes
         alert: "destructive group bg-[#fbec5d] text-destructive-foreground",
       },
     },

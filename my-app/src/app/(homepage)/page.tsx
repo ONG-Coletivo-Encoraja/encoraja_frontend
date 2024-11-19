@@ -83,32 +83,32 @@ export default function Home() {
              className="grid md:grid-cols-2 w-full min-h-screen bg-no-repeat bg-cover bg-center p-8"
             style={{ backgroundImage: "url('/img/homepage3bg.png')" }}
           >
-            <div className="h-auto md::py-20 text-left flex flex-col justify-center" style={{ paddingLeft: "5%" }}>
-              <Label className="text-[#73225D] md:text-3xl text-left" style={{ fontSize: "3rem",   fontWeight: "bold", marginBottom: "1rem",}}>
+            <div className="h-auto md::py-30 text-left flex flex-col justify-center" style={{ paddingLeft: "5%" }}>
+              <Label className="text-[#73225D] md:text-2xl text-left" style={{ fontSize: "3rem",   fontWeight: "bold", marginBottom: "1rem",}}>
                  Fundadoras
               </Label>
-              <Label className="text-[#73225D] sm:text-1.3xl text-justify" style={{ fontSize: "1.3rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
+              <Label className="text-[#73225D] sm:text-1.1xl text-justify" style={{ fontSize: "1.1rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
                 O Coletivo Encoraja é uma organização social de mulheres, sem fins lucrativos, com o objetivo de promover o enfrentamento ao abuso sexual infantil, violência doméstica e fomentar o empreendedorismo e o empoderamento feminino.
               </Label>
-              <Label className="text-[#73225D] sm:text-1.3xl text-justify" style={{ fontSize: "1.3rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
+              <Label className="text-[#73225D] sm:text-1.1xl text-justify" style={{ fontSize: "1.1rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
                 O Encoraja surgiu com o lançamento do Livro Leda e Lili de Fabiane Prado e Diana Monteiro em 2022.
               </Label>
-              <Label className="text-[#73225D] sm:text-1.3xl text-justify" style={{ fontSize: "1.3rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
+              <Label className="text-[#73225D] sm:text-1.1xl text-justify" style={{ fontSize: "1.1rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
                 Em outubro de 2022 surgiu o Coletivo Encoraja formado por 10 mulheres de diferentes áreas do conhecimento, que doam o seu tempo e seu talento para atuar no enfrentamento ao abuso infantil, violência doméstica e o empreendedorismo feminino.
               </Label>
-              <Label className="text-[#73225D] sm:text-1.3xl text-justify" style={{ fontSize: "1.3rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
+              <Label className="text-[#73225D] sm:text-1.1xl text-justify" style={{ fontSize: "1.1rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
                 Trabalhamos por meio de atividades artísticas culturais como contação de histórias, espetáculos teatrais e cursos profissionalizantes.
               </Label>
-              <Label className="text-[#73225D] sm:text-1.3xl text-justify" style={{ fontSize: "1.3rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
+              <Label className="text-[#73225D] sm:text-1.1xl text-justify" style={{ fontSize: "1.1rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
                 Iniciamos nossos projetos por meio do aporte do Fundo Elas e até o momento, já apresentamos 14 contações de histórias da Leda e Lili, 05 apresentações do espetáculo Na Cidade das Hortênsias que também é baseado no livro Leda e Lili, desenvolvemos 09 oficinas para mulheres voltada para criação e elaboração de quadros, com intuito de possibilitar uma nova fonte de renda às mulheres e tivemos nosso primeiro curso profissionalizante, Canva para Mulheres Empreendedoras.
               </Label>
-              <Label className="text-[#73225D] sm:text-1.3xl text-justify" style={{ fontSize: "1.3rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
+              <Label className="text-[#73225D] sm:text-1.1xl text-justify" style={{ fontSize: "1.1rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
                 Com os nosso projetos em movimento, conseguimos impactar 1.000 pessoas de forma direta, 3.500 de modo indireto, sendo 75% das pessoas impactadas mulheres e meninas em situação de vulnerabilidade social.
               </Label>
-              <Label className="text-[#73225D] sm:text-1.3xl text-justify" style={{ fontSize: "1.3rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
+              <Label className="text-[#73225D] sm:text-1.1xl text-justify" style={{ fontSize: "1.1rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
                 Buscamos trabalhar na parte preventiva ao abuso e a violência doméstica porque é o ponto em que o Brasil mais falha. No que tange a ações preventivas, o Brasil possui uma grande escassez perdendo até para países menos desenvolvidos como Quênia e Turquia.
               </Label>
-              <Label className="text-[#73225D] sm:text-1.3xl text-justify" style={{ fontSize: "1.3rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
+              <Label className="text-[#73225D] sm:text-1.1xl text-justify" style={{ fontSize: "1.1rem",   marginBottom: "1rem", lineHeight: "1.3", maxWidth: "200%",}}>
               Por isso, ao trabalhar na prevenção buscamos resguardar nossas crianças e proporcionar as mulheres uma independência financeira e socioemocional, para que ela possua mais força para sair do ciclo repetitivo de violência.
               </Label>
             </div>
@@ -139,7 +139,7 @@ export default function Home() {
               </Label>
           </div>
 
-          <div className="grid sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
               <EventsCard 
                 img={<img src="img/events/instituto-ama.jpeg" alt="instituto-ama" />}
                 title="Instituto Ama"
