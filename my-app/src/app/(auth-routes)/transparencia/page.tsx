@@ -173,21 +173,25 @@ const handleSubmit = async (values: IComplaince) => {
             </CardFooter>
         </Card>
 
-        <div id="contact" className="text-[#73225D] sm:mt-60 text-3xl items-center justify-center">
+        <div
+              id="contact"
+              className="text-[#BF6550] sm:mt-60 text-3xl flex flex-col items-center justify-center h-[200px]"
+            >
               <Label
-                className="text-[#BF6550] sm:mt-60 text-3xl items-center"
+                className="text-[#BF6550] text-3xl"
                 style={{
                   fontSize: '2rem',
-                  fontFamily: 'Peace Sans',
+                   
                   fontWeight: 'bold',
                   marginBottom: '1rem',
                   maxWidth: '100%',
+                  textAlign: 'center',
                 }}
               >
                 Contatos
               </Label>
 
-              <div className="sm:mt-4 flex justify-center items-center sm:space-x-6">
+              <div className="sm:mt-4 flex justify-center items-center sm:space-x-6 font-rosario">
                 <a
                   href="https://www.instagram.com/coletivo_encoraja/"
                   target="_blank"
@@ -205,7 +209,7 @@ const handleSubmit = async (values: IComplaince) => {
                 href="https://www.google.com/maps?q=Rua+Tibagi,+99+-+Centro,+Curitiba+-+PR,+Brasil"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#73225D] text-xl font-rosario underline"
+                className="text-[#73225D] text-xl underline"
               >
                 <img loading="lazy" src="https://img.shields.io/badge/Google%20Maps-E1306C?style=for-the-badge&logo=googlemaps&logoColor=white"></img>
               </a>

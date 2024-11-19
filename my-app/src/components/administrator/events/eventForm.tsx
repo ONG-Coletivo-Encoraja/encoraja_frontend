@@ -20,6 +20,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 export default function RegisterEvent() {
   const [users, setUsers] = useState<UserData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -107,8 +108,14 @@ export default function RegisterEvent() {
           });
         }
       }
+<<<<<<< HEAD
+    }
+  };
+}
+=======
     };
   }
+>>>>>>> SCRUM-338-fix-routes
 
   return (
     <div className="flex justify-center items-center">
@@ -319,6 +326,43 @@ export default function RegisterEvent() {
               />
 
 
+<<<<<<< HEAD
+      <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Status</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} defaultValue="">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="active">Ativo</SelectItem>
+                        <SelectItem value="inactive">Inativo</SelectItem>
+                        <SelectItem value="pending">Pendente</SelectItem>
+                        <SelectItem value="finished">Finalizado</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      </CardContent>
+      <CardFooter className="flex justify-end gap-4">
+        <Button variant="outline">
+          Cancelar
+        </Button>
+        <Button type="submit" onClick={form.handleSubmit(handleSubmit)}>
+          Salvar
+        </Button>
+      </CardFooter>
+    </Card>
+=======
               <FormField
                 control={form.control}
                 name="workload"
@@ -394,6 +438,7 @@ export default function RegisterEvent() {
         </CardFooter>
       </Card>
     </div>
+>>>>>>> SCRUM-338-fix-routes
   )
 };
 

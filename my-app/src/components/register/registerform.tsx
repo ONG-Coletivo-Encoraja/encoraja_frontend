@@ -17,6 +17,8 @@ import { UserData } from '../../interfaces/IUserData';
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "O nome deve ter pelo menos 2 caracteres." }),
@@ -414,15 +416,48 @@ export default function RegisterForm() {
                       Ler termos
                     </Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="sm:max-w-[800px]">
                   <DialogHeader>
-                    <DialogTitle>Termos de Uso dos Dados</DialogTitle>
+                    <DialogTitle>Coletivo Encoraja</DialogTitle>
+                    <DialogDescription>Política de Privacidade e Consentimento de Uso de Dados</DialogDescription>
                   </DialogHeader>
-                  <div className="space-y-2">
-                    <p>Organização Coletivo Encoraja
+                  <div className="space-y-2 ">
+                  <Label>Bem-vindo ao Coletivo Encoraja!  Esta política descreve como usamos seus dados.</Label>
 
-                      1. Termos e termos e termos
-                    </p>
+                  <h3><Label>Dados Pessoais:</Label></h3>
+                  
+                  <Label>Coletamos nome, e-mail e telefone para contato e comunicação.  Dados sensíveis (raça, gênero, etc.) são anonimizados para pesquisa interna e estatísticas, sem vinculação à sua identidade.</Label>
+
+                  <h3><Label>Uso de Imagens:</Label></h3>
+                  <Label>
+                    Ao participar de eventos ou enviar imagens, você autoriza o uso em materiais de divulgação, redes sociais e relatórios.  Para discordar, contate-nos.
+                  </Label>
+
+                  <h3><Label>Finalidades do Tratamento de Dados:</Label></h3>
+                  <ul>
+                    <li><Label>- Pesquisas e relatórios estatísticos anonimizados</Label></li>
+                    <li><Label>- Melhoria da organização e comunicação</Label></li>
+                    <li><Label>- Divulgação do impacto de nossos projetos</Label></li>
+                  </ul>
+
+                  <h3><Label>Proteção de Dados:</Label></h3>
+                  <Label>
+                    Seus dados são protegidos e não compartilhados com terceiros, exceto por obrigação legal ou com sua autorização.
+                  </Label>
+
+                  <h3><Label>Seus Direitos:</Label></h3>
+                  <ul>
+                    <li><Label>- Solicitar informações sobre seus dados</Label></li>
+                    <li><Label>- Corrigir ou excluir informações pessoais</Label></li>
+                    <li><Label>- Revogar seu consentimento</Label></li>
+                  </ul>
+                  <h3><Label>Cookies:</Label></h3>
+                  <Label>Usamos cookies para melhorar sua experiência.  Você pode gerenciá-los nas configurações do seu navegador.</Label>
+                  <br></br>
+                  <br></br>
+                  <Label>
+                    Ao continuar, você concorda com esta política.  Para mais informações, contate-nos.
+                  </Label>
                   </div>
                 </DialogContent>
               </Dialog>

@@ -24,14 +24,14 @@ export default function Navbar() {
             <Label className="text-white"><Link href="/#about-us">Sobre Nós</Link></Label>
             <Label className="text-white"><Link href="/#events">Eventos</Link></Label>
             <Label className="text-white"><Link href="/#partners">Apoiadores e Parceiros</Link></Label>
-            <Label className="text-white"><Link href="/transparency">Transparência</Link></Label>
+            <Label className="text-white"><Link href="/transparencia">Transparência</Link></Label>
             <Label className="text-white"><Link href="/#contact">Contato</Link></Label>
             <Label className="text-white"><Link href="/#donate">Doe</Link></Label>
           </div>
         </div>
         <div className="flex items-center mr-4">
             <Label className="text-white mx-4"><Link href="/login">Login</Link></Label>
-            <Label className="text-white mx-4"><Link href="/register">Cadastre-se</Link></Label>
+            <Label className="text-white mx-4"><Link href="/cadastre-se">Cadastre-se</Link></Label>
         </div>
       </Menubar>
     </div>

@@ -59,7 +59,7 @@ export default function ForgotPassForm() {
                 </Form>
             </CardContent>
             <CardFooter className="flex flex-col justify-center gap-4">
-                <Link href='/recover-password'>
+                <Link href='/recuperar-senha'>
                     <Button type="button" className="mt-4">Recebi o código</Button>
                 </Link>
             </CardFooter>

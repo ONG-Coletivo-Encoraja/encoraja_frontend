@@ -1,4 +1,4 @@
-import * as React from "react";
+import  React from "react";
 import { CardContent, CardTitle, CardHeader } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
