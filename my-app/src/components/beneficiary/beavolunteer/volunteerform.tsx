@@ -102,8 +102,8 @@ export function BeAVolunteer() {
 
   return (
     <>
-      <div className='h-full flex justify-center items-center mt-24'>
-        {loading ? (
+      <div className='h-full flex justify-center mt-24'>
+        {loading ? (git
           <div className="flex items-center justify-center h-screen">
             <CircularProgress color="secondary" />
           </div>
