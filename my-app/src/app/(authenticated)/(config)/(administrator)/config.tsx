@@ -49,14 +49,14 @@ export const NavItems = () => {
       name: 'Dashboard',
       href: '/relatorios/dashboard',
       icon: <ChartNoAxesCombined size={25} color="#702054" />,
-      active: isNavItemActive(pathname, '/general-reports'),
+      active: isNavItemActive(pathname, '/relatorios/dashboard'),
       position: 'top',
     },
     {
       name: 'Relatórios de eventos',
       href: '/relatorios/eventos',
       icon: <FileChartColumn size={25} color="#702054" />,
-      active: isNavItemActive(pathname, '/event-report'),
+      active: isNavItemActive(pathname, '/relatorios/eventos'),
       position: 'top',
     },
     {
